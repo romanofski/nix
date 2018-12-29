@@ -20,6 +20,7 @@
         hasktags
         ctags
         ispell
+        ghc
       ];
     };
 
