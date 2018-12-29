@@ -57,6 +57,7 @@
     maildrop
     gnupg
     powertop
+    linuxPackages.tp_smapi
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -69,6 +70,7 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.syncthing.enable = true;
+  services.tlp.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
