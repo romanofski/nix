@@ -65,6 +65,8 @@ in
         file
         python35
         lsof
+        killall
+        unzip
       ];
     };
   };
