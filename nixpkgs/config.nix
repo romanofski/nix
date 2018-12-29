@@ -1,5 +1,7 @@
 { pkgs }:
 
+let unstable = import <unstable> { };
+in
 { packageOverrides = super: let self = super.pkgs; in with self; rec {
 ## My one-shot install environment.
     my-meta-env = buildEnv {
@@ -13,7 +15,7 @@
     my-haskell-env = buildEnv {
       name = "haskell-env";
       paths = with pkgs.haskellPackages; [
-        cabal-install
+        unstable.cabal-install
         ghcid
         hlint
         hindent
