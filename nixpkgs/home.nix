@@ -38,6 +38,7 @@ home.packages = [
   pkgs.unzip
   pkgs.xlockmore
   pkgs.xorg.xbacklight
+  pkgs.gnome3.cheese
   pkgsUnstable.cabal-install
   # Was not installable:
   #
