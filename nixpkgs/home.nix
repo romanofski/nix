@@ -57,4 +57,8 @@ home.packages = [
   # Installed via nix-env from termonad git checkout HEAD
   # pkgsUnstable.termonad-with-packages
 ];
+
+services.syncthing = {
+  enable = true;
+};
 }
