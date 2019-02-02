@@ -42,21 +42,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    firefox
-    git
     nix-prefetch-scripts
-    emacs
-    wget
-    vim
-    arandr
-    evince
-    silver-searcher
     hicolor-icon-theme
-    gnome3.adwaita-icon-theme
+    # gnome3.adwaita-icon-theme
     getmail
     maildrop
-    gnupg
-    powertop
     linuxPackages.tp_smapi
     home-manager
   ];
