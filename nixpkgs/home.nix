@@ -26,6 +26,7 @@ home.packages = [
   pkgs.gsettings_desktop_schemas
   pkgs.ispell
   pkgs.killall
+  pkgs.libreoffice-fresh
   pkgs.lsof
   pkgs.minetest
   pkgs.noto-fonts-emoji
