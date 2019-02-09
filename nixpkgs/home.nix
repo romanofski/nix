@@ -29,6 +29,7 @@ home.packages = [
   pkgs.libreoffice-fresh
   pkgs.lsof
   pkgs.minetest
+  pkgs.minetest
   pkgs.noto-fonts-emoji
   pkgs.pavucontrol
   pkgs.pinentry
