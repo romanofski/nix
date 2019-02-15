@@ -5,8 +5,8 @@ let
     pkgs.fetchFromGitHub {
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "178836c9bb65c8eb98ebec865fd8a7370436e1dd";
-      sha256 = "14w2hc0bsb7dclzkwgmvhzlxrn763zyb0gdnwh12jv08xmqjvda0";
+      rev = "86db60f3f3b6d68c61c4a4c54bc4a5bb175a76d8";
+      sha256 = "1k5xinimh3ha9020b3z2kzg6b3pjpzc8r2n9cqcnszkzv278g8ck";
     }
   ) { };
 in {
@@ -24,6 +24,7 @@ home.packages = [
   pkgs.gnome3.cheese
   pkgs.gnupg
   pkgs.gsettings_desktop_schemas
+  pkgs.inkscape
   pkgs.ispell
   pkgs.killall
   pkgs.libreoffice-fresh
