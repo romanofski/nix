@@ -129,4 +129,7 @@
   # should.
   system.stateVersion = "18.09"; # Did you read the comment?
 
+  nix.gc.automatic = true;
+  nix.gc.dates = "weekly";
+  nix.gc.options = "--delete-older-than 14d";
 }
