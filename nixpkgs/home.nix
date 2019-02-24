@@ -21,6 +21,7 @@ home.packages = [
   pkgs.file
   pkgs.gimp
   pkgs.git
+  pkgs.gdb
   pkgs.gnome3.cheese
   pkgs.gnupg
   pkgs.gsettings_desktop_schemas
