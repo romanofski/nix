@@ -45,6 +45,7 @@ home.packages = [
   pkgs.unzip
   pkgs.vim
   pkgs.wget
+  pkgs.wine
   pkgs.xlockmore
   pkgs.xorg.xbacklight
   pkgsUnstable.firefox
