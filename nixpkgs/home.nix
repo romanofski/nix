@@ -31,13 +31,11 @@ home.packages = [
   pkgs.libreoffice-fresh
   pkgs.lsof
   pkgs.minetest
-  pkgs.minetest
   pkgs.noto-fonts-emoji
   pkgs.pavucontrol
   pkgs.pinentry
   pkgs.poppler_utils
   pkgs.powertop
-  pkgs.python35
   pkgs.python36Packages.syncthing-gtk
   pkgs.silver-searcher
   pkgs.tmux
