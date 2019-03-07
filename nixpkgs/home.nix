@@ -13,6 +13,9 @@ in {
 home.packages = [
   pkgs.arandr
   pkgs.aspellDicts.en
+  pkgs.blueman
+  pkgs.bluez
+  pkgs.bluez-tools
   pkgs.ctags
   pkgs.elinks
   pkgs.emacs
