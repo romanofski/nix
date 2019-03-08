@@ -13,6 +13,7 @@ in {
 home.packages = [
   pkgs.arandr
   pkgs.aspellDicts.en
+  pkgs.binutils
   pkgs.blueman
   pkgs.bluez
   pkgs.bluez-tools
