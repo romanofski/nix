@@ -89,11 +89,12 @@
   services.xserver = {
     enable = true;
     layout = "us";
+    xkbModel = "pc105";
     desktopManager.default = "none";
     desktopManager.xterm.enable = false;
     desktopManager.xfce.enable = true;
     displayManager.lightdm.enable = true;
-    xkbOptions = "crtl:nocaps";
+    xkbOptions = "compose:ralt";
 
     windowManager.default = "xmonad";
     windowManager.xmonad = {
