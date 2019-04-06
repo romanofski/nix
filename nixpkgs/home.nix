@@ -5,12 +5,13 @@ let
     pkgs.fetchFromGitHub {
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "86db60f3f3b6d68c61c4a4c54bc4a5bb175a76d8";
-      sha256 = "1k5xinimh3ha9020b3z2kzg6b3pjpzc8r2n9cqcnszkzv278g8ck";
+      rev = "056b9d0085ed02c4524bf206d0112685327f0eef";
+      sha256 = "0rz2m765hbwram55bk20hbn4qby6sg1xfcharp87yq4h8b8m7w5c";
     }
   ) { };
 in {
 home.packages = [
+  pkgs.ansible
   pkgs.arandr
   pkgs.aspellDicts.en
   pkgs.binutils
@@ -23,9 +24,9 @@ home.packages = [
   pkgs.evince
   pkgs.feh
   pkgs.file
+  pkgs.gdb
   pkgs.gimp
   pkgs.git
-  pkgs.gdb
   pkgs.gnome3.cheese
   pkgs.gnupg
   pkgs.gsettings_desktop_schemas
@@ -42,8 +43,9 @@ home.packages = [
   pkgs.powertop
   pkgs.python36Packages.syncthing-gtk
   pkgs.silver-searcher
+  pkgs.sshpass
   pkgs.tmux
-  pkgs.tor-browser-bundle-bin
+  pkgs.torbrowser
   pkgs.unzip
   pkgs.vim
   pkgs.wget
@@ -51,7 +53,6 @@ home.packages = [
   pkgs.xlockmore
   pkgs.xorg.xbacklight
   pkgsUnstable.firefox
-  pkgsUnstable.termonad-with-packages
 ];
 
 services.syncthing = {
