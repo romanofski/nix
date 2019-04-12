@@ -37,6 +37,7 @@ home.packages = [
   pkgs.lsof
   pkgs.minetest
   pkgs.noto-fonts-emoji
+  pkgs.openttd
   pkgs.pavucontrol
   pkgs.pinentry
   pkgs.poppler_utils
