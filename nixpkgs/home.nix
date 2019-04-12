@@ -14,6 +14,7 @@ home.packages = [
   pkgs.ansible
   pkgs.arandr
   pkgs.aspellDicts.en
+  pkgs.bind
   pkgs.binutils
   pkgs.blueman
   pkgs.bluez
