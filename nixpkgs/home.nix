@@ -54,6 +54,7 @@ home.packages = [
   pkgs.wine
   pkgs.xlockmore
   pkgs.xorg.xbacklight
+  pkgsUnstable.openra
   pkgsUnstable.firefox
 ];
 
