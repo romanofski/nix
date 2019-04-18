@@ -39,6 +39,7 @@ home.packages = [
   pkgs.minetest
   pkgs.noto-fonts-emoji
   pkgs.openttd
+  pkgs.parallel
   pkgs.pavucontrol
   pkgs.pinentry
   pkgs.poppler_utils
