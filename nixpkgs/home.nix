@@ -10,6 +10,7 @@ let
     }
   ) { };
   opts = import ./opts.nix;
+  mailhost = "mail.gocept.net";
 in {
   home.packages = [
     pkgs.ansible
@@ -37,6 +38,7 @@ in {
     pkgs.killall
     pkgs.libreoffice-fresh
     pkgs.lsof
+    pkgs.maildrop
     pkgs.minetest
     pkgs.noto-fonts-emoji
     pkgs.openjdk8
@@ -66,6 +68,23 @@ in {
     enable = true;
   };
   services.gpg-agent.enable = true;
+  services.getmail = {
+    enable = true;
+    retriever = {
+      type = "SimpleIMAPSSLRetriever";
+      server = mailhost;
+      username = opts.username;
+      mailboxes = ["ALL"];
+      passwordCommand = "${pkgs.pass}/bin/pass bromeco";
+    };
+    destination = {
+      type = "MDA_external";
+      path = "${pkgs.maildrop}/bin/maildrop";
+    };
+    options = {
+      delete = true;
+    };
+  };
 
   accounts.email = {
     accounts = {
@@ -75,7 +94,7 @@ in {
         userName = "${opts.username}";
         primary = true;
         flavor = "plain";
-        smtp.host = "mail.gocept.net";
+        smtp.host = mailhost;
         smtp.tls.enable = true;
         smtp.tls.useStartTls = true;
         passwordCommand = "${pkgs.pass}/bin/pass bromeco";
