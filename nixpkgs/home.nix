@@ -9,6 +9,7 @@ let
       sha256 = "0rz2m765hbwram55bk20hbn4qby6sg1xfcharp87yq4h8b8m7w5c";
     }
   ) { };
+  opts = import ./opts.nix;
 in {
 home.packages = [
   pkgs.ansible
@@ -41,6 +42,7 @@ home.packages = [
   pkgs.openjdk8
   pkgs.openttd
   pkgs.parallel
+  pkgs.pass
   pkgs.pavucontrol
   pkgs.pinentry
   pkgs.poppler_utils
@@ -63,4 +65,33 @@ home.packages = [
 services.syncthing = {
   enable = true;
 };
+  services.gpg-agent.enable = true;
+
+  accounts.email = {
+    accounts = {
+      bromeco = {
+      realName = "Róman Joost";
+        address = "roman@bromeco.de";
+        userName = "${opts.username}";
+        primary = true;
+        flavor = "plain";
+        smtp.host = "mail.gocept.net";
+        smtp.tls.enable = true;
+        smtp.tls.useStartTls = true;
+        passwordCommand = "${pkgs.pass}/bin/pass bromeco";
+        msmtp = {
+         enable = true;
+        };
+      };
+    };
+  };
+
+  programs.msmtp = {
+    enable = true;
+    extraConfig = ''
+      defaults
+      syslog on
+      domain bromeco.de
+    '';
+  };
 }
