@@ -101,10 +101,33 @@ in {
         msmtp = {
           enable = true;
         };
+        notmuch = {
+          enable = true;
+        };
       };
     };
   };
 
+  programs.zsh = {
+    enable = true;
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "sudo"];
+      theme = "pygmalion";
+    };
+  };
+  programs.notmuch = {
+    enable = true;
+    new = {
+      tags=["unread" "inbox"];
+    };
+    search={
+      excludeTags=["deleted" "spam"];
+    };
+    maildir = {
+      synchronizeFlags=false;
+    };
+  };
   programs.msmtp = {
     enable = true;
     extraConfig = ''
