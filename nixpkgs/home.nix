@@ -59,6 +59,7 @@ in {
     pkgs.vim
     pkgs.wget
     pkgs.wine
+    pkgs.xautolock
     pkgs.xlockmore
     pkgs.xorg.xbacklight
     pkgsUnstable.openra
@@ -85,6 +86,10 @@ in {
     options = {
       delete = true;
     };
+  };
+  services.screen-locker = {
+    enable = true;
+    lockCmd = "${pkgs.xautlock}/bin/xautolock -locknow";
   };
 
   accounts.email = {
