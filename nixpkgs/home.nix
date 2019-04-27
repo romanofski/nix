@@ -116,6 +116,9 @@ in {
 
   programs.zsh = {
     enable = true;
+    shellAliases = {
+      c = "cd ..";
+    };
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo"];
