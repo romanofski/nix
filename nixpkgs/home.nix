@@ -11,6 +11,7 @@ let
   ) { };
   opts = import ./opts.nix;
   mailhost = "mail.gocept.net";
+  realName = "Róman Joost";
 in {
   home.packages = [
     pkgs.ansible
@@ -73,7 +74,7 @@ in {
     retriever = {
       type = "SimpleIMAPSSLRetriever";
       server = mailhost;
-      username = opts.username;
+      username = opts.email;
       mailboxes = ["ALL"];
       passwordCommand = "${pkgs.pass}/bin/pass bromeco";
     };
@@ -89,9 +90,9 @@ in {
   accounts.email = {
     accounts = {
       bromeco = {
-        realName = "Róman Joost";
-        address = "roman@bromeco.de";
-        userName = "${opts.username}";
+        realName = "${realName}";
+        address = "${opts.email}";
+        userName = "${opts.email}";
         primary = true;
         flavor = "plain";
         smtp.host = mailhost;
@@ -135,5 +136,28 @@ in {
       syslog on
       domain bromeco.de
     '';
+  };
+  programs.git = {
+    enable = true;
+    aliases = {
+	    lg = "log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
+	    ll = "!git st; git --no-pager log --pretty='format:%Cred%cr %Cblue%h %Cgreen%an:%Creset %s%C(yellow)%d' -n20; echo";
+	    # Nice list of branches by age
+	    bb = "for-each-ref --sort=-committerdate --format='%1B[36m%(committerdate:relative) %1B[33m%(refname:short)%1B[0;m' refs/heads/";
+	    info = "config --list";
+    };
+    ignores = [
+      "dist"
+      ".cabal-sandbox"
+      "cabal.sandbox.config"
+      ".stack-work"
+      "*.o"
+      "*.hi"
+    ];
+    signing = {
+      key = "D02BC6E095A0446267E1F43C0133D0C73A765B52";
+    };
+    userEmail = "${opts.email}";
+    userName = "${realName}";
   };
 }
