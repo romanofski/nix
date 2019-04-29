@@ -114,6 +114,10 @@ in {
     };
   };
 
+  home.sessionVariables = {
+    EDITOR = "vim";
+  };
+
   programs.zsh = {
     enable = true;
     shellAliases = {
