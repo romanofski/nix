@@ -120,6 +120,7 @@ in {
 
   programs.zsh = {
     enable = true;
+    enableCompletion = true;
     shellAliases = {
       c = "cd ..";
     };
