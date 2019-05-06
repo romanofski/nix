@@ -5,8 +5,8 @@ let
     pkgs.fetchFromGitHub {
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "056b9d0085ed02c4524bf206d0112685327f0eef";
-      sha256 = "0rz2m765hbwram55bk20hbn4qby6sg1xfcharp87yq4h8b8m7w5c";
+      rev = "89a650a593dc00dc34570e34190dbba36f70d889";
+      sha256 = "028kliy2b1p9wcvf3hhfffi4q16hc3bfbb2nqcv6gps1a4i8vr40";
     }
   ) { };
   opts = import ./opts.nix;
