@@ -69,7 +69,10 @@ in {
   services.syncthing = {
     enable = true;
   };
-  services.gpg-agent.enable = true;
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+  };
   services.getmail = {
     enable = true;
     retriever = {
