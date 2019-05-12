@@ -89,6 +89,7 @@ in {
     options = {
       delete = true;
     };
+    frequency = "*:0/5";
   };
   services.screen-locker = {
     enable = true;
