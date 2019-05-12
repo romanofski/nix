@@ -49,6 +49,7 @@
     nix-prefetch-scripts
     linuxPackages.tp_smapi
     home-manager
+    git
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -63,6 +64,7 @@
   services.tlp.enable = true;
   services.tor.enable = true;
   services.tor.client.enable = true;
+  services.dbus.packages = with pkgs; [ gnome3.dconf ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

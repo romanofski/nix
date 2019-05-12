@@ -13,9 +13,15 @@ let
   mailhost = "mail.gocept.net";
   realName = "Róman Joost";
 in {
+  imports = [
+    ./emacs.nix
+  ];
+
   home.packages = [
+    pkgs.emacs-all-the-icons-fonts
     pkgs.ansible
     pkgs.arandr
+    pkgs.aspellDicts.de
     pkgs.aspellDicts.en
     pkgs.bind
     pkgs.binutils
@@ -24,16 +30,19 @@ in {
     pkgs.bluez-tools
     pkgs.ctags
     pkgs.elinks
-    pkgs.emacs
     pkgs.evince
     pkgs.feh
     pkgs.file
+    pkgs.fira
+    pkgs.fira-code
+    pkgs.fira-mono
     pkgs.gdb
     pkgs.gimp
     pkgs.git
     pkgs.gnome3.cheese
     pkgs.gnupg
     pkgs.gsettings_desktop_schemas
+    pkgs.ibm-plex
     pkgs.inkscape
     pkgs.ispell
     pkgs.killall
@@ -176,5 +185,37 @@ in {
     };
     userEmail = "${opts.email}";
     userName = "${realName}";
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.gnome3.gnome_themes_standard;
+      name = "Adwaita";
+    };
+  };
+  fonts.fontconfig = {
+    enable = true;
+  };
+  xresources.properties = {
+    "Xft.antialias" = 1;
+    "Xft.autohint" = 0;
+    "Xft.hinting" = 1;
+    "Xft.hintstyle" = "hintfull";
+    "Xft.lcdfilter" = "lcddefault";
+    "Xft.rgba" = "rgb";
+    "Xcursor.theme" = "core";
+    "Xautolock.time" = 20;
+    "Xautolock.locker" = "xlock";
+    "Xautolock.corners" = "+0-0";
+    "Xautolock.cornerdelay" = 3;
+
+    "XLock.foreground" = "White";
+    "XLock.background" = "Gray20";
+    "XLock.echokeys" = 1;
+    "XLock.usefirst" = 1;
+    "XLock.echokey" = "*";
+
+    "Xft.dpi" = 100;
   };
 }
