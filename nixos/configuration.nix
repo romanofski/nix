@@ -47,10 +47,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     nix-prefetch-scripts
-    hicolor-icon-theme
-    # gnome3.adwaita-icon-theme
-    getmail
-    maildrop
     linuxPackages.tp_smapi
     home-manager
   ];
