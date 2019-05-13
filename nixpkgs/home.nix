@@ -15,6 +15,7 @@ let
 in {
   imports = [
     ./emacs.nix
+    ./vim.nix
   ];
 
   home.packages = [
@@ -65,7 +66,6 @@ in {
     pkgs.tmux
     pkgs.torbrowser
     pkgs.unzip
-    pkgs.vim
     pkgs.wget
     pkgs.wine
     pkgs.xautolock
