@@ -7,7 +7,11 @@
   (general-nmap :keymaps 'haskell-mode-map
                 :prefix ","
                 "e" '(:ignore t :which-key "edit")
-                "ei" 'haskell-mode-format-imports))
+                "ei" 'haskell-mode-format-imports)
+  )
+;; disable stack-ghc altogether since most projects I'm currently
+;; working on are not using stack
+(setq-default flycheck-disabled-checkers 'haskell/haskell-stack-ghc)
 
 (use-package hindent
   :after haskell-mode
