@@ -9,9 +9,9 @@ let
       sha256 = "028kliy2b1p9wcvf3hhfffi4q16hc3bfbb2nqcv6gps1a4i8vr40";
     }
   ) { };
-  opts = import ./opts.nix;
   mailhost = "mail.gocept.net";
   realName = "Róman Joost";
+  email = "roman@bromeco.de";
 in {
   imports = [
     ./emacs.nix
@@ -87,7 +87,7 @@ in {
     retriever = {
       type = "SimpleIMAPSSLRetriever";
       server = mailhost;
-      username = opts.email;
+      username = email;
       mailboxes = ["ALL"];
       passwordCommand = "${pkgs.pass}/bin/pass bromeco";
     };
@@ -109,8 +109,8 @@ in {
     accounts = {
       bromeco = {
         realName = "${realName}";
-        address = "${opts.email}";
-        userName = "${opts.email}";
+        address = "${email}";
+        userName = "${email}";
         primary = true;
         flavor = "plain";
         smtp.host = mailhost;
@@ -179,12 +179,11 @@ in {
       ".stack-work"
       "*.o"
       "*.hi"
-      "opts.nix"
     ];
     signing = {
       key = "D02BC6E095A0446267E1F43C0133D0C73A765B52";
     };
-    userEmail = "${opts.email}";
+    userEmail = "${email}";
     userName = "${realName}";
   };
 
