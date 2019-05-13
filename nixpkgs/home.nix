@@ -179,6 +179,7 @@ in {
       ".stack-work"
       "*.o"
       "*.hi"
+      "opts.nix"
     ];
     signing = {
       key = "D02BC6E095A0446267E1F43C0133D0C73A765B52";
