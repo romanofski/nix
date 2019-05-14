@@ -91,6 +91,13 @@ let
         dante
       ];
     }
+    {
+      file = ./emacs/lang/latex.el;
+      pkgs = epkgs: with epkgs; [
+        auctex
+        company-auctex
+      ];
+    }
   ];
 in
 {
