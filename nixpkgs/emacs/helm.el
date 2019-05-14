@@ -20,6 +20,10 @@
   :config
   (helm-mode 1)
 
+  (with-eval-after-load 'helm-files
+    (dolist (keymap (list helm-find-files-map helm-read-file-map))
+      (define-key keymap (kbd "C-h") 'helm-find-files-up-one-level)))
+
   (setq helm-M-x-fuzzy-match t
         helm-buffers-fuzzy-matching t
         helm-display-function 'pop-to-buffer
