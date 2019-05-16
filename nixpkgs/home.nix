@@ -104,6 +104,11 @@ in {
     enable = true;
     lockCmd = "${pkgs.xautlock}/bin/xautolock -locknow";
   };
+  services.redshift = {
+    enable = true;
+    latitude = "-27";
+    longitude = "152";
+  };
 
   accounts.email = {
     accounts = {
