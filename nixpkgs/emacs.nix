@@ -15,6 +15,7 @@ let
       pkgs = epkgs: with epkgs; [
         smartparens
         which-key
+        flycheck
       ];
     }
     {
