@@ -9,9 +9,6 @@
                 "e" '(:ignore t :which-key "edit")
                 "ei" 'haskell-mode-format-imports)
   )
-;; disable stack-ghc altogether since most projects I'm currently
-;; working on are not using stack
-(setq-default flycheck-disabled-checkers 'haskell/haskell-stack-ghc)
 
 (use-package hindent
   :after haskell-mode
@@ -40,6 +37,7 @@
   :after haskell-mode
   :commands 'dante-mode
   :init
+  (add-hook 'haskell-mode-hook 'dante-mode)
   (add-hook 'haskell-mode-hook 'flycheck-mode)
   (setq dante-repl-command-line '("cabal" "new-repl"))
 
@@ -47,6 +45,7 @@
   (setq flymake-no-changes-timeout nil)
   (setq flymake-start-syntax-check-on-newline nil)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+
 
   ;; save the buffer after some idle time to run dante
   (auto-save-visited-mode 1)
