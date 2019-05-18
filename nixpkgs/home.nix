@@ -99,6 +99,7 @@ in {
       delete = true;
     };
     frequency = "*:0/5";
+    idlefolders = ["INBOX"];
   };
   services.screen-locker = {
     enable = true;
