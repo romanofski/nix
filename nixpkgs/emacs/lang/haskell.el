@@ -18,11 +18,7 @@
                  "f" '(:ignore t :which-key "format")
                  "ff" 'hindent-reformat-buffer
                  "fd" 'hindent-reformat-decl)
-
-  :config
-  ;; TODO: this isn't always activating. Why?
-  (add-hook 'haskell-mode-hook 'hindent-mode)
-  (setq hindent-reformat-buffer-on-save t))
+  )
 
 (use-package hlint-refactor
   :after haskell-mode
