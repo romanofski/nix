@@ -37,7 +37,7 @@
   (global-flycheck-mode)
 
   :general
-  (general-map :prefix "SPC"
+  (general-nmap :prefix "SPC"
 	       "e" '(:ignore t :which-key "errors")
 	       "el" 'flycheck-list-errors
 	       "en" 'next-error
