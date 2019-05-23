@@ -82,25 +82,6 @@ in {
     enable = true;
     enableSshSupport = true;
   };
-  services.getmail = {
-    enable = true;
-    retriever = {
-      type = "SimpleIMAPSSLRetriever";
-      server = mailhost;
-      username = email;
-      mailboxes = ["ALL"];
-      passwordCommand = "${pkgs.pass}/bin/pass bromeco";
-    };
-    destination = {
-      type = "MDA_external";
-      path = "${pkgs.maildrop}/bin/maildrop";
-    };
-    options = {
-      delete = true;
-    };
-    frequency = "*:0/5";
-    idlefolders = ["INBOX"];
-  };
   services.screen-locker = {
     enable = true;
     lockCmd = "${pkgs.xautlock}/bin/xautolock -locknow";
@@ -123,11 +104,24 @@ in {
         smtp.tls.enable = true;
         smtp.tls.useStartTls = true;
         passwordCommand = "${pkgs.pass}/bin/pass bromeco";
+        imap = {
+          host = mailhost;
+          tls = {
+            enable = true;
+            useStartTls = true;
+          };
+        };
         msmtp = {
           enable = true;
         };
         notmuch = {
           enable = true;
+        };
+        getmail = {
+          enable = true;
+          mailboxes = ["ALL"];
+          destinationCommand = "${pkgs.maildrop}/bin/maildrop";
+          delete = false;
         };
       };
     };
@@ -137,6 +131,7 @@ in {
     EDITOR = "vim";
   };
 
+  programs.getmail.enable = true;
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -157,9 +152,9 @@ in {
     search={
       excludeTags=["deleted" "spam"];
     };
-    maildir = {
-      synchronizeFlags=false;
-    };
+  maildir = {
+    synchronizeFlags=false;
+  };
   };
   programs.msmtp = {
     enable = true;
