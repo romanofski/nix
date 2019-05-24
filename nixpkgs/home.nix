@@ -219,4 +219,10 @@ in {
 
     "Xft.dpi" = 100;
   };
+  home.file = [
+    {
+      target = ".tmux.conf";
+      text = builtins.readFile ./tmux.conf;
+    }
+  ];
 }
