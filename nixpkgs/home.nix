@@ -225,4 +225,13 @@ in {
       text = builtins.readFile ./tmux.conf;
     }
   ];
+  xdg = {
+    enable = true;
+    configFile = [
+      {
+        target = "purebred/purebred.hs";
+        text = builtins.readFile ./purebred.hs;
+      }
+    ];
+  };
 }
