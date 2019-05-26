@@ -22,7 +22,11 @@
 
   (with-eval-after-load 'helm-files
     (dolist (keymap (list helm-find-files-map helm-read-file-map))
-      (define-key keymap (kbd "C-h") 'helm-find-files-up-one-level)))
+      (define-key keymap (kbd "C-h") 'helm-find-files-up-one-level)
+      (define-key keymap (kbd "<tab>") 'helm-execute-persistent-action)
+      (define-key keymap (kbd "C-z") 'helm-select-action)
+      )
+    )
 
   (setq helm-M-x-fuzzy-match t
         helm-buffers-fuzzy-matching t
