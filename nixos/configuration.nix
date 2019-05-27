@@ -9,26 +9,11 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./yubikey.nix
+      ./printing.nix
     ];
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices = [
-    {
-      name = "root";
-      device = "/dev/nvme0n1p2";
-      preLVM = true;
-    }
-  ];
 
   networking.networkmanager.enable = true;
   networking.hostName = "krombopulos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n = {
@@ -52,14 +37,6 @@
     git
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.tlp.enable = true;
   services.tor.enable = true;
@@ -71,13 +48,6 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
-  # Enable CUPS to print documents.
-  services.printing = {
-   enable = true;
-   browsing = true;
-   drivers = [ pkgs.brlaser ];
-  };
 
   # Enable sound.
   sound.enable = true;
@@ -111,12 +81,8 @@
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
 
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.rjoost = {
+    users.users.rjoost = {
       createHome = true;
       extraGroups = ["wheel" "video" "audio" "disk" "networkmanager"];
       group = "rjoost";
@@ -124,17 +90,17 @@
       isNormalUser = true;
       uid = 1000;
       shell = pkgs.zsh;
-  };
+    };
 
-  users.groups.rjoost.gid = 1000;
+    users.groups.rjoost.gid = 1000;
 
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "18.09"; # Did you read the comment?
+    # This value determines the NixOS release with which your system is to be
+      # compatible, in order to avoid breaking some software such as database
+    # servers. You should change this only after NixOS release notes say you
+    # should.
+    system.stateVersion = "18.09"; # Did you read the comment?
 
-  nix.gc.automatic = true;
-  nix.gc.dates = "weekly";
-  nix.gc.options = "--delete-older-than 14d";
+    nix.gc.automatic = true;
+    nix.gc.dates = "weekly";
+    nix.gc.options = "--delete-older-than 14d";
 }

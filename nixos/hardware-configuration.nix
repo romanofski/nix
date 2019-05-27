@@ -11,6 +11,17 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.luks.devices = [
+    {
+      name = "root";
+      device = "/dev/nvme0n1p2";
+      preLVM = true;
+    }
+  ];
+
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/22c9b704-a5e2-417d-935c-1a8b361ea67f";
