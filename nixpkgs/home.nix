@@ -75,6 +75,7 @@ in {
     pkgsUnstable.firefox
   ];
 
+  services.getmail.enable = true;
   services.syncthing = {
     enable = true;
   };
@@ -131,7 +132,6 @@ in {
     EDITOR = "vim";
   };
 
-  programs.getmail.enable = true;
   programs.zsh = {
     enable = true;
     enableCompletion = true;
