@@ -5,8 +5,8 @@ let
     pkgs.fetchFromGitHub {
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "89a650a593dc00dc34570e34190dbba36f70d889";
-      sha256 = "028kliy2b1p9wcvf3hhfffi4q16hc3bfbb2nqcv6gps1a4i8vr40";
+      rev = "f3eaa070aa314727948998665f2a3ce00610cb0c";
+      sha256 = "1azm9c2v395qficngq873dj66n2nfv3v944riwbix96haf7l9s1m";
     }
   ) { };
   mailhost = "mail.gocept.net";
