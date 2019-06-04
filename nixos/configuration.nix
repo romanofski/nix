@@ -10,6 +10,8 @@
       ./hardware-configuration.nix
       ./yubikey.nix
       ./printing.nix
+      ./virtualisation.nix
+      ./firewall.nix
     ];
 
   networking.networkmanager.enable = true;
@@ -42,12 +44,6 @@
   services.tor.enable = true;
   services.tor.client.enable = true;
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # Enable sound.
   sound.enable = true;
