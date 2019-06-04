@@ -52,7 +52,6 @@ in {
     pkgs.maildrop
     pkgs.minetest
     pkgs.noto-fonts-emoji
-    pkgs.openjdk8
     pkgs.openttd
     pkgs.parallel
     pkgs.pass
