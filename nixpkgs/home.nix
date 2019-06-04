@@ -122,7 +122,7 @@ in {
           enable = true;
           mailboxes = ["ALL"];
           destinationCommand = "${pkgs.maildrop}/bin/maildrop";
-          delete = false;
+          delete = true;
         };
       };
     };
