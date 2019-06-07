@@ -99,6 +99,15 @@ let
         company-auctex
       ];
     }
+    {
+      file = ./emacs/lang/yaml.el;
+      pkgs = epkgs: with epkgs; [
+        ansible
+        yaml-mode
+        yasnippet
+        auto-complete
+      ];
+    }
   ];
 in
 {
