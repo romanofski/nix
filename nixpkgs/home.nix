@@ -1,14 +1,7 @@
 { pkgs, ... }:
 
 let
-  pkgsUnstable = import (
-    pkgs.fetchFromGitHub {
-      owner = "nixos";
-      repo = "nixpkgs";
-      rev = "f3eaa070aa314727948998665f2a3ce00610cb0c";
-      sha256 = "1azm9c2v395qficngq873dj66n2nfv3v944riwbix96haf7l9s1m";
-    }
-  ) { };
+  pkgsUnstable = import <unstable> { };
   mailhost = "mail.gocept.net";
   realName = "Róman Joost";
   email = "roman@bromeco.de";
@@ -16,6 +9,7 @@ in {
   imports = [
     ./emacs.nix
     ./vim.nix
+    ./games.nix
   ];
 
   home.packages = [
@@ -51,9 +45,7 @@ in {
     pkgs.libreoffice-fresh
     pkgs.lsof
     pkgs.maildrop
-    pkgs.minetest
     pkgs.noto-fonts-emoji
-    pkgs.openttd
     pkgs.parallel
     pkgs.pass
     pkgs.pavucontrol
@@ -67,11 +59,9 @@ in {
     pkgs.torbrowser
     pkgs.unzip
     pkgs.wget
-    pkgs.wine
     pkgs.xautolock
     pkgs.xlockmore
     pkgs.xorg.xbacklight
-    pkgsUnstable.openra
     pkgsUnstable.firefox
   ];
 
