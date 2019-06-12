@@ -100,6 +100,13 @@ let
       ];
     }
     {
+      file = ./emacs/lang/js.el;
+      pkgs = epkgs: with epkgs; [
+        js2-mode
+        prettier-js
+      ];
+    }
+    {
       file = ./emacs/lang/yaml.el;
       pkgs = epkgs: with epkgs; [
         ansible
