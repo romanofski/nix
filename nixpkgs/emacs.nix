@@ -103,6 +103,8 @@ let
       file = ./emacs/lang/js.el;
       pkgs = epkgs: with epkgs; [
         js2-mode
+        typescript-mode
+        tide
         prettier-js
       ];
     }
