@@ -40,20 +40,9 @@
     ];
 
     services.openssh.enable = true;
-    services.tlp.enable = true;
     services.tor.enable = true;
     services.tor.client.enable = true;
     services.dbus.packages = with pkgs; [ gnome3.dconf ];
-
-    # Enable sound.
-    sound.enable = true;
-    hardware.pulseaudio.enable = true;
-    hardware.opengl = {
-      enable = true;
-      driSupport32Bit = true;
-    };
-
-    hardware.bluetooth.enable = true;
 
     # Enable the X11 windowing system.
     services.xserver = {
