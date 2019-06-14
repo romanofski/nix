@@ -37,6 +37,7 @@ in {
     pkgs.fira
     pkgs.fira-code
     pkgs.fira-mono
+    pkgs.fira-code-symbols
     pkgs.gdb
     pkgs.gimp
     pkgs.git
