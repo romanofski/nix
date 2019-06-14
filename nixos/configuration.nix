@@ -40,8 +40,6 @@
     ];
 
     services.openssh.enable = true;
-    services.tor.enable = true;
-    services.tor.client.enable = true;
     services.dbus.packages = with pkgs; [ gnome3.dconf ];
 
     # Enable the X11 windowing system.
