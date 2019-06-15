@@ -12,6 +12,8 @@
     ./printing.nix
     ./virtualisation.nix
     ./firewall.nix
+    ./services/ntp.nix
+    ./services/tor.nix
     ];
 
     networking.networkmanager.enable = true;
