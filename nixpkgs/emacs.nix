@@ -65,10 +65,6 @@ let
       ];
     }
     {
-      file = ./emacs/hooks.el;
-      pkgs = epkgs: [];
-    }
-    {
       file = ./emacs/git.el;
       pkgs = epkgs: with epkgs; [
         evil-magit

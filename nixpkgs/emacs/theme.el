@@ -5,7 +5,10 @@
 ;; for long enough that I never use it.)
 (tool-bar-mode -1)
 
-(use-package all-the-icons)
+(use-package all-the-icons
+  :init
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+  )
 
 ;; themes!
 (use-package doom-themes

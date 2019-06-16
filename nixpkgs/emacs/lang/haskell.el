@@ -1,5 +1,7 @@
 (use-package haskell-mode
   :mode "\\.\\(hs\\|lhs\\|hsc\\|cpphs\\|c2hs\\)\\'"
+  :init
+  (add-hook 'haskell-mode-hook 'fira-code-mode)
   :general
   (general-nvmap :keymaps 'haskell-mode-map
                  "gI" 'haskell-navigate-imports)
