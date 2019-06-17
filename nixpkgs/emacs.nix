@@ -25,6 +25,7 @@ let
         evil-surround
         evil-ediff
         evil-magit
+        evil-visualstar
       ];
     }
     {

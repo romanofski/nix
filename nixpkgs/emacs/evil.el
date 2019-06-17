@@ -33,3 +33,6 @@
 ;; bindings for ediff
 (use-package evil-ediff
   :after evil)
+
+(use-package evil-visualstar
+  :after evil)
