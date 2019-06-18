@@ -22,6 +22,10 @@
 		)
 
   :config
+  ;; makes * and # use emacs-symbols instead of words, otherwise emacs
+  ;; only searches for foo in foo_bar
+  (setq-default evil-symbol-word-search t)
+  ;; additional maps
   (with-eval-after-load 'evil-maps
     (define-key evil-motion-state-map (kbd ";") 'evil-repeat-find-char)
     (define-key evil-motion-state-map (kbd ":") 'evil-ex)))
