@@ -123,4 +123,7 @@ in
   home.file.".emacs.d/init.el" = {
     text = builtins.foldl' (acc: config: acc + builtins.readFile config.file + "\n") "" configs;
   };
+  home.file.".emacs.d/abbrev_defs" = {
+    text = builtins.readFile ./emacs/abbrev_defs.el;
+  };
 }
