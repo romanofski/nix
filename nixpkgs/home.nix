@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   pkgsUnstable = import <unstable> { };
@@ -247,42 +247,14 @@ in {
       target = ".tmux.conf";
       text = builtins.readFile ./tmux.conf;
     }
-    {
-      target = ".mailfilter";
-      text = ''
-        import PATH
-        DEFAULT="${config.home.homeDirectory}/Maildir"
-        PATH=$HOME/.nix-profile/bin:$HOME/.local/bin:$PATH
-        NOTMUCH_CONFIG="${config.xdg.configHome}/notmuch/notmuchrc"
-
-        if (/^(From|To):.*@gnome.org/:h)
-        {
-        to "| notmuch insert +list -inbox"
-        }
-
-        # Handle spam
-        if (/^From: messages-noreply@linkedin.com/:h)
-        {
-        to "| notmuch insert +spam -inbox"
-        }
-        if (/^X-getmail-retrieved-from-mailbox:.*Trash$/)
-        {
-        to "| notmuch insert +spam -inbox"
-        }
-
-
-        to  "| notmuch insert"
-      '';
-    }
   ];
-
-    xdg = {
-      enable = true;
-      configFile = [
-        {
-          target = "purebred/purebred.hs";
-          text = builtins.readFile ./purebred.hs;
-        }
-      ];
-    };
+  xdg = {
+    enable = true;
+    configFile = [
+      {
+        target = "purebred/purebred.hs";
+        text = builtins.readFile ./purebred.hs;
+      }
+    ];
+  };
 }
