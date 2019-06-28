@@ -51,7 +51,7 @@
   hardware.pulseaudio.enable = true;
   hardware.opengl = {
     enable = true;
-    driSupport32Bit = true;
+    driSupport = true;
   };
 
   hardware.bluetooth.enable = true;
