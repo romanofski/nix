@@ -67,8 +67,8 @@ main = purebred $ tweak defaultConfig where
 
 myColoredTags :: [(AttrName, Attr)]
 myColoredTags =
-  [ ("inbox", fg magenta)
-  , ("archive", fg cyan)
-  , ("signed", fg green)
-  , ("attachment", fg brightRed)
+  [ (mailTagAttr <> "inbox", fg magenta)
+  , (mailTagAttr <> "archive", fg cyan)
+  , (mailTagAttr <> "signed", fg green)
+  , (mailTagAttr <> "attachment", fg brightRed)
   ]
