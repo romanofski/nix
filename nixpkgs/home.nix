@@ -66,6 +66,17 @@ in {
     pkgsUnstable.firefox
   ];
 
+  services.xsuspender = {
+    enable = true;
+    rules = {
+      Firefox = {
+        matchWmClassContains = "Firefox";
+        suspendDelay = 10;
+        suspendSubtreePattern = "Firefox";
+      };
+    };
+  };
+
   services.getmail.enable = true;
   services.syncthing = {
     enable = true;
