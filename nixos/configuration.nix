@@ -12,6 +12,7 @@
       ./printing.nix
       ./virtualisation.nix
       ./firewall.nix
+      ./unfree.nix
       ./services/ntp.nix
       ./services/tor.nix
     ];
