@@ -15,6 +15,7 @@
       ./unfree.nix
       ./services/ntp.nix
       ./services/tor.nix
+      ./services/upower.nix
     ];
 
   networking.networkmanager.enable = true;
