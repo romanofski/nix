@@ -51,7 +51,7 @@
     xkbModel = "pc105";
     desktopManager.default = "none";
     desktopManager.xterm.enable = false;
-    desktopManager.xfce.enable = true;
+    desktopManager.xfce.enable = false;
     displayManager.lightdm.enable = true;
     xkbOptions = "compose:ralt";
 
