@@ -23,10 +23,21 @@
 ;; backup files somewhere outside of where project file watchers will pick them
 ;; up
 ;;
-(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-      backup-by-copying t
-      version-control t
-      delete-old-versions t
+;; Put backup files neatly away
+;; Kudos to https://github.com/jorgenschaefer/Config/blob/master/emacs.el
+(let ((backup-dir "~/.cache/emacs/backups")
+      (auto-saves-dir "~/.cache/emacs/auto-saves/"))
+  (dolist (dir (list backup-dir auto-saves-dir))
+    (when (not (file-directory-p dir))
+      (make-directory dir t)))
+  (setq backup-directory-alist `(("." . ,backup-dir))
+        auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
+        tramp-backup-directory-alist `((".*" . ,backup-dir))
+	tramp-auto-save-directory auto-saves-dir))
+
+(setq backup-by-copying t  ; Don't delink hardlinks
+      version-control t  ; Use version numbers on backups
+      delete-old-versions t  ; Clean up the backups
       kept-new-versions 20
       kept-old-versions 5)
 
