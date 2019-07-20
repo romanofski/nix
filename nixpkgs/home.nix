@@ -13,7 +13,6 @@ in {
   ];
 
   home.packages = [
-    pkgs.emacs-all-the-icons-fonts
     pkgs.ansible
     pkgs.arandr
     pkgs.aspellDicts.de
@@ -25,13 +24,14 @@ in {
     pkgs.bluez-tools
     pkgs.ctags
     pkgs.elinks
+    pkgs.emacs-all-the-icons-fonts
     pkgs.evince
     pkgs.feh
     pkgs.file
     pkgs.fira
     pkgs.fira-code
-    pkgs.fira-mono
     pkgs.fira-code-symbols
+    pkgs.fira-mono
     pkgs.gdb
     pkgs.gimp
     pkgs.git
