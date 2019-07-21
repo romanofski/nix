@@ -62,7 +62,6 @@ in {
     pkgs.unzip
     pkgs.usbutils
     pkgs.wget
-    pkgs.xautolock
     pkgs.xlockmore
     pkgs.xorg.xbacklight
     pkgsUnstable.firefox
@@ -91,7 +90,7 @@ in {
   };
   services.screen-locker = {
     enable = true;
-    lockCmd = "${pkgs.xautlock}/bin/xautolock -locknow";
+    lockCmd = "${pkgs.xautolock}/bin/xautolock -locknow";
   };
   services.redshift = {
     enable = true;
