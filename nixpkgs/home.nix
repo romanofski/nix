@@ -35,6 +35,7 @@ in {
     pkgs.gdb
     pkgs.gimp
     pkgs.git
+    pkgs.glib
     pkgs.gnome3.cheese
     pkgs.gnupg
     pkgs.gsettings_desktop_schemas
@@ -59,6 +60,7 @@ in {
     pkgs.tmux
     pkgs.torbrowser
     pkgs.unzip
+    pkgs.usbutils
     pkgs.wget
     pkgs.xautolock
     pkgs.xlockmore
@@ -258,10 +260,26 @@ in {
 
     "Xft.dpi" = 100;
   };
+  xsession.enable = true;
+
+xsession.windowManager.xmonad = {
+  enable = true;
+  enableContribAndExtras = true;
+  config = ./xmonad.hs;
+  extraPackages = haskellPackages: [
+    haskellPackages.xmobar
+  ];
+};
+
   home.file = [
     {
       target = ".tmux.conf";
       text = builtins.readFile ./tmux.conf;
+    }
+    {
+      target = ".xmonad/startup-hook";
+      text = builtins.readFile ./startup-hook.sh;
+      executable = true;
     }
   ];
   xdg = {

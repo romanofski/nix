@@ -16,6 +16,7 @@
       ./services/ntp.nix
       ./services/tor.nix
       ./services/upower.nix
+      ./services/gvfs.nix
     ];
 
   networking.networkmanager.enable = true;
@@ -49,18 +50,15 @@
     enable = true;
     layout = "us";
     xkbModel = "pc105";
-    desktopManager.default = "none";
+    desktopManager.default = "xfce";
     desktopManager.xterm.enable = false;
-    desktopManager.xfce.enable = false;
+    desktopManager.xfce = {
+      enable = true;
+      noDesktop = true;
+      enableXfwm = true;
+    };
     displayManager.lightdm.enable = true;
     xkbOptions = "compose:ralt";
-
-    windowManager.default = "xmonad";
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      extraPackages = haskellPackages : [haskellPackages.xmobar];
-    };
   };
 
   # Enable touchpad support.
