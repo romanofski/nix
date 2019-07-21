@@ -16,15 +16,7 @@ function save_start {
     fi
 }
 
-xrdb -query
-xrdb -merge ~/.Xresources
-
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 10 --transparent true --tint 0x000000 &
-
-save_start "nm-applet"
-save_start "xautolock" "-detectsleep"
 save_start "feh" "-z" "--bg-fill" "Pictures/*.jpg"
-save_start "gnome-keyring-daemon" "--start"
 
 # restore stdout and stderr
 exec 1>&3 2>&4
