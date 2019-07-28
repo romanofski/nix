@@ -23,6 +23,7 @@ in {
     pkgs.bluez
     pkgs.bluez-tools
     pkgs.ctags
+    pkgs.docker-compose
     pkgs.elinks
     pkgs.emacs-all-the-icons-fonts
     pkgs.evince
