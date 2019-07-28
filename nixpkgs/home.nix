@@ -66,8 +66,8 @@ in {
     pkgs.xlockmore
     pkgs.xorg.xbacklight
     pkgsUnstable.firefox
-    pkgsUnstable.xfce4-13.thunar
-    pkgsUnstable.xfce4-13.thunar-volman
+    pkgsUnstable.xfce4-14.thunar
+    pkgsUnstable.xfce4-14.thunar-volman
   ];
 
   services.xsuspender = {
