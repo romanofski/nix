@@ -22,6 +22,7 @@ Example configuration, currently used for testing which demonstrates various
 ways to overwrite the configuration.
 -}
 import Purebred
+import qualified Purebred.Plugin.ICU
 import qualified Data.ByteString as B
 import System.Environment (lookupEnv)
 import System.Directory (getCurrentDirectory)
@@ -64,6 +65,7 @@ main = purebred $ tweak defaultConfig where
     . set (confComposeView . cvIdentities) fromMail
     . set (confComposeView . cvSendMailPath) "/home/rjoost/.nix-profile/bin/msmtp"
     . over confTheme (applyAttrMappings myColoredTags)
+    . Purebred.Plugin.ICU.enable
 
 myColoredTags :: [(AttrName, Attr)]
 myColoredTags =
