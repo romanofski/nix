@@ -1,3 +1,4 @@
+
 { pkgs, ... }:
 
 let
@@ -70,6 +71,7 @@ let
       pkgs = epkgs: with epkgs; [
         evil-magit
         magit
+        git-timemachine
       ];
     }
 

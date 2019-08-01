@@ -39,9 +39,6 @@
 
 (use-package helm-ag
   :after helm
-  :general
-  (general-nvmap :prefix "SPC"
-    "*" 'helm-do-ag-project-root)
 
   :config
   (setq helm-ag-insert-at-point 'symbol))
