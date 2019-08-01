@@ -289,6 +289,10 @@ xsession.windowManager.xmonad = {
         target = "purebred/purebred.hs";
         text = builtins.readFile ./purebred.hs;
       }
+      {
+        target = "gtfs/config.cfg";
+        text = builtins.readFile ./gtfsschedule.cfg;
+      }
     ];
   };
 }
