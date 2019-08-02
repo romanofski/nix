@@ -281,6 +281,13 @@ xsession.windowManager.xmonad = {
       text = builtins.readFile ./startup-hook.sh;
       executable = true;
     }
+    {
+      target = ".ghc/ghci.conf";
+      text = ''
+        :set prompt "λ: "
+        :set -XOverloadedStrings
+      '';
+    }
   ];
   xdg = {
     enable = true;
