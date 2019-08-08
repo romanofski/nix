@@ -22,6 +22,7 @@ in {
     pkgs.blueman
     pkgs.bluez
     pkgs.bluez-tools
+    pkgs.calibre
     pkgs.ctags
     pkgs.docker-compose
     pkgs.elinks
