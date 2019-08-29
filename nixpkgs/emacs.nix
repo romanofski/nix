@@ -116,6 +116,12 @@ let
         auto-complete
       ];
     }
+    {
+      file = ./emacs/lang/python.el;
+      pkgs = epkgs: with epkgs; [
+        py-isort
+      ];
+    }
   ];
 in
 {
@@ -128,4 +134,15 @@ in
   home.file.".emacs.d/abbrev_defs" = {
     text = builtins.readFile ./emacs/abbrev_defs.el;
   };
+
+  home.packages = [
+    pkgs.emacs-all-the-icons-fonts
+    pkgs.aspellDicts.de
+    pkgs.aspellDicts.en
+    pkgs.fira
+    pkgs.fira-code
+    pkgs.fira-mono
+    pkgs.fira-code-symbols
+    pkgs.pythonPackages.isort
+  ];
 }
