@@ -15,8 +15,6 @@ in {
   home.packages = [
     pkgs.ansible
     pkgs.arandr
-    pkgs.aspellDicts.de
-    pkgs.aspellDicts.en
     pkgs.bind
     pkgs.binutils
     pkgs.blueman
@@ -26,14 +24,9 @@ in {
     pkgs.ctags
     pkgs.docker-compose
     pkgs.elinks
-    pkgs.emacs-all-the-icons-fonts
     pkgs.evince
     pkgs.feh
     pkgs.file
-    pkgs.fira
-    pkgs.fira-code
-    pkgs.fira-code-symbols
-    pkgs.fira-mono
     pkgs.gdb
     pkgs.gimp
     pkgs.git
