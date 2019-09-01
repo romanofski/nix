@@ -19,6 +19,8 @@
       ./services/gvfs.nix
     ];
 
+  systemd.tmpfiles.rules = [ "d /tmp 1777 root root 10d"];
+
   networking.networkmanager.enable = true;
   networking.hostName = "krombopulos"; # Define your hostname.
 
