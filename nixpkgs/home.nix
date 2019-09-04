@@ -38,6 +38,7 @@ in {
     pkgs.ibm-plex
     pkgs.inkscape
     pkgs.ispell
+    pkgs.keepassxc
     pkgs.killall
     pkgs.libnotify
     pkgs.libreoffice-fresh
