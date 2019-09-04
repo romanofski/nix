@@ -20,6 +20,7 @@ in {
     pkgs.blueman
     pkgs.bluez
     pkgs.bluez-tools
+    pkgs.cabal2nix
     pkgs.calibre
     pkgs.ctags
     pkgs.docker-compose
