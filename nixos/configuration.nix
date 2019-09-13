@@ -7,6 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
+      <nixos-hardware/lenovo/thinkpad/t480s>
       ./hardware-configuration.nix
       ./yubikey.nix
       ./printing.nix
