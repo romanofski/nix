@@ -42,6 +42,7 @@ in {
     pkgs.killall
     pkgs.libnotify
     pkgs.libreoffice-fresh
+    pkgs.libsForQt511.vlc
     pkgs.lsof
     pkgs.maildrop
     pkgs.noto-fonts-emoji
