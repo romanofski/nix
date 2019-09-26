@@ -63,6 +63,7 @@ in {
     pkgs.xlockmore
     pkgs.xorg.xbacklight
     pkgsUnstable.firefox
+    pkgsUnstable.haskellPackages.termonad
     pkgsUnstable.xfce4-14.thunar
     pkgsUnstable.xfce4-14.thunar-volman
   ];
@@ -262,7 +263,7 @@ in {
 xsession.windowManager.xmonad = {
   enable = true;
   enableContribAndExtras = true;
-  config = ./xmonad.hs;
+  config = ./configs/xmonad.hs;
   extraPackages = haskellPackages: [
     haskellPackages.xmobar
   ];
@@ -271,7 +272,7 @@ xsession.windowManager.xmonad = {
   home.file = [
     {
       target = ".tmux.conf";
-      text = builtins.readFile ./tmux.conf;
+      text = builtins.readFile ./configs/tmux.conf;
     }
     {
       target = ".xmonad/startup-hook";
@@ -291,11 +292,15 @@ xsession.windowManager.xmonad = {
     configFile = [
       {
         target = "purebred/purebred.hs";
-        text = builtins.readFile ./purebred.hs;
+        text = builtins.readFile ./configs/purebred.hs;
+      }
+      {
+        target = "termonad/termonad.hs";
+        text = builtins.readFile ./configs/termonad.hs;
       }
       {
         target = "gtfs/config.cfg";
-        text = builtins.readFile ./gtfsschedule.cfg;
+        text = builtins.readFile ./configs/gtfsschedule.cfg;
       }
     ];
   };
