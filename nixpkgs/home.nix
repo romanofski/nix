@@ -62,6 +62,7 @@ in {
     pkgs.wget
     pkgs.xlockmore
     pkgs.xorg.xbacklight
+    pkgs.xss-lock
     pkgsUnstable.firefox
     pkgsUnstable.haskellPackages.termonad
     pkgsUnstable.xfce4-14.thunar
@@ -89,7 +90,7 @@ in {
   };
   services.screen-locker = {
     enable = true;
-    lockCmd = "${pkgs.xautolock}/bin/xautolock -locknow";
+    lockCmd = "xlock";
   };
   services.redshift = {
     enable = true;
