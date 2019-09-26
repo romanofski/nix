@@ -27,6 +27,7 @@ in {
     pkgs.elinks
     pkgs.evince
     pkgs.feh
+    pkgs.ffmpeg
     pkgs.file
     pkgs.gdb
     pkgs.gimp
@@ -53,6 +54,8 @@ in {
     pkgs.poppler_utils
     pkgs.powertop
     pkgs.python36Packages.syncthing-gtk
+    pkgs.qt-recordmydesktop
+    pkgs.recordmydesktop
     pkgs.silver-searcher
     pkgs.sshpass
     pkgs.tmux
@@ -62,6 +65,7 @@ in {
     pkgs.wget
     pkgs.xlockmore
     pkgs.xorg.xbacklight
+    pkgs.xorg.xwininfo
     pkgs.xss-lock
     pkgsUnstable.firefox
     pkgsUnstable.haskellPackages.termonad

@@ -54,6 +54,7 @@ myManageHook = composeAll
     , className =? "XVkbd"          --> doIgnore
     , className =? "Cellwriter"     --> doIgnore
     , className =? "Gtkdialog"      --> doFloat
+    , className =? "Qt-recordMyDesktop" --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , isFullscreen                  --> doFullFloat
     --                                      x y w h
