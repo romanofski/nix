@@ -13,6 +13,7 @@ in {
   ];
 
   home.packages = [
+    pkgs.a2ps
     pkgs.ansible
     pkgs.arandr
     pkgs.bind
