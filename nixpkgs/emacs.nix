@@ -143,5 +143,6 @@ in
     pkgs.aspellDicts.de
     pkgs.aspellDicts.en
     pkgs.hasklig
+    pkgs.nodePackages.prettier
   ];
 }
