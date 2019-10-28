@@ -9,6 +9,8 @@
 (use-package tide
   :ensure t
   :after (typescript-mode company flycheck)
+  :init
+  (setq tide-tsserver-executable "~/works/slsecure/config-frontend/frontend/node_modules/.bin/tsserver")
   :hook (
 	 (typescript-mode . tide-setup)
 	 (typescript-mode . tide-hl-identifier-mode)
