@@ -143,6 +143,5 @@ in
     pkgs.fira-code
     pkgs.fira-mono
     pkgs.fira-code-symbols
-    pkgs.pythonPackages.isort
   ];
 }
