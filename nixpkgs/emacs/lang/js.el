@@ -19,7 +19,5 @@
   :after (:any js2-mode tide)
   :init
   (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'js2-mode-hook 'fira-code-mode)
   (add-hook 'tide-mode-hook 'prettier-js-mode)
-  (add-hook 'tide-mode-hook 'fira-code-mode)
   )

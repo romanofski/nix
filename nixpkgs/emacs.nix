@@ -53,6 +53,7 @@ let
         solaire-mode
         hl-todo
         nyan-mode
+        hasklig-mode
       ];
     }
     {
@@ -141,11 +142,6 @@ in
     pkgs.emacs-all-the-icons-fonts
     pkgs.aspellDicts.de
     pkgs.aspellDicts.en
-    pkgs.fira
-    pkgs.fira-code
-    pkgs.fira-mono
-    pkgs.fira-code-symbols
-    pkgs.python36Packages.jedi
-    pkgs.python36Packages.epc
+    pkgs.hasklig
   ];
 }
