@@ -22,7 +22,7 @@
   (doom-themes-treemacs-config)
 
   ;; the 't' argument here tells emacs not to confirm the load is safe
-  (load-theme 'doom-city-lights t)
+  (load-theme 'doom-solarized-light t)
 
   ;; TODO: theme switcher
   )
