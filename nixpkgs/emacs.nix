@@ -144,5 +144,7 @@ in
     pkgs.aspellDicts.en
     pkgs.hasklig
     pkgs.nodePackages.prettier
+    pkgs.python36Packages.jedi
+    pkgs.python36Packages.epc
   ];
 }
