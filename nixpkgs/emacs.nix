@@ -120,6 +120,7 @@ let
       file = ./emacs/lang/python.el;
       pkgs = epkgs: with epkgs; [
         py-isort
+        company-jedi
       ];
     }
   ];
@@ -143,5 +144,7 @@ in
     pkgs.fira-code
     pkgs.fira-mono
     pkgs.fira-code-symbols
+    pkgs.python36Packages.jedi
+    pkgs.python36Packages.epc
   ];
 }
