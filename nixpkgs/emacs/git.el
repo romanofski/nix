@@ -18,4 +18,11 @@
      (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
 
 (use-package evil-magit
-:after magit)
+  :after magit
+  :config
+  (general-define-key
+   :keymaps '(git-rebase-mode-map)
+   :states '(normal)
+   "x" 'git-rebase-kill-line
+   "s-j" 'git-rebase-move-line-down
+   "s-k" 'git-rebase-move-line-up))
