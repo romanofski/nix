@@ -1,5 +1,6 @@
 (add-hook 'python-mode-hook #'abbrev-mode)
-(use-package py-isort)
+(use-package py-isort
+  :hook (before-save . py-isort-before-save))
 
 (use-package company-jedi
   :ensure t)
