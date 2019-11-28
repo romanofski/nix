@@ -18,3 +18,6 @@
 (use-package general
   :init
   (general-evil-setup))
+
+;; disable tabs globally
+(setq-default indent-tabs-mode nil)
