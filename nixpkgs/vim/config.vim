@@ -80,7 +80,7 @@ augroup filetypedetect
     au! BufRead,BufNewFile *.vala       setfiletype vala
     au! BufRead,BufNewFile *.vapi       setfiletype vala
     au  BufRead,BufNewFile *.rb         set ts=2 sts=2 sw=2 expandtab
-    au! BufRead,BufNewFile /run/user/*/purebred* set ft=mail
+    au! BufRead,BufNewFile /home/rjoost/Maildir/Drafts/new/* set ft=mail
 augroup END
 
 autocmd FileType html map <F2> <Esc>:1,$!tidy -q -i --show-errors 0<CR>
