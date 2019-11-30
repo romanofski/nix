@@ -35,9 +35,8 @@
   :after haskell-mode
   :commands 'dante-mode
   :init
-  (add-hook 'haskell-mode-hook 'dante-mode)
   (add-hook 'haskell-mode-hook 'flycheck-mode)
-  (setq dante-repl-command-line '("cabal" "new-repl"))
+  (add-hook 'haskell-mode-hook 'dante-mode)
 
   ;; disable checks on idle after change to avoid surprises
   (setq flymake-no-changes-timeout nil)
