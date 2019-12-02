@@ -1,4 +1,6 @@
 " Vim settings
+set encoding=utf-8
+scriptencoding utf-8
 colorscheme solarized
 set softtabstop=4
 set backspace=2
