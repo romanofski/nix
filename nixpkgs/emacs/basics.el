@@ -54,4 +54,18 @@
 	       "en" 'next-error
 	       "ep" 'previous-error))
 
+(use-package flyspell
+  :defer 1
+  :custom
+  (flyspell-mode 1))
+
+(use-package flyspell-correct-helm
+  :after flyspell
+  :commands (flyspell-correct-helm)
+  :init
+  (setq flyspell-correct-interface #'flyspell-correct-helm)
+  :general
+  (general-nmap :prefix "SPC"
+    "z" '(:ignore t :which-key "spelling")
+    "z=" 'flyspell-correct-wrapper))
 ;;; basics.el ends here

@@ -17,6 +17,7 @@ let
         smartparens
         which-key
         flycheck
+        flyspell-correct-helm
       ];
     }
     {
