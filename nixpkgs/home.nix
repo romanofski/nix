@@ -10,6 +10,7 @@ in {
     ./emacs.nix
     ./vim.nix
     ./games.nix
+    ./xmonad.nix
   ];
 
   home.packages = [
@@ -268,15 +269,6 @@ in {
     "Xft.dpi" = 100;
   };
   xsession.enable = true;
-
-xsession.windowManager.xmonad = {
-  enable = true;
-  enableContribAndExtras = true;
-  config = ./configs/xmonad.hs;
-  extraPackages = haskellPackages: [
-    haskellPackages.xmobar
-  ];
-};
 
   home.file = [
     {

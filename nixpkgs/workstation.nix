@@ -16,6 +16,7 @@ in {
   imports = [
     ./emacs.nix
     ./vim.nix
+    ./xmonad.nix
   ];
 
   home.packages = [
@@ -25,6 +26,7 @@ in {
     pkgs.fontconfig
     pkgs.xmobar
     pkgs.yarn
+    pkgs.haskellPackages.termonad
     pkgs.nodejs-slim-10_x
   ];
 
@@ -205,13 +207,6 @@ in {
     ];
   };
   xsession.enable = true;
-  xsession.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
-    extraPackages = haskellPackages: [
-      haskellPackages.xmobar
-    ];
-  };
   systemd.user.services = {
     hamster-service = {
       Unit = {
