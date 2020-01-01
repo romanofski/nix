@@ -210,6 +210,7 @@ in {
       defaults
       syslog on
       domain bromeco.de
+      port 587
     '';
   };
   programs.git = {
