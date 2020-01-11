@@ -69,7 +69,6 @@ in {
     pkgs.xorg.xwininfo
     pkgs.xss-lock
     pkgsUnstable.firefox
-    pkgsUnstable.haskellPackages.termonad
     pkgsUnstable.xfce4-14.thunar
     pkgsUnstable.xfce4-14.thunar-volman
   ];
