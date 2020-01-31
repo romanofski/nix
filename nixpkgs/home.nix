@@ -10,6 +10,7 @@ in {
     ./emacs.nix
     ./vim.nix
     ./games.nix
+    ./termonad.nix
   ];
 
   home.packages = [
@@ -302,10 +303,6 @@ in {
       {
         target = "purebred/purebred.hs";
         text = builtins.readFile ./configs/purebred.hs;
-      }
-      {
-        target = "termonad/termonad.hs";
-        text = builtins.readFile ./configs/termonad.hs;
       }
       {
         target = "gtfs/config.cfg";
