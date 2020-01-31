@@ -10,6 +10,7 @@ in {
     ./emacs.nix
     ./vim.nix
     ./games.nix
+    ./gtfsschedule.nix
     ./termonad.nix
   ];
 
@@ -303,10 +304,6 @@ in {
       {
         target = "purebred/purebred.hs";
         text = builtins.readFile ./configs/purebred.hs;
-      }
-      {
-        target = "gtfs/config.cfg";
-        text = builtins.readFile ./configs/gtfsschedule.cfg;
       }
     ];
   };
