@@ -139,6 +139,7 @@ in
 
   home.packages = [
     pkgs.emacs-all-the-icons-fonts
+    pkgs.nixfmt
     pkgs.aspellDicts.de
     pkgs.aspellDicts.en
     pkgs.fira
