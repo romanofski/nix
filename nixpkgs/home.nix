@@ -10,6 +10,7 @@ in {
     ./emacs.nix
     ./vim.nix
     ./games.nix
+    ./xmobar.nix
     ./gtfsschedule.nix
     ./termonad.nix
   ];
