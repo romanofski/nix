@@ -65,6 +65,7 @@ in {
     pkgs.tmux
     pkgs.torbrowser
     pkgs.unzip
+    pkgs.urlview
     pkgs.usbutils
     pkgs.wget
     pkgs.xlockmore
