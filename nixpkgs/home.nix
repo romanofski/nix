@@ -10,7 +10,6 @@ in {
     ./emacs.nix
     ./vim.nix
     ./games.nix
-    ./xmobar.nix
     ./gtfsschedule.nix
     ./termonad.nix
   ];
@@ -298,6 +297,10 @@ in {
         :set prompt "λ: "
         :set -XOverloadedStrings
       '';
+    }
+    {
+      target = ".xmobarrc";
+      text = builtins.readFile ./configs/xmobarrc;
     }
   ];
   xdg = {
