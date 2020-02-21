@@ -23,3 +23,9 @@
   (add-hook 'tide-mode-hook 'prettier-js-mode)
   (add-hook 'tide-mode-hook 'fira-code-mode)
   )
+
+(use-package web-mode
+  :ensure t
+  :mode (("\\.ts[x]?\\'" . web-mode)
+         ("\\.js[x]?\\'" . web-mode))
+  )

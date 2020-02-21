@@ -106,6 +106,7 @@ let
         typescript-mode
         tide
         prettier-js
+        web-mode
       ];
     }
     {
