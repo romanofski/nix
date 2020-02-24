@@ -302,10 +302,6 @@ in {
       target = ".xmobarrc";
       text = builtins.readFile ./configs/xmobarrc;
     }
-    {
-      target = ".mailfilter";
-      text = builtins.readFile ./configs/mailfilter;
-    }
   ];
   xdg = {
     enable = true;
