@@ -58,4 +58,5 @@
   hardware.bluetooth.enable = true;
 
   services.tlp.enable = true;
+  hardware.sane.enable = true;
 }

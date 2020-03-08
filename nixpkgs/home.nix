@@ -37,6 +37,7 @@ in {
     pkgs.git
     pkgs.glib
     pkgs.gnome3.cheese
+    pkgs.gnome3.simple-scan
     pkgs.gnupg
     pkgs.gsettings_desktop_schemas
     pkgs.ibm-plex
