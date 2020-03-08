@@ -57,7 +57,7 @@ main = purebred $ tweak defaultConfig where
     . over (confMailView . mvKeybindings) (`union` myMailKeybindings)
     . set (confFileBrowserView . fbHomePath) getCurrentDirectory
     . set (confComposeView . cvIdentities) fromMail
-    . set (confComposeView . cvSendMailPath) "/home/rjoost/.nix-profile/bin/msmtp"
+    . set (confComposeView . cvSendMailCmd) (sendmail "/home/rjoost/.nix-profile/bin/msmtp")
     . over confTheme (applyAttrMappings myColoredTags)
     . Purebred.Plugin.ICU.enable
 
