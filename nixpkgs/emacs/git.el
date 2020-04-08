@@ -18,4 +18,20 @@
      (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
 
 (use-package evil-magit
-:after magit)
+  :after magit)
+
+(use-package auth-source
+  :init
+  (setq auth-source-debug t))
+
+(use-package auth-source-pass
+  :demand t
+  :after auth-source
+  :init
+  (progn
+    (setq auth-sources '(password-store))
+    )
+  )
+
+(use-package forge
+  :after magit)

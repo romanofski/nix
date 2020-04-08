@@ -70,8 +70,9 @@ let
     {
       file = ./emacs/git.el;
       pkgs = epkgs: with epkgs; [
-        evil-magit
         magit
+        forge
+        ghub
         git-timemachine
       ];
     }
