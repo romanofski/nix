@@ -37,6 +37,8 @@
 
   # Autocompletion for zsh
   environment.pathsToLink = [ "/share/zsh "];
+  # Use this path as otherwise $PATH on SSH is set to /usr/bin et.al
+  environment.sessionVariables = { PATH="/run/current-system/sw/bin"; };
 
   environment.systemPackages = with pkgs; [
     nix-prefetch-scripts
