@@ -79,6 +79,13 @@ let
 
     # languages
     {
+      file = ./emacs/lang/adoc.el;
+      pkgs = epkgs: with epkgs; [
+        adoc-mode
+        markup-faces
+      ];
+    }
+    {
       file = ./emacs/lang/nix.el;
       pkgs = epkgs: with epkgs; [
         nix-mode
