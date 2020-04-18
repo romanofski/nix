@@ -59,6 +59,7 @@ in {
     pkgs.powertop
     pkgs.python36Packages.syncthing-gtk
     pkgs.qt-recordmydesktop
+    pkgs.qtpass
     pkgs.recordmydesktop
     pkgs.silver-searcher
     pkgs.sshpass
