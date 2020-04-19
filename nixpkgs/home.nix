@@ -17,6 +17,7 @@ in {
   home.packages = [
     pkgs.a2ps
     pkgs.ansible
+    pkgs.antiword
     pkgs.arandr
     pkgs.bind
     pkgs.binutils
@@ -51,6 +52,7 @@ in {
     pkgs.lsof
     pkgs.maildrop
     pkgs.noto-fonts-emoji
+    pkgs.pandoc
     pkgs.parallel
     pkgs.pass
     pkgs.pavucontrol
