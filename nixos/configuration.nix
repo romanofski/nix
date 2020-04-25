@@ -64,6 +64,9 @@
     };
     displayManager.lightdm.enable = true;
     xkbOptions = "compose:ralt";
+    exportConfiguration = true;
+    extraConfig = builtins.readFile ./xorg.conf;
+    videoDrivers = ["intel" "vesa"];
   };
 
   # Enable touchpad support.
