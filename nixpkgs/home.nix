@@ -16,6 +16,7 @@ in {
 
   home.packages = [
     pkgs.a2ps
+    pkgs.acpilight
     pkgs.ansible
     pkgs.antiword
     pkgs.arandr
@@ -48,7 +49,7 @@ in {
     pkgs.killall
     pkgs.libnotify
     pkgs.libreoffice-fresh
-    pkgs.libsForQt511.vlc
+    pkgs.libsForQt5.vlc
     pkgs.lsof
     pkgs.maildrop
     pkgs.noto-fonts-emoji
@@ -60,9 +61,7 @@ in {
     pkgs.poppler_utils
     pkgs.powertop
     pkgs.python36Packages.syncthing-gtk
-    pkgs.qt-recordmydesktop
     pkgs.qtpass
-    pkgs.recordmydesktop
     pkgs.silver-searcher
     pkgs.sshpass
     pkgs.tmux
@@ -72,7 +71,6 @@ in {
     pkgs.usbutils
     pkgs.wget
     pkgs.xlockmore
-    pkgs.xorg.xbacklight
     pkgs.xorg.xwininfo
     pkgs.xss-lock
     pkgsUnstable.firefox
@@ -285,28 +283,24 @@ in {
     ];
   };
 
-  home.file = [
-    {
-      target = ".tmux.conf";
+  home.file = {
+    ".tmux.conf" = {
       text = builtins.readFile ./configs/tmux.conf;
-    }
-    {
-      target = ".xmonad/startup-hook";
+    };
+    ".xmonad/startup-hook" = {
       text = builtins.readFile ./startup-hook.sh;
       executable = true;
-    }
-    {
-      target = ".ghc/ghci.conf";
+    };
+    ".ghc/ghci.conf" = {
       text = ''
         :set prompt "λ: "
         :set -XOverloadedStrings
       '';
-    }
-    {
-      target = ".xmobarrc";
+    };
+    ".xmobarrc" = {
       text = builtins.readFile ./configs/xmobarrc;
-    }
-  ];
+    };
+  };
   xdg = {
     enable = true;
     configFile = [
