@@ -2,6 +2,9 @@
 
 {
   virtualisation = {
+    libvirtd = {
+      enable = true;
+    };
     docker = {
       enable = true;
       storageDriver = "overlay2";
