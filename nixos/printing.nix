@@ -5,6 +5,6 @@
   services.printing = {
     enable = true;
     browsing = true;
-    drivers = [ pkgs.brlaser ];
+    drivers = [ pkgs.brlaser pkgs.foomatic_filters ];
   };
 }
