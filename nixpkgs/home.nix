@@ -14,6 +14,8 @@ in {
     ./termonad.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   home.packages = [
     pkgs.a2ps
     pkgs.acpilight
@@ -283,31 +285,18 @@ in {
     ];
   };
 
-  home.file = {
-    ".tmux.conf" = {
-      text = builtins.readFile ./configs/tmux.conf;
-    };
-    ".xmonad/startup-hook" = {
-      text = builtins.readFile ./startup-hook.sh;
+  home.file.".tmux.conf".source = ./configs/tmux.conf;
+  home.file.".xmonad/startup-hook" = {
+      source = ./startup-hook.sh;
       executable = true;
-    };
-    ".ghc/ghci.conf" = {
-      text = ''
+  };
+  home.file.".ghc/ghci.conf".text = ''
         :set prompt "λ: "
         :set -XOverloadedStrings
       '';
-    };
-    ".xmobarrc" = {
-      text = builtins.readFile ./configs/xmobarrc;
-    };
-  };
+  home.file.".xmobarrc".source = ./configs/xmobarrc;
   xdg = {
     enable = true;
-    configFile = [
-      {
-        target = "purebred/purebred.hs";
-        text = builtins.readFile ./configs/purebred.hs;
-      }
-    ];
+    configFile."purebred/purebred.hs".source = ./configs/purebred.hs;
   };
 }

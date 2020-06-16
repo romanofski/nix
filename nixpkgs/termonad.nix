@@ -3,11 +3,6 @@
 {
   xdg = {
     enable = true;
-    configFile = [
-      {
-        target = "termonad/termonad.hs";
-        text = builtins.readFile ./configs/termonad.hs;
-      }
-    ];
+    configFile."termonad/termonad.hs".source = ./configs/termonad.hs;
   };
 }
