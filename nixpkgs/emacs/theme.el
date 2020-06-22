@@ -150,7 +150,4 @@
 (provide 'fira-code-mode)
 ;; end Fira Code Ligature support
 
-(setq mode-line-format
-      (list
-       '(:eval (list (nyan-create)))
-       ))
+(use-package nyan-mode)
