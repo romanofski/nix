@@ -150,4 +150,7 @@
 (provide 'fira-code-mode)
 ;; end Fira Code Ligature support
 
-(use-package nyan-mode)
+(use-package nyan-mode
+  :ensure t
+  :init (nyan-mode t)
+  )
