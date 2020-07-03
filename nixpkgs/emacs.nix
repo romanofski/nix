@@ -151,10 +151,6 @@ in
     pkgs.nixfmt
     pkgs.aspellDicts.de
     pkgs.aspellDicts.en
-    pkgs.fira
-    pkgs.fira-code
-    pkgs.fira-mono
-    pkgs.fira-code-symbols
     pkgs.python36Packages.jedi
     pkgs.python36Packages.epc
     pkgs.shellcheck

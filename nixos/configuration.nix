@@ -68,6 +68,13 @@
       extraConfig = builtins.readFile ./xorg.conf;
       videoDrivers = ["intel" "vesa"];
     };
+    fonts.fonts = [
+      pkgs.dejavu_fonts
+      pkgs.fira
+      pkgs.fira-code
+      pkgs.fira-mono
+      pkgs.fira-code-symbols
+    ];
 
     # Enable touchpad support.
     services.xserver.libinput.enable = true;
