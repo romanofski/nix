@@ -1,7 +1,26 @@
 { pkgs, ... }:
 
 let
-  pkgsUnstable = import <unstable> { };
+  pkgsUnstable = import <unstable> {
+    overlays = [
+      (self: super:
+
+      {
+        python3Packages = super.python3Packages.override {
+          overrides = pself: psuper: {
+            dbus-python = psuper.dbus-python.overridePythonAttrs(old: rec {
+              version = "1.2.16";
+              src = psuper.fetchPypi {
+                pname = "dbus-python";
+                inherit version;
+                sha256 = "196m5rk3qzw5nkmgzjl7wmq0v7vpwfhh8bz2sapdi5f9hqfqy8qi";
+              };
+            });
+          };
+        };
+      })
+    ];
+  };
   mailhost = "mail.gocept.net";
   realName = "Róman Joost";
   email = "roman@bromeco.de";
@@ -76,6 +95,7 @@ in {
     pkgs.xorg.xwininfo
     pkgs.xss-lock
     pkgsUnstable.firefox
+    pkgsUnstable.hamster
     pkgsUnstable.xfce4-14.thunar
     pkgsUnstable.xfce4-14.thunar-volman
   ];
@@ -287,13 +307,13 @@ in {
 
   home.file.".tmux.conf".source = ./configs/tmux.conf;
   home.file.".xmonad/startup-hook" = {
-      source = ./startup-hook.sh;
-      executable = true;
+    source = ./startup-hook.sh;
+    executable = true;
   };
   home.file.".ghc/ghci.conf".text = ''
-        :set prompt "λ: "
-        :set -XOverloadedStrings
-      '';
+    :set prompt "λ: "
+    :set -XOverloadedStrings
+  '';
   home.file.".xmobarrc".source = ./configs/xmobarrc;
   xdg = {
     enable = true;
