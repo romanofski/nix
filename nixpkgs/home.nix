@@ -123,7 +123,7 @@ in {
     defaultCacheTtlSsh = 7200;
   };
   services.screen-locker = {
-    enable = true;
+    enable = false;
     lockCmd = "xlock";
   };
   services.redshift = {

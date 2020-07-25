@@ -88,7 +88,7 @@ main = do
             spawn "~/.xmonad/startup-hook"
         , workspaces         = myWorkspaces
   } `additionalKeys`
-      [ ((mod1Mask .|. controlMask, xK_l), spawn "xautolock -locknow")
+      [ ((mod1Mask .|. controlMask, xK_l), spawn "loginctl lock-session")
       , ((mod1Mask, xK_p), shellPrompt myXPConfig)
       , ((0, xF86XK_AudioRaiseVolume ), spawn "pactl set-sink-volume @DEFAULT_SINK@ +2%")
       , ((0, xF86XK_AudioLowerVolume ), spawn "pactl set-sink-volume @DEFAULT_SINK@ -2%")
