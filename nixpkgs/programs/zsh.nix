@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
-{
+let
+  secrets = import ../secrets.nix;
+in with secrets; {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -10,7 +12,7 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo"];
-      theme = "pygmalion";
+      theme = "${zshtheme}";
     };
   };
 }
