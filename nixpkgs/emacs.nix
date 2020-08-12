@@ -154,5 +154,6 @@ in
     pkgs.python36Packages.jedi
     pkgs.python36Packages.epc
     pkgs.shellcheck
+    pkgs.fira-code-symbols
   ];
 }

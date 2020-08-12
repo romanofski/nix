@@ -71,7 +71,6 @@
       pkgs.fira
       pkgs.fira-code
       pkgs.fira-mono
-      pkgs.fira-code-symbols
     ];
 
     # Enable touchpad support.
