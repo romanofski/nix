@@ -21,147 +21,39 @@ let
       })
     ];
   };
-  mailhost = "mail.gocept.net";
-  realName = "Róman Joost";
-  email = "roman@bromeco.de";
-in {
+  secrets = import ./secrets.nix;
+in with secrets; {
   imports = [
+    ./essential-packages.nix
     ./emacs.nix
-    ./vim.nix
-    ./games.nix
-    ./gtfsschedule.nix
-    ./termonad.nix
+    ./programs/vim.nix
+    ./programs/gtfsschedule.nix
+    ./programs/termonad.nix
+    ./programs/zsh.nix
+    ./programs/dunst.nix
+    ./programs/notmuch.nix
+    ./programs/git.nix
+    ./programs/xsession.nix
+    ./programs/purebred.nix
+    ./programs/gtk.nix
+    ./programs/tmux.nix
+    ./programs/ghci.nix
+    ./services/gpg-agent.nix
+    ./services/screen-locker.nix
+  ];
+
+  home.packages = [
+    pkgs.weechat
   ];
 
   nixpkgs.config.allowUnfree = true;
 
-  home.packages = [
-    pkgs.a2ps
-    pkgs.acpilight
-    pkgs.ansible
-    pkgs.antiword
-    pkgs.arandr
-    pkgs.bind
-    pkgs.binutils
-    pkgs.blueman
-    pkgs.bluez
-    pkgs.bluez-tools
-    pkgs.cabal2nix
-    pkgs.calibre
-    pkgs.ctags
-    pkgs.docker-compose
-    pkgs.elinks
-    pkgs.evince
-    pkgs.feh
-    pkgs.ffmpeg
-    pkgs.file
-    pkgs.gdb
-    pkgs.gimp
-    pkgs.git
-    pkgs.glib
-    pkgs.gnome3.cheese
-    pkgs.gnome3.simple-scan
-    pkgs.gnupg
-    pkgs.gsettings_desktop_schemas
-    pkgs.ibm-plex
-    pkgs.inkscape
-    pkgs.ispell
-    pkgs.keepassxc
-    pkgs.killall
-    pkgs.libnotify
-    pkgs.libreoffice-fresh
-    pkgs.libsForQt5.vlc
-    pkgs.lsof
-    pkgs.maildrop
-    pkgs.noto-fonts-emoji
-    pkgs.pandoc
-    pkgs.parallel
-    pkgs.pass
-    pkgs.pavucontrol
-    pkgs.pinentry
-    pkgs.poppler_utils
-    pkgs.powertop
-    pkgs.python36Packages.syncthing-gtk
-    pkgs.qtpass
-    pkgs.silver-searcher
-    pkgs.sshpass
-    pkgs.tmux
-    pkgs.torbrowser
-    pkgs.unzip
-    pkgs.urlview
-    pkgs.usbutils
-    pkgs.wget
-    pkgs.xlockmore
-    pkgs.xorg.xwininfo
-    pkgs.xss-lock
-    pkgsUnstable.firefox
-    pkgsUnstable.hamster
-    pkgsUnstable.xfce4-14.thunar
-    pkgsUnstable.xfce4-14.thunar-volman
-  ];
-
-  services.xsuspender = {
-    enable = true;
-    rules = {
-      Firefox = {
-        matchWmClassContains = "Firefox";
-        suspendDelay = 10;
-        suspendSubtreePattern = "Firefox";
-      };
-    };
-  };
 
   services.getmail.enable = true;
-  services.syncthing = {
-    enable = true;
-  };
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    # 2h
-    defaultCacheTtl = 7200;
-    defaultCacheTtlSsh = 7200;
-  };
-  services.screen-locker = {
-    enable = false;
-    lockCmd = "xlock";
-  };
   services.redshift = {
     enable = true;
     latitude = "-27";
     longitude = "152";
-  };
-  services.dunst = {
-    enable = true;
-    iconTheme = {
-      package = pkgs.gnome3.gnome_themes_standard;
-      name = "Adwaita";
-    };
-    settings = {
-      global = {
-        geometry = "500x5-30+50";
-        transparency = 10;
-        font = "Roboto 13";
-        padding = 15;
-        horizontal_padding = 17;
-        word_wrap = true;
-        follow = "keyboard";
-        format = "%s %p %I\n%b";
-        markup = "full";
-      };
-
-      urgency_low = {
-        timeout = 5;
-      };
-
-      urgency_normal = {
-        timeout = 10;
-      };
-
-      urgency_critical = {
-        timeout = 15;
-      };
-    };
   };
 
   accounts.email = {
@@ -201,122 +93,5 @@ in {
 
   home.sessionVariables = {
     EDITOR = "vim";
-  };
-
-  programs.home-manager = {
-    enable = true;
-  };
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    shellAliases = {
-      c = "cd ..";
-    };
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "git" "sudo"];
-      theme = "pygmalion";
-    };
-  };
-  programs.notmuch = {
-    enable = true;
-    new = {
-      tags=["unread" "inbox"];
-    };
-    search={
-      excludeTags=["deleted" "spam"];
-    };
-    maildir = {
-      synchronizeFlags=false;
-    };
-  };
-  programs.msmtp = {
-    enable = true;
-    extraConfig = ''
-      defaults
-      syslog on
-      domain bromeco.de
-      port 587
-    '';
-  };
-  programs.git = {
-    enable = true;
-    aliases = {
-	    lg = "log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
-	    ll = "!git st; git --no-pager log --pretty='format:%Cred%cr %Cblue%h %Cgreen%an:%Creset %s%C(yellow)%d' -n20; echo";
-	    # Nice list of branches by age
-	    bb = "for-each-ref --sort=-committerdate --format='%1B[36m%(committerdate:relative) %1B[33m%(refname:short)%1B[0;m' refs/heads/";
-	    info = "config --list";
-    };
-    ignores = [
-      "dist"
-      ".cabal-sandbox"
-      "cabal.sandbox.config"
-      ".stack-work"
-      "*.o"
-      "*.hi"
-    ];
-    signing = {
-      key = "D02BC6E095A0446267E1F43C0133D0C73A765B52";
-    };
-    userEmail = "${email}";
-    userName = "${realName}";
-  };
-
-  gtk = {
-    enable = true;
-    theme = {
-      package = pkgs.gnome3.gnome_themes_standard;
-      name = "Adwaita";
-    };
-  };
-  fonts.fontconfig = {
-    enable = true;
-  };
-  xresources.properties = {
-    "Xft.antialias" = 1;
-    "Xft.autohint" = 0;
-    "Xft.hinting" = 1;
-    "Xft.hintstyle" = "hintfull";
-    "Xft.lcdfilter" = "lcddefault";
-    "Xft.rgba" = "rgb";
-    "Xcursor.theme" = "core";
-    "Xautolock.time" = 20;
-    "Xautolock.locker" = "xlock";
-    "Xautolock.corners" = "+0-0";
-    "Xautolock.cornerdelay" = 3;
-
-    "XLock.foreground" = "White";
-    "XLock.background" = "Gray20";
-    "XLock.echokeys" = 1;
-    "XLock.usefirst" = 1;
-    "XLock.echokey" = "*";
-
-    "Xft.dpi" = 100;
-  };
-  xsession.enable = true;
-
-  xsession.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
-    config = ./configs/xmonad.hs;
-    extraPackages = haskellPackages: [
-      haskellPackages.xmobar
-    ];
-  };
-
-  home.file.".tmux.conf".source = ./configs/tmux.conf;
-  home.file.".xmonad/startup-hook" = {
-    source = ./startup-hook.sh;
-    executable = true;
-  };
-  home.file.".ghc/ghci.conf".text = ''
-    :set prompt "λ: "
-    :set -XOverloadedStrings
-  '';
-  home.file.".xmobarrc".source = ./configs/xmobarrc;
-  xdg = {
-    enable = true;
-    configFile."purebred/purebred.hs".source = ./configs/purebred.hs;
   };
 }
