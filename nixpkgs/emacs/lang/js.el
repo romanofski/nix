@@ -1,9 +1,10 @@
 (use-package js2-mode
-  :mode "\\.\\(jsx\\|js\\)\\'"
+  :mode ("\\.jsx\\'" "\\.js\\'")
   )
 
 (use-package typescript-mode
-  :mode "\\.\\(tsx\\|ts\\)\\'"
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode))
   )
 
 (use-package tide
