@@ -9,11 +9,11 @@
     [ # Include the results of the hardware scan.
     <nixos-hardware/lenovo/thinkpad/t480s>
     ./hardware-configuration.nix
-    ./yubikey.nix
-    ./printing.nix
-    ./virtualisation.nix
-    ./firewall.nix
-    ./unfree.nix
+    ./configs/yubikey.nix
+    ./configs/printing.nix
+    ./configs/virtualisation.nix
+    ./configs/firewall.nix
+    ./configs/unfree.nix
     ./services/ntp.nix
     ./services/tor.nix
     ./services/upower.nix
@@ -26,11 +26,9 @@
     networking.hostName = "krombopulos"; # Define your hostname.
 
     # Select internationalisation properties.
-    i18n = {
-      consoleFont = "Lat2-Terminus16";
-      consoleKeyMap = "us";
-      defaultLocale = "en_AU.UTF-8";
-    };
+    console.keyMap = "us";
+    console.font = "Lat2-Terminus16";
+    i18n.defaultLocale = "en_AU.UTF-8";
 
     # Set your time zone.
     time.timeZone = "Australia/Brisbane";
@@ -55,13 +53,13 @@
       enable = true;
       layout = "us";
       xkbModel = "pc105";
-      desktopManager.default = "xfce";
       desktopManager.xterm.enable = false;
       desktopManager.xfce = {
         enable = true;
         noDesktop = true;
         enableXfwm = true;
       };
+      displayManager.defaultSession = "xfce";
       displayManager.lightdm.enable = true;
       xkbOptions = "compose:ralt";
       exportConfiguration = true;
