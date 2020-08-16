@@ -94,4 +94,14 @@ in with secrets; {
   home.sessionVariables = {
     EDITOR = "vim";
   };
+
+  programs.msmtp = {
+    enable = true;
+    extraConfig = ''
+      defaults
+      syslog on
+      domain bromeco.de
+      port 587
+    '';
+  };
 }
