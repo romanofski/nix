@@ -25,6 +25,9 @@
   ;; makes * and # use emacs-symbols instead of words, otherwise emacs
   ;; only searches for foo in foo_bar
   (setq-default evil-symbol-word-search t)
+  ;; make autocompletion case sensitive, otherwise camel case words
+  ;; are completed as lowercase
+  (setq dabbrev-case-fold-search nil)
   ;; additional maps
   (with-eval-after-load 'evil-maps
     (define-key evil-motion-state-map (kbd ";") 'evil-repeat-find-char)
