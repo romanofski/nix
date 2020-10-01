@@ -37,6 +37,7 @@ in with secrets; {
     ./programs/purebred.nix
     ./programs/gtk.nix
     ./programs/tmux.nix
+    ./programs/autorandr.nix
     ./programs/ghci.nix
     ./services/gpg-agent.nix
     ./services/screen-locker.nix
