@@ -1,10 +1,9 @@
 (add-hook 'python-mode-hook #'abbrev-mode)
-(use-package py-isort
-  :hook (before-save . py-isort-before-save))
-
-(use-package company-jedi
-  :ensure t)
-
-(defun my/python-mode-hook ()
-  (add-to-list 'company-backends 'company-jedi))
-(add-hook 'python-mode-hook 'my/python-mode-hook)
+(use-package lsp-python-ms
+  :ensure t
+  :init
+  (setq lsp-python-ms-auto-install-server t
+        lsp-python-ms-executable (executable-find "python-language-server"))
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))  ; or lsp-deferred
