@@ -2,6 +2,12 @@
 { pkgs, ... }:
 
 let
+  pkgSrc = builtins.fetchTarball {
+    # current nixos-unstable HEAD as of 15/08/2020
+    url = "https://github.com/NixOS/nixpkgs/archive/32b46dd897ab2143a609988a04d87452f0bbef59.tar.gz";
+    sha256 = "1gzfrpjnr1bz9zljsyg3a4zrhk8r927sz761mrgcg56dwinkhpjk";
+  };
+  pkgsUnstable = import pkgSrc {};
   configs = [
     {
       file = ./emacs/init.el;
@@ -110,11 +116,19 @@ let
     {
       file = ./emacs/lang/js.el;
       pkgs = epkgs: with epkgs; [
-        js2-mode
-        typescript-mode
-        tide
         prettier-js
         web-mode
+        typescript-mode
+      ];
+    }
+    {
+      file = ./emacs/lang/lsp.el;
+      pkgs = epkgs: with epkgs; [
+        lsp-mode
+        lsp-ui
+        lsp-treemacs
+        company-lsp
+        helm-lsp
       ];
     }
     {
@@ -129,8 +143,7 @@ let
     {
       file = ./emacs/lang/python.el;
       pkgs = epkgs: with epkgs; [
-        py-isort
-        company-jedi
+        lsp-python-ms
       ];
     }
   ];
@@ -156,5 +169,10 @@ in
     pkgs.shellcheck
     pkgs.nodePackages.prettier
     pkgs.fira-code-symbols
+    # emacs lsp support
+    pkgs.nodePackages.typescript-language-server
+    pkgs.nodePackages.typescript
+    pkgs.nodePackages.vscode-html-languageserver-bin
+    pkgsUnstable.python-language-server
   ];
 }
