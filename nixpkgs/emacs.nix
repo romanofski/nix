@@ -110,11 +110,19 @@ let
     {
       file = ./emacs/lang/js.el;
       pkgs = epkgs: with epkgs; [
-        js2-mode
-        typescript-mode
-        tide
         prettier-js
         web-mode
+        typescript-mode
+      ];
+    }
+    {
+      file = ./emacs/lang/lsp.el;
+      pkgs = epkgs: with epkgs; [
+        lsp-mode
+        lsp-ui
+        lsp-treemacs
+        company-lsp
+        helm-lsp
       ];
     }
     {
@@ -156,5 +164,9 @@ in
     pkgs.shellcheck
     pkgs.nodePackages.prettier
     pkgs.fira-code-symbols
+    # emacs lsp support
+    pkgs.nodePackages.typescript-language-server
+    pkgs.nodePackages.typescript
+    pkgs.nodePackages.vscode-html-languageserver-bin
   ];
 }
