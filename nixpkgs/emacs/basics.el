@@ -68,4 +68,7 @@
   (general-nmap :prefix "SPC"
     "z" '(:ignore t :which-key "spelling")
     "z=" 'flyspell-correct-wrapper))
+
+(use-package highlight-parentheses
+  :hook (after-init . highlight-parentheses-mode))
 ;;; basics.el ends here

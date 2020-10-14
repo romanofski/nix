@@ -21,6 +21,7 @@ let
       file = ./emacs/basics.el;
       pkgs = epkgs: with epkgs; [
         smartparens
+        highlight-parentheses
         which-key
         flycheck
         flyspell-correct-helm
