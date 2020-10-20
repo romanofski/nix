@@ -1,30 +1,36 @@
 { pkgs, ... }:
 
 let
-  pkgsUnstable = import <unstable> {
-    overlays = [
-      (self: super:
-
-      {
-        python3Packages = super.python3Packages.override {
-          overrides = pself: psuper: {
-            dbus-python = psuper.dbus-python.overridePythonAttrs(old: rec {
-              version = "1.2.16";
-              src = psuper.fetchPypi {
-                pname = "dbus-python";
-                inherit version;
-                sha256 = "196m5rk3qzw5nkmgzjl7wmq0v7vpwfhh8bz2sapdi5f9hqfqy8qi";
-              };
-            });
-          };
-        };
-      })
-    ];
-  };
   secrets = import ./secrets.nix;
+  pkgSrc = builtins.fetchTarball {
+    # current nixos-unstable HEAD as of 15/08/2020
+    url = "https://github.com/NixOS/nixpkgs/archive/32b46dd897ab2143a609988a04d87452f0bbef59.tar.gz";
+    sha256 = "1gzfrpjnr1bz9zljsyg3a4zrhk8r927sz761mrgcg56dwinkhpjk";
+  };
+  unstable = import pkgSrc {
+  };
 in with secrets; {
+
+  nixpkgs.overlays = [
+    (self: super:
+
+    {
+      python3Packages = super.python3Packages.override {
+        overrides = pself: psuper: {
+          dbus-python = psuper.dbus-python.overridePythonAttrs(old: rec {
+            version = "1.2.16";
+            src = psuper.fetchPypi {
+              pname = "dbus-python";
+              inherit version;
+              sha256 = "196m5rk3qzw5nkmgzjl7wmq0v7vpwfhh8bz2sapdi5f9hqfqy8qi";
+            };
+          });
+        };
+      };
+    })
+  ];
+
   imports = [
-    ./essential-packages.nix
     ./emacs.nix
     ./programs/vim.nix
     ./programs/gtfsschedule.nix
@@ -32,7 +38,6 @@ in with secrets; {
     ./programs/zsh.nix
     ./programs/dunst.nix
     ./programs/notmuch.nix
-    ./programs/git.nix
     ./programs/xsession.nix
     ./programs/purebred.nix
     ./programs/gtk.nix
@@ -45,8 +50,19 @@ in with secrets; {
   nixpkgs.config.allowUnfree = true;
 
   home.packages = [
-    pkgs.google-chrome
+    pkgs.feh
+    pkgs.xmobar
+    pkgs.nix-index
   ];
+
+  # Home Manager needs a bit of information about you and the
+  # paths it should manage.
+  home.username = "rjoost";
+  home.homeDirectory = "/home/rjoost";
+
+  fonts.fontconfig = {
+    enable = true;
+  };
 
   accounts.email = {
     accounts = {
