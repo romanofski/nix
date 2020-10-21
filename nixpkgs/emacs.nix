@@ -102,7 +102,6 @@ let
       file = ./emacs/lang/haskell.el;
       pkgs = epkgs: with epkgs; [
         haskell-mode
-        hindent
         hlint-refactor
         dante
       ];
