@@ -168,6 +168,7 @@ in
     pkgs.python36Packages.epc
     pkgs.shellcheck
     pkgs.nodePackages.prettier
+    pkgs.silver-searcher
     pkgs.fira-code-symbols
     # emacs lsp support
     pkgs.nodePackages.typescript-language-server
