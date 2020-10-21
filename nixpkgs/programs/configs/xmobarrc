@@ -9,7 +9,7 @@ Config { font = "xft:IBM Plex Mono Medium:size=8"
        , lowerOnStart = True
        , persistent = False
        , hideOnStart = False
-       , commands = [ Run Weather "YBBN" ["-t","<tempC>°C * <skyCondition>","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
+       , commands = [ Run Weather "YBBN" ["-t","<tempC>C * <skyCondition>","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
 , Run Date "%a %b %_d %Y" "date" 36000
 , Run Date "%H:%M" "brisbane" 600
 , Run DynNetwork ["-L","0","-H","32","--normal","green","--high","red"] 10
