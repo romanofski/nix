@@ -1,6 +1,7 @@
 (use-package lsp-mode
   :commands (lsp-deferred)
   :hook ((typescript-mode . lsp-deferred)
+         (haskell-mode . lsp-deferred)
          (web-mode . lsp-deferred))
   :config
   (setq-default lsp-prefer-flymake nil

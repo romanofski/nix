@@ -102,8 +102,8 @@ let
       file = ./emacs/lang/haskell.el;
       pkgs = epkgs: with epkgs; [
         haskell-mode
-        hlint-refactor
-        dante
+        lsp-haskell
+        flycheck-haskell
       ];
     }
     {
@@ -171,6 +171,8 @@ in
     pkgs.silver-searcher
     pkgs.fira-code-symbols
     # emacs lsp support
+    pkgs.haskellPackages.haskell-language-server
+    pkgs.haskellPackages.hie-bios
     pkgs.nodePackages.typescript-language-server
     pkgs.nodePackages.typescript
     pkgs.nodePackages.vscode-html-languageserver-bin
