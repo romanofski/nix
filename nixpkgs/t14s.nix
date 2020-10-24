@@ -43,6 +43,7 @@ in with secrets; {
     ./programs/gtk.nix
     ./programs/tmux.nix
     ./programs/ghci.nix
+    ./programs/offlineimap.nix
     ./services/gpg-agent.nix
     ./services/screen-locker.nix
   ];
@@ -69,15 +70,33 @@ in with secrets; {
       clipchamp = {
         realName = "${realName}";
         address = "${email}";
-        userName = "roman.joost";
+        userName = "roman.joost@clipchamp.com";
         primary = true;
         flavor = "gmail.com";
         smtp.host = "smtp.gmail.com";
         smtp.tls.enable = true;
         smtp.tls.useStartTls = true;
-        passwordCommand = "${pkgs.pass}/bin/pass clipchamp/smtp-gmail";
+        passwordCommand = "${pkgs.pass}/bin/pass clipchamp/offlineimap-gmail";
         msmtp = {
           enable = true;
+        };
+        offlineimap = {
+          enable = true;
+          postSyncHookCommand = ''
+            notmuch new
+          '';
+          extraConfig = {
+            account = {
+              autorefresh = 5;
+              synclabels = true;
+            };
+            local = {
+              sync_deletes = false;
+            };
+            remote = {
+              sslcacertfile = "/etc/pki/tls/certs/ca-bundle.crt";
+            };
+          };
         };
         notmuch = {
           enable = true;
