@@ -70,5 +70,7 @@
     "z=" 'flyspell-correct-wrapper))
 
 (use-package highlight-parentheses
-  :hook (after-init . highlight-parentheses-mode))
+  :init
+  (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
+  (setq hl-paren-delay 0.2))
 ;;; basics.el ends here
