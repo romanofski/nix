@@ -39,6 +39,8 @@
 (use-package doom-modeline
   :ensure t
   :defer t
+  :config
+  (setq doom-modeline-buffer-file-name-style 'truncate-upto-root)
   :hook (after-init . doom-modeline-init))
 
 (use-package airline-themes
