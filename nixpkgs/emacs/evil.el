@@ -19,6 +19,8 @@
                 "wl" 'evil-window-right
                 "w-" 'evil-window-split
                 "TAB" 'evil-switch-to-windows-last-buffer
+
+                "fy" 'clip-file
 		)
 
   :config
