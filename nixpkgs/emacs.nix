@@ -23,8 +23,7 @@ let
         smartparens
         highlight-parentheses
         which-key
-        flycheck
-        flyspell-correct-helm
+        flymake
       ];
     }
     {

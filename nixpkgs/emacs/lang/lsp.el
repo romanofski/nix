@@ -2,19 +2,13 @@
   :commands (lsp-deferred)
   :hook ((typescript-mode . lsp-deferred)
          (haskell-mode . lsp-deferred)
-         (web-mode . lsp-deferred))
+         )
   :config
-  (setq-default lsp-prefer-flymake nil
+  (setq-default lsp-prefer-flymake t
                 lsp-auto-guess-root t
                 lsp-enable-snippet t
+                lsp-enable-completion-at-point t
                 lsp-idle-delay 0.500))
-
-(use-package company-lsp
-  :after company lsp-mode
-  :config
-  (setq company-lsp-enable-snippet t)
-  :init
-  (push 'company-lsp company-backends))
 
 (use-package lsp-ui
   :init
@@ -26,11 +20,7 @@
         lsp-ui-sideline-show-diagnostics nil
         lsp-ui-sideline-ignore-duplicate t
         lsp-ui-sideline-delay 0.7)
-  :hook ((lsp-mode . flycheck-mode)
-         (lsp-mode . lsp-ui-mode))
-  :config
-  (setq lsp-ui-flycheck-enable t)
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-  (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
+  :hook ((lsp-mode . lsp-ui-mode))
+  )
 
 (provide 'use-lsp)
