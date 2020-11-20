@@ -54,6 +54,7 @@ in with secrets; {
     pkgs.feh
     pkgs.xmobar
     pkgs.nix-index
+    pkgs.elinks
     pkgs.glibcLocales
   ];
 
@@ -84,7 +85,7 @@ in with secrets; {
         offlineimap = {
           enable = true;
           postSyncHookCommand = ''
-            notmuch new
+            ${pkgs.notmuch}/bin/notmuch --config ~/.config/notmuch/notmuchrc new
           '';
           extraConfig = {
             account = {
