@@ -54,7 +54,6 @@ in with secrets; {
     pkgs.feh
     pkgs.xmobar
     pkgs.nix-index
-    pkgs.glibcLocales
   ];
 
   # Home Manager needs a bit of information about you and the
