@@ -56,7 +56,7 @@ solarizedLight =
       , createColour  38 139 210 -- blue
       , createColour 211  54 130 -- magenta
       , createColour  42 161 152 -- cyan
-      , createColour 238 232 213 -- base2
+      , createColour   7  54  66 -- base02  -- dark color otherwise we have light on light
       ]
 
 
