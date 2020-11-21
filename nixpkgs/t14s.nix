@@ -46,6 +46,7 @@ in with secrets; {
     ./programs/offlineimap.nix
     ./services/gpg-agent.nix
     ./services/screen-locker.nix
+    ./services/hamster.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
