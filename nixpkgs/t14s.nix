@@ -43,6 +43,7 @@ in with secrets; {
     ./programs/gtk.nix
     ./programs/tmux.nix
     ./programs/ghci.nix
+    ./programs/xmobar.nix
     ./programs/offlineimap.nix
     ./services/gpg-agent.nix
     ./services/screen-locker.nix
@@ -53,7 +54,6 @@ in with secrets; {
 
   home.packages = [
     pkgs.feh
-    pkgs.xmobar
     pkgs.nix-index
     pkgs.elinks
     pkgs.glibcLocales

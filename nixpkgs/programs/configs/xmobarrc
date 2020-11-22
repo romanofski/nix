@@ -15,10 +15,11 @@ Config { font = "xft:IBM Plex Mono Medium:size=8"
 , Run DynNetwork ["-L","0","-H","32","--normal","green","--high","red"] 10
 , Run DateZone "%a %H:%M:%S" "de_DE.UTF-8" "UTC" "berlin" 10
 , Run UVMeter "Brisbane" ["-H", "3", "-L", "3", "--low", "green", "--high", "red"] 900
+, Run Com "workbalance" [] "workbalance" 3600
 , Run Com "gtfsschedule" ["monitor", "013048+10", "-u"] "gtfs" 600
 , Run BatteryP ["BAT0"] ["-t", "<acstatus><watts> (<left>%/ <timeleft>)", "-L", "10", "-H", "80", "-p", "3", "--", "-O", "<fc=green>On</fc> - ", "-i", "", "-L", "-15", "-H", "-5", "-l", "red", "-m", "blue", "-h", "green"] 600
                     ]
        , sepChar = "%"
        , alignSep = "||"
-       , template = "%gtfs% || UV: %uv Brisbane% %battery% <fc=#ee9a00>%date% %brisbane%</fc> - %YBBN% | BER: %berlin%"
+       , template = "%gtfs% || %workbalance% UV: %uv Brisbane% %battery% <fc=#ee9a00>%date% %brisbane%</fc> - %YBBN% | BER: %berlin%"
        }
