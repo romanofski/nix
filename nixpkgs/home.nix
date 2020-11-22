@@ -1,26 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
-  pkgsUnstable = import <unstable> {
-    overlays = [
-      (self: super:
-
-      {
-        python3Packages = super.python3Packages.override {
-          overrides = pself: psuper: {
-            dbus-python = psuper.dbus-python.overridePythonAttrs(old: rec {
-              version = "1.2.16";
-              src = psuper.fetchPypi {
-                pname = "dbus-python";
-                inherit version;
-                sha256 = "196m5rk3qzw5nkmgzjl7wmq0v7vpwfhh8bz2sapdi5f9hqfqy8qi";
-              };
-            });
-          };
-        };
-      })
-    ];
-  };
+  pkgsUnstable = import <unstable> {};
   secrets = import ./secrets.nix;
 in with secrets; {
   imports = [
@@ -94,6 +75,11 @@ in with secrets; {
 
   home.sessionVariables = {
     EDITOR = "vim";
+  };
+
+  programs.home-manager = {
+    enable = true;
+    path = "https://github.com/nix-community/home-manager/archive/release-" + lib.fileContents ../release + ".tar.gz";
   };
 
   programs.msmtp = {

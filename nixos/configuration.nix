@@ -41,7 +41,6 @@
     environment.systemPackages = with pkgs; [
       nix-prefetch-scripts
       linuxPackages.tp_smapi
-      home-manager
       git
     ];
 
