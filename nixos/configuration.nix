@@ -23,7 +23,11 @@
     systemd.tmpfiles.rules = [ "d /tmp 1777 root root 10d"];
 
     networking.networkmanager.enable = true;
+    networking.networkmanager.dns = "systemd-resolved";
     networking.hostName = "krombopulos"; # Define your hostname.
+
+    services.resolved.enable = true;
+    services.resolved.dnssec = "false";
 
     # Select internationalisation properties.
     console.keyMap = "us";
