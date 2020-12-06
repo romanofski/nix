@@ -4,6 +4,7 @@
          (haskell-mode . lsp-deferred)
          )
   :config
+  (add-hook 'lsp-mode-hook 'fira-code-mode)
   (setq-default lsp-prefer-flymake t
                 lsp-auto-guess-root t
                 lsp-enable-snippet t
