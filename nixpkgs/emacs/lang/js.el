@@ -8,8 +8,10 @@
   :mode "\\.ts[x]?\\'")
 
 (use-package prettier-js
-  :after (typescript-mode)
-  :init
-  (add-hook 'web-mode 'prettier-js-mode)
-  (add-hook 'lsp-mode-hook 'fira-code-mode)
+  :ensure t
+  :config
+  (add-hook 'markdown-mode-hook 'prettier-js-mode)
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  (add-hook 'typescript-mode-hook 'prettier-js-mode)
   )
