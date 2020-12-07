@@ -168,7 +168,6 @@ in
     pkgs.shellcheck
     pkgs.nodePackages.prettier
     pkgs.silver-searcher
-    pkgs.fira-code-symbols
     pkgs.discount
     # emacs lsp support
     pkgs.haskellPackages.haskell-language-server
