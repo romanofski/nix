@@ -61,7 +61,7 @@
 
 ;; fonts and ligatures
 (when (window-system)
-  (set-face-attribute 'default nil :height 100 :family "Fira Code"))
+  (set-face-attribute 'default nil :weight 'semi-bold :height 100 :family "Victor Mono Medium"))
 
 ;; transparent title bar
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))

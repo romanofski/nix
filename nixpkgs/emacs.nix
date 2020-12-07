@@ -168,6 +168,7 @@ in
     pkgs.shellcheck
     pkgs.nodePackages.prettier
     pkgs.silver-searcher
+    pkgs.victor-mono
     pkgs.discount
     # emacs lsp support
     pkgs.haskellPackages.haskell-language-server
