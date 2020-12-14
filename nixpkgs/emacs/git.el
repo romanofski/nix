@@ -4,7 +4,10 @@
                 "g" '(:ignore t :which-key "git")
                 "gs" 'magit-status
                 "gb" 'magit-blame)
-
+  (:keymaps 'git-rebase-mode-map
+            :states 'normal
+            "K" #'git-rebase-move-line-up
+            "J" #'git-rebase-move-line-down)
   :config
   (setq git-commit-fill-column 72))
 
