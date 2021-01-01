@@ -145,6 +145,12 @@ let
         lsp-python-ms
       ];
     }
+    {
+      file = ./emacs/lang/terraform.el;
+      pkgs = epkgs: with epkgs; [
+        terraform-mode
+      ];
+    }
   ];
 in
 {
