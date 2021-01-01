@@ -28,6 +28,20 @@ in with secrets; {
         };
       };
     })
+
+    (self: super:
+
+    {
+      haskellPackages = super.haskellPackages.override {
+        overrides = hself: hsuper: {
+          workbalance = hsuper.callPackage ./overlays/packages/workbalance.nix {};
+          # tests currently b0rked
+          # *** Exception: <stdout>: hPutChar: resource vanished (Broken pipe)
+          # Test suite doctests: FAIL
+          termonad = pkgs.haskell.lib.dontCheck hsuper.termonad;
+        };
+      };
+    })
   ];
 
   imports = [
