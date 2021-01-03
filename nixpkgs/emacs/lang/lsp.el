@@ -22,5 +22,3 @@
         lsp-ui-sideline-delay 0.7)
   :hook ((lsp-mode . lsp-ui-mode))
   )
-
-(provide 'use-lsp)
