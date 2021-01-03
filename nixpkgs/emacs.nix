@@ -182,6 +182,7 @@ in
     pkgs.nodePackages.typescript-language-server
     pkgs.nodePackages.typescript
     pkgs.nodePackages.vscode-html-languageserver-bin
+    pkgs.nodePackages.eslint
     pkgsUnstable.python-language-server
   ];
 }
