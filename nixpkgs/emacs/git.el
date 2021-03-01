@@ -20,9 +20,6 @@
      ;; force update evil keymaps after git-timemachine-mode loaded
      (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
 
-(use-package evil-magit
-  :after magit)
-
 (use-package auth-source
   :init
   (setq auth-source-debug t))

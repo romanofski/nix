@@ -32,7 +32,7 @@ let
         evil
         evil-surround
         evil-ediff
-        evil-magit
+        evil-collection
         evil-visualstar
       ];
     }

@@ -1,7 +1,12 @@
 (require 'use-package)
 
 (use-package evil
+  :ensure t
   :init
+  ;; for evil-collection
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  ;; other stuff
   (setq evil-want-C-u-scroll 1)
   (evil-mode 1)
 
@@ -45,3 +50,9 @@
 
 (use-package evil-visualstar
   :after evil)
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
