@@ -41,6 +41,7 @@ let
       pkgs = epkgs: with epkgs; [
         company
         company-statistics
+        yasnippet
       ];
     }
     {

@@ -14,3 +14,12 @@
   :after company
   :init
 (company-statistics-mode))
+
+(use-package yasnippet
+  :ensure t
+
+  :init
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+
+  :config
+  (yas-reload-all))
