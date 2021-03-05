@@ -7,7 +7,7 @@
       import subprocess
 
       def get_pass(service, cmd):
-      return subprocess.check_output(cmd, ).strip()
+          return subprocess.check_output(cmd, ).strip()
     '';
   };
 
