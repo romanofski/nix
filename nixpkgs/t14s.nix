@@ -35,15 +35,6 @@ in with secrets; {
         };
       };
     })
-
-    # Emacs 27 attempt to shape unibyte text with ligatures fix
-    (self: super:
-
-    {
-      emacs27 = super.emacs27.overrideAttrs (old: {
-        patches = super.emacs27.patches ++ [./overlays/packages/emacs27-allow-unibyte.patch];
-      });
-    })
   ];
 
   imports = [
