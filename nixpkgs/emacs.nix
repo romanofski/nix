@@ -107,18 +107,12 @@ let
       ];
     }
     {
-      file = ./emacs/lang/latex.el;
-      pkgs = epkgs: with epkgs; [
-        auctex
-        company-auctex
-      ];
-    }
-    {
       file = ./emacs/lang/js.el;
       pkgs = epkgs: with epkgs; [
         prettier-js
         web-mode
         typescript-mode
+        ecukes
       ];
     }
     {
