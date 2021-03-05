@@ -64,6 +64,7 @@ in with secrets; {
     ./services/gpg-agent.nix
     ./services/screen-locker.nix
     ./services/hamster.nix
+    ./services/syncthing.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
