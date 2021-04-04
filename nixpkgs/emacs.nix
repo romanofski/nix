@@ -121,7 +121,6 @@ let
         lsp-mode
         lsp-ui
         lsp-treemacs
-        company-lsp
         helm-lsp
       ];
     }
