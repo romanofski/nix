@@ -2,6 +2,7 @@
 -- http://haskell.org/haskellwiki/Xmonad/Config_archive/31d1's_xmonad.hs
 import XMonad
 import Data.List    -- isInfixOf
+import qualified Data.Map as M
 import Graphics.X11.ExtraTypes.XF86
 
 import XMonad.Hooks.DynamicLog
@@ -17,11 +18,12 @@ import XMonad.Layout.ToggleLayouts
 import XMonad.Layout.CenteredMaster
 import XMonad.Layout.Grid
 import XMonad.Layout.MosaicAlt
-import qualified Data.Map as M
 
 import XMonad.Util.Run
 import XMonad.Util.EZConfig (additionalKeys)
 
+import qualified XMonad.Actions.Submap as SM
+import qualified XMonad.Actions.Search as S
 import XMonad.Prompt
 import XMonad.Prompt.Shell
 
@@ -74,6 +76,15 @@ myXPConfig = defaultXPConfig { fgColor = "#eee8d5" -- white
                              , autoComplete = Just 1
                              }
 
+searchEngineMap method = M.fromList $
+  [ ((0, xK_d), method S.duckduckgo)
+  , ((0, xK_h), method S.hoogle)
+  , ((0, xK_y), method S.youtube)
+  , ((0, xK_m), method S.maps)
+  , ((0, xK_i), method S.imdb)
+  , ((0, xK_w), method S.wikipedia)
+  ]
+
 main = do
     xmproc <- spawnPipe "xmobar -x 0"
     xmonad $ docks defaultConfig {
@@ -96,4 +107,7 @@ main = do
       , ((0, xF86XK_AudioPause     ), spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
       , ((0, xF86XK_MonBrightnessDown     ), spawn "xbacklight -dec 20%")
       , ((0, xF86XK_MonBrightnessUp       ), spawn "xbacklight -inc 20%")
+      -- search commands
+      , ((mod1Mask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch def)
+      , ((mod1Mask .|. shiftMask, xK_s), SM.submap $ searchEngineMap $ S.selectSearch)
       ]
