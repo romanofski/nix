@@ -21,6 +21,7 @@ import XMonad.Layout.MosaicAlt
 
 import XMonad.Util.Run
 import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.XSelection (safePromptSelection)
 
 import qualified XMonad.Actions.Submap as SM
 import qualified XMonad.Actions.Search as S
@@ -101,6 +102,7 @@ main = do
   } `additionalKeys`
       [ ((mod1Mask .|. controlMask, xK_l), spawn "loginctl lock-session")
       , ((mod1Mask, xK_p), shellPrompt myXPConfig)
+      , ((mod1Mask, xK_b), safePromptSelection "firefox")
       , ((0, xF86XK_AudioRaiseVolume ), spawn "pactl set-sink-volume @DEFAULT_SINK@ +2%")
       , ((0, xF86XK_AudioLowerVolume ), spawn "pactl set-sink-volume @DEFAULT_SINK@ -2%")
       , ((0, xF86XK_AudioMute        ), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
