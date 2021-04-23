@@ -48,6 +48,7 @@
       git
     ];
 
+    programs.mosh.enable = true;
     services.openssh.enable = true;
     services.dbus.packages = with pkgs; [ gnome3.dconf ];
 
