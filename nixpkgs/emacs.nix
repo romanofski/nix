@@ -148,8 +148,11 @@ let
   ];
 in
 {
-  programs.emacs.enable = true;
-  programs.emacs.extraPackages = epkgs: builtins.concatMap (config: config.pkgs epkgs) configs ++ [];
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacsGcc;
+    extraPackages = epkgs: builtins.concatMap (config: config.pkgs epkgs) configs ++ [];
+  };
 
   home.file.".emacs.d/init.el" = {
     text = builtins.foldl' (acc: config: acc + builtins.readFile config.file + "\n") "" configs;
