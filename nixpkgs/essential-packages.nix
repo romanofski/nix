@@ -43,7 +43,7 @@ in
     pkgs.sshpass
     pkgs.tmux
     pkgs.unzip
-    pkgs.urlview
+    pkgs.urlscan
     pkgs.usbutils
     pkgs.wget
     pkgs.xlockmore
