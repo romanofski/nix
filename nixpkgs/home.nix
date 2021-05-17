@@ -39,6 +39,7 @@ in with secrets; {
     ./programs/ghci.nix
     ./services/gpg-agent.nix
     ./services/screen-locker.nix
+    ./services/syncthing.nix
   ];
 
   home.packages = [
