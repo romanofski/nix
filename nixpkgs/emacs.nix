@@ -23,7 +23,6 @@ let
         smartparens
         highlight-parentheses
         which-key
-        flymake
       ];
     }
     {
