@@ -166,8 +166,6 @@ in
     pkgs.nixfmt
     pkgs.aspellDicts.de
     pkgs.aspellDicts.en
-    pkgs.python36Packages.jedi
-    pkgs.python36Packages.epc
     pkgs.shellcheck
     pkgs.nodePackages.prettier
     pkgs.silver-searcher
@@ -180,6 +178,6 @@ in
     pkgs.nodePackages.typescript
     pkgs.nodePackages.vscode-html-languageserver-bin
     pkgs.nodePackages.eslint
-    pkgsUnstable.python-language-server
+    pkgs.python37Packages.python-language-server
   ];
 }
