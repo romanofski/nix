@@ -2,7 +2,7 @@
 
 {
   services.screen-locker = {
-    enable = false;
-    lockCmd = "xlock";
+    enable = true;
+    lockCmd = "${pkgs.xlockmore}/bin/xlock";
   };
 }
