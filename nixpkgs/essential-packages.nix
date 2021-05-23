@@ -14,6 +14,7 @@ in
     pkgs.blueman
     pkgs.bluez
     pkgs.bluez-tools
+    pkgs.cachix
     pkgs.ctags
     pkgs.elinks
     pkgs.evince
