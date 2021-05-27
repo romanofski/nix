@@ -1,7 +1,8 @@
 { pkgs, lib, ... }:
 
 let
-  pkgsUnstable = import <unstable> {};
+  sources = import ./nixpkgsource.nix;
+  pkgsUnstable = import sources.nixos-unstable { };
   secrets = import ./secrets.nix;
 in with secrets; {
 

@@ -2,12 +2,8 @@
 { pkgs, ... }:
 
 let
-  pkgSrc = builtins.fetchTarball {
-    # current nixos-unstable HEAD as of 15/08/2020
-    url = "https://github.com/NixOS/nixpkgs/archive/32b46dd897ab2143a609988a04d87452f0bbef59.tar.gz";
-    sha256 = "1gzfrpjnr1bz9zljsyg3a4zrhk8r927sz761mrgcg56dwinkhpjk";
-  };
-  pkgsUnstable = import pkgSrc {};
+  sources = import ./nixpkgsource.nix;
+  pkgsUnstable = import sources.nixos-unstable { };
   configs = [
     {
       file = ./emacs/init.el;
