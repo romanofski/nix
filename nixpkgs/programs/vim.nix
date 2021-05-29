@@ -2,24 +2,22 @@
 
 let
   config = ./vim/config.vim;
+  sources = import ../nixpkgsource.nix;
+  pkgsUnstable = import sources.nixos-unstable { };
 in {
-  programs.vim = {
+  programs.neovim = {
     enable = true;
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgsUnstable.vimPlugins; [
       bufexplorer
       colors-solarized
       ctrlp-vim
+      vim-nix
       vim-airline
       vim-surround
     ];
-    settings = {
-      background = "dark";
-      tabstop = 2;
-      shiftwidth = 4;
-      hidden = true;
-      expandtab = true;
-      smartcase = true;
-    };
+    vimAlias = true;
+    withNodeJs = true;
+    withPython3 = true;
     extraConfig = builtins.readFile config + "\n";
   };
 }

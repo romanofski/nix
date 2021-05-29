@@ -47,7 +47,6 @@ filetype plugin on
 filetype indent on
 
 " for handling mouse events in xterm
-set ttymouse=xterm2
 colo default
 syntax on
 
@@ -57,7 +56,6 @@ let g:pep8_ignore="E501,E241"
 
 "" Map Python trickery to function keys and commands
 map <F8> :Explore<CR>
-map ,tex :r !cat /home/roman/.vim/templates/artcl.tex.templ
 nnoremap <cr> :noh<cr><cr>
 inoremap ,a ä
 inoremap ,o ö
