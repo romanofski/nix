@@ -21,5 +21,3 @@
 
 ;; disable tabs globally
 (setq-default indent-tabs-mode nil)
-;; re-open last emacs state
-(desktop-save-mode 1)
