@@ -63,6 +63,7 @@ in with secrets; {
     ./services/screen-locker.nix
     ./services/hamster.nix
     ./services/syncthing.nix
+    ./services/emacs.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

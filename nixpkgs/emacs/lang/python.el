@@ -1,6 +1,6 @@
 (add-hook 'python-mode-hook #'abbrev-mode)
 (use-package lsp-python-ms
-  :ensure t
+  :defer 1
   :init
   (setq lsp-python-ms-auto-install-server t
         lsp-python-ms-executable (executable-find "python-language-server"))
