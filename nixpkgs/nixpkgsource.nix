@@ -1,7 +1,7 @@
 {
   nixos-unstable = builtins.fetchTarball {
-    # current nixos-unstable HEAD as of 15/08/2020
-    url = "https://github.com/NixOS/nixpkgs/archive/ea7d4aa9b8225abd6147339f0d56675d6f1f0fd1.tar.gz";
-    sha256 = "11bwgyglag40w2y50nq2gg4697ymdjprkgip75kb3hjrvvwpma53";
+    # current nixos-unstable HEAD as of 04/06/2021
+    url = "https://github.com/NixOS/nixpkgs/archive/1c2986bbb806c57f9470bf3231d8da7250ab9091.tar.gz";
+    sha256 = "0y1275nzlmsys5rk7ivzbdc8cpjs9cbk0wz6yh3i2c57b8nbd3ym";
   };
 }
