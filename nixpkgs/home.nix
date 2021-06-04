@@ -4,6 +4,7 @@ let
   sources = import ./nixpkgsource.nix;
   pkgsUnstable = import sources.nixos-unstable { };
   secrets = import ./secrets.nix;
+  homemanagerRelease = lib.fileContents ../release;
 in with secrets; {
 
   nixpkgs.overlays = [
@@ -104,7 +105,7 @@ in with secrets; {
 
   programs.home-manager = {
     enable = true;
-    path = "https://github.com/nix-community/home-manager/archive/release-" + lib.fileContents ../release + ".tar.gz";
+    path = "https://github.com/nix-community/home-manager/archive/release-" + homemanagerRelease + ".tar.gz";
   };
 
   programs.msmtp = {
