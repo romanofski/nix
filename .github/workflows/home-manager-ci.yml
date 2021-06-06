@@ -1,0 +1,41 @@
+name: home-manager Build
+on:
+  - push
+  - pull_request
+jobs:
+  linux:
+    name: Nix
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v12
+        with:
+          nix_path: "nixpkgs=channel:nixos-unstable"
+
+      - name: Install home-manager channel
+        run: |
+          nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+          nix-channel --update
+
+      - name: Link home.nix
+        run: |
+          mkdir -p $HOME/.config/nixpkgs
+          cd $HOME/.config/nixpkgs && ln -s $GITHUB_WORKSPACE/nixpkgs/home.nix $HOME/.config/nixpkgs/home.nix
+
+      - name: Create secrets.nix
+        run: |
+          cat <<EOF > $GITHUB_WORKSPACE/nixpkgs/secrets.nix
+          {
+            mailhost = "mail.testing.example";
+            realName = "Róman Joost";
+            email = "user@example.example";
+            zshtheme = "pygmalion";
+          }
+          EOF
+
+      - name: Build
+        shell: bash
+        run: |
+          nix-shell -I $HOME/.nix-defexpr/channels '<home-manager>' -A install
