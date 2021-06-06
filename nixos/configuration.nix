@@ -67,8 +67,16 @@
       displayManager.lightdm.enable = true;
       xkbOptions = "compose:ralt";
       exportConfiguration = true;
-      extraConfig = builtins.readFile ./xorg.conf;
       videoDrivers = ["intel" "vesa"];
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
+      serverFlagsSection = ''
+        Option "OffTime" "10"
+        Option "SuspendTime" "5"
+        Option "StandbyTime" "3"
+      '';
+
     };
     fonts.fonts = [
       pkgs.dejavu_fonts
