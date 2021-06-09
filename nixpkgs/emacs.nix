@@ -131,7 +131,7 @@ let
     {
       file = ./emacs/lang/python.el;
       pkgs = epkgs: with epkgs; [
-        lsp-python-ms
+        lsp-pyright
       ];
     }
     {
@@ -173,6 +173,9 @@ in
     pkgs.nodePackages.typescript
     pkgs.nodePackages.vscode-html-languageserver-bin
     pkgs.nodePackages.eslint
-    pkgs.python37Packages.python-language-server
+    pkgs.pyright
+    pkgs.python39Packages.isort
+    pkgs.python39Packages.pylint
+    pkgs.python39Packages.yapf
   ];
 }
