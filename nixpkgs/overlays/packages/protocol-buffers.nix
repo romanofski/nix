@@ -1,6 +1,6 @@
 { mkDerivation, aeson, array, base, base16-bytestring, binary
-, bytestring, containers, directory, fetchgit, filepath, mtl
-, parsec, stdenv, syb, text, utf8-string, vector
+, bytestring, containers, directory, fetchgit, filepath, lib, mtl
+, parsec, syb, text, utf8-string, vector
 }:
 mkDerivation {
   pname = "protocol-buffers";
@@ -17,5 +17,5 @@ mkDerivation {
   ];
   homepage = "https://github.com/k-bx/protocol-buffers";
   description = "Parse Google Protocol Buffer specifications";
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }
