@@ -81,6 +81,15 @@ let
 
     # languages
     {
+      file = ./emacs/lang/lsp.el;
+      pkgs = epkgs: with epkgs; [
+        lsp-mode
+        lsp-ui
+        lsp-treemacs
+        helm-lsp
+      ];
+    }
+    {
       file = ./emacs/lang/adoc.el;
       pkgs = epkgs: with epkgs; [
         adoc-mode
@@ -108,15 +117,6 @@ let
         web-mode
         typescript-mode
         ecukes
-      ];
-    }
-    {
-      file = ./emacs/lang/lsp.el;
-      pkgs = epkgs: with epkgs; [
-        lsp-mode
-        lsp-ui
-        lsp-treemacs
-        helm-lsp
       ];
     }
     {
