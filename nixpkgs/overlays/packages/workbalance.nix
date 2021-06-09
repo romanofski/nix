@@ -1,4 +1,4 @@
-{ mkDerivation, fetchFromGitHub, attoparsec, base, shelly, stdenv, text, time }:
+{ mkDerivation, fetchFromGitHub, attoparsec, base, shelly, lib, text, time }:
 mkDerivation {
   pname = "workbalance";
   version = "0.1.0.0";
@@ -12,5 +12,5 @@ mkDerivation {
   isExecutable = true;
   executableHaskellDepends = [ attoparsec base shelly text time ];
   description = "Shows a work balance";
-  license = stdenv.lib.licenses.gpl3;
+  license = lib.licenses.gpl3;
 }

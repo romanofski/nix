@@ -1,13 +1,13 @@
 { mkDerivation, base, bytestring, cassava, conduit, conduit-extra
 , containers, directory, esqueleto, fetchgit, HStringTemplate
-, http-client, http-conduit, http-types, ini, lifted-base
+, http-client, http-conduit, http-types, ini, lib, lifted-base
 , monad-control, monad-logger, mtl, network, old-locale
 , optparse-applicative, persistent, persistent-sqlite
 , persistent-template, protocol-buffers, QuickCheck, resourcet
-, silently, stdenv, streaming-commons, system-filepath, tasty
-, tasty-hunit, tasty-quickcheck, temporary, text, time
-, transformers, transformers-base, unliftio-core, utf8-string
-, xdg-basedir, zip-archive
+, silently, streaming-commons, system-filepath, tasty, tasty-hunit
+, tasty-quickcheck, temporary, text, time, transformers
+, transformers-base, unliftio-core, utf8-string, xdg-basedir
+, zip-archive
 }:
 mkDerivation {
   pname = "gtfsschedule";
@@ -42,5 +42,5 @@ mkDerivation {
   ];
   homepage = "http://github.com/romanofski/gtfsschedule#readme";
   description = "Be on time for your next public transport service";
-  license = stdenv.lib.licenses.gpl3;
+  license = lib.licenses.gpl3Only;
 }
