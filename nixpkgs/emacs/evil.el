@@ -1,11 +1,16 @@
 (require 'use-package)
 
+(use-package undo-tree
+  :commands global-undo-tree-mode
+  :init (global-undo-tree-mode 1))
+
 (use-package evil
   :ensure t
   :init
   ;; for evil-collection
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
+  (setq evil-undo-system 'undo-tree)
   ;; other stuff
   (setq evil-want-C-u-scroll 1)
   (evil-mode 1)

@@ -29,6 +29,7 @@ let
         evil-ediff
         evil-collection
         evil-visualstar
+        undo-tree
       ];
     }
     {
