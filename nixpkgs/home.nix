@@ -27,6 +27,11 @@ in with secrets; {
         inherit (self.haskellPackages) ghcWithPackages;
       };
     })
+
+    (self: super:
+    {
+      xlockmore = super.callPackage ./overlays/packages/xlockmore.nix {};
+    })
   ];
 
   imports = [
