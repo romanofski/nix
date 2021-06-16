@@ -57,6 +57,7 @@ in with secrets; {
 
   home.packages = [
     pkgs.weechat
+    pkgs.nix-index
   ];
 
   nixpkgs.config.allowUnfree = true;
