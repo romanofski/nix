@@ -84,4 +84,11 @@
     (when filename
       (x-select-text filename)
       (message "Filename copied to clipboard"))))
-;;; basics.el ends here
+
+;; Highlight uncommitted changes using VC
+;; Source: https://github.com/dgutov/diff-hl
+(use-package diff-hl
+  :defer 3
+  :config
+  (global-diff-hl-mode)
+  )

@@ -19,6 +19,7 @@ let
         smartparens
         highlight-parentheses
         which-key
+        diff-hl
       ];
     }
     {
