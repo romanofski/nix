@@ -19,7 +19,8 @@
     "XLock.echokeys" = 1;
     "XLock.usefirst" = 1;
     "XLock.echokey" = "*";
-    "XLock.dpmsoff" = "10";
+    # 10 minutes
+    "XLock.dpmsoff" = "600";
 
     "Xft.dpi" = 100;
   };
