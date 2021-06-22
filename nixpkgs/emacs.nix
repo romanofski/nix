@@ -57,12 +57,12 @@ let
         solaire-mode
         hl-todo
         nyan-mode
+        all-the-icons-dired
       ];
     }
     {
       file = ./emacs/projects.el;
       pkgs = epkgs: with epkgs; [
-        all-the-icons
         helm-projectile
         projectile
         treemacs

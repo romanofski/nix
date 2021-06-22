@@ -92,3 +92,9 @@
   :config
   (global-diff-hl-mode)
   )
+
+(use-package dired
+  :general
+  (general-nmap :prefix "SPC"
+    "d" '(:ignore t :which-key "dired")
+    "dd" 'dired-jump))
