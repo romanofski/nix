@@ -42,6 +42,10 @@ in with secrets; {
       };
     })
 
+    (self: super:
+    {
+      xlockmore = super.callPackage ./overlays/packages/xlockmore.nix {};
+    })
   ];
 
   imports = [
