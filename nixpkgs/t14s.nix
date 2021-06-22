@@ -8,23 +8,6 @@ in with secrets; {
     (self: super:
 
     {
-      python3Packages = super.python3Packages.override {
-        overrides = pself: psuper: {
-          dbus-python = psuper.dbus-python.overridePythonAttrs(old: rec {
-            version = "1.2.16";
-            src = psuper.fetchPypi {
-              pname = "dbus-python";
-              inherit version;
-              sha256 = "196m5rk3qzw5nkmgzjl7wmq0v7vpwfhh8bz2sapdi5f9hqfqy8qi";
-            };
-          });
-        };
-      };
-    })
-
-    (self: super:
-
-    {
       haskellPackages = super.haskellPackages.override {
         overrides = hself: hsuper: {
           workbalance = hsuper.callPackage ./overlays/packages/workbalance.nix {};
