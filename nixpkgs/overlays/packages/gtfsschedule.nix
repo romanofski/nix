@@ -14,8 +14,8 @@ mkDerivation {
   version = "0.8.3.0";
   src = fetchgit {
     url = "https://github.com/romanofski/gtfsschedule.git";
-    sha256 = "1pyp5z0wdfyzcn75nxhfxwn472nd26rg1gxww0sv3wyvwvcayi43";
-    rev = "dfedcc357e01bab3eeb0dc8dcb68cdefca1c9a30";
+    sha256 = "16zd18aw86q9z5zsvipjjvn9k9dvm033ml21dxakmrx902fv1rvp";
+    rev = "00977661d7b365495c237eee0dc6731961a1a4e1";
     fetchSubmodules = true;
   };
   isLibrary = true;
