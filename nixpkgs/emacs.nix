@@ -80,6 +80,12 @@ let
         git-timemachine
       ];
     }
+    {
+      file = ./emacs/term.el;
+      pkgs = epkgs: with epkgs; [
+        emacs-libvterm
+      ];
+    }
 
     # languages
     {
