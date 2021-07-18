@@ -8,6 +8,7 @@
                 lsp-auto-guess-root t
                 lsp-enable-snippet t
                 lsp-enable-completion-at-point t
+                lsp-file-watch-threshold 9000
                 lsp-idle-delay 0.500))
 
 (use-package lsp-ui
