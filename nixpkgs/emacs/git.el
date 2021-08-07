@@ -9,7 +9,8 @@
             "K" #'git-rebase-move-line-up
             "J" #'git-rebase-move-line-down)
   :config
-  (setq git-commit-fill-column 72))
+  (setq git-commit-fill-column 72)
+  (setq magit-list-refs-sortby "-committerdate"))
 
 (use-package git-timemachine
   :commands git-timemachine-mode
