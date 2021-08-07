@@ -140,6 +140,8 @@ let
       file = ./emacs/lang/python.el;
       pkgs = epkgs: with epkgs; [
         lsp-pyright
+        yapfify
+        pyvenv
       ];
     }
     {
