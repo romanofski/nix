@@ -1,8 +1,8 @@
-{ mkDerivation, base, bytestring, cassava, conduit, conduit-extra
-, containers, directory, esqueleto, fetchgit, HStringTemplate
-, http-client, http-conduit, http-types, ini, lib, lifted-base
-, monad-control, monad-logger, mtl, network, old-locale
-, optparse-applicative, persistent, persistent-sqlite
+{ mkDerivation, base, bifunctors, bytestring, cassava, conduit
+, conduit-extra, containers, directory, esqueleto, fetchgit
+, HStringTemplate, http-client, http-conduit, http-types, ini, lens
+, lib, lifted-base, monad-control, monad-logger, mtl, network
+, old-locale, optparse-applicative, persistent, persistent-sqlite
 , persistent-template, protocol-buffers, QuickCheck, resourcet
 , silently, streaming-commons, system-filepath, tasty, tasty-hunit
 , tasty-quickcheck, temporary, text, time, transformers
@@ -14,20 +14,21 @@ mkDerivation {
   version = "0.8.3.0";
   src = fetchgit {
     url = "https://github.com/romanofski/gtfsschedule.git";
-    sha256 = "16zd18aw86q9z5zsvipjjvn9k9dvm033ml21dxakmrx902fv1rvp";
-    rev = "00977661d7b365495c237eee0dc6731961a1a4e1";
+    sha256 = "1fla28475sfxhbfsqvzmqwi7c7njlzah1l7hya2kgbsxvskv63pf";
+    rev = "b65ffde20019130813d17d7f796d29de0434c0a1";
     fetchSubmodules = true;
   };
   isLibrary = true;
   isExecutable = true;
   enableSeparateDataOutput = true;
   libraryHaskellDepends = [
-    base bytestring cassava conduit conduit-extra containers directory
-    esqueleto HStringTemplate http-client http-conduit http-types ini
-    monad-control monad-logger mtl old-locale optparse-applicative
-    persistent persistent-sqlite persistent-template protocol-buffers
-    resourcet system-filepath temporary text time transformers
-    unliftio-core utf8-string xdg-basedir zip-archive
+    base bifunctors bytestring cassava conduit conduit-extra containers
+    directory esqueleto HStringTemplate http-client http-conduit
+    http-types ini lens monad-control monad-logger mtl old-locale
+    optparse-applicative persistent persistent-sqlite
+    persistent-template protocol-buffers resourcet system-filepath
+    temporary text time transformers unliftio-core utf8-string
+    xdg-basedir zip-archive
   ];
   executableHaskellDepends = [
     base bytestring http-conduit ini mtl optparse-applicative
