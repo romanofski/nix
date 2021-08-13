@@ -31,9 +31,7 @@
   :config
   (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
   (add-hook 'after-revert-hook #'turn-on-solaire-mode)
-  (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
-
-  (solaire-mode-swap-bg))
+)
 
 ;; pretty modeline
 (use-package doom-modeline
