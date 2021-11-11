@@ -98,3 +98,7 @@
   (general-nmap :prefix "SPC"
     "d" '(:ignore t :which-key "dired")
     "dd" 'dired-jump))
+
+
+;; show trailing whitespace
+(setq-default show-trailing-whitespace t)
