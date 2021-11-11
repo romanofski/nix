@@ -33,6 +33,3 @@
     (setq auth-sources '(password-store))
     )
   )
-
-(use-package forge
-  :after magit)
