@@ -7,7 +7,10 @@ let
 in {
   programs.neovim = {
     enable = true;
+    package = pkgsUnstable.neovim-unwrapped;
     plugins = with pkgsUnstable.vimPlugins; [
+      coc-nvim
+      nvim-treesitter
       bufexplorer
       colors-solarized
       ctrlp-vim
