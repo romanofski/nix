@@ -54,6 +54,7 @@ in with secrets; {
     pkgs.nix-index
     pkgs.socat
     pkgs.tmux
+    pkgs.iproute
   ];
 
   # Home Manager needs a bit of information about you and the
@@ -122,4 +123,7 @@ in with secrets; {
     '';
   };
 
+  programs.zsh.loginExtra = ''
+  export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
+  '';
 }
