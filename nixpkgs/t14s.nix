@@ -24,42 +24,36 @@ in with secrets; {
         inherit (self.haskellPackages) ghcWithPackages;
       };
     })
-
-    (self: super:
-    {
-      xlockmore = super.callPackage ./overlays/packages/xlockmore.nix {};
-    })
   ];
 
   imports = [
     ./emacs.nix
     ./programs/vim.nix
-    ./programs/gtfsschedule.nix
-    ./programs/termonad.nix
     ./programs/zsh.nix
-    ./programs/dunst.nix
     ./programs/notmuch.nix
-    ./programs/xsession.nix
     ./programs/purebred.nix
-    ./programs/gtk.nix
+    # currently uses dconf which is stuffy
+    #./programs/gtk.nix
     ./programs/tmux.nix
     ./programs/ghci.nix
-    ./programs/xmobar.nix
-    ./programs/offlineimap.nix
     ./services/gpg-agent.nix
-    ./services/screen-locker.nix
     ./services/hamster.nix
-    ./services/syncthing.nix
     ./services/emacs.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
   home.packages = [
-    pkgs.feh
-    pkgs.nix-index
+    pkgs.bzip2
     pkgs.elinks
+    pkgs.feh
+    pkgs.gcc
+    pkgs.git-lfs
     pkgs.glibcLocales
+    pkgs.haskellPackages.workbalance
+    pkgs.nix-index
+    pkgs.socat
+    pkgs.tmux
   ];
 
   # Home Manager needs a bit of information about you and the
