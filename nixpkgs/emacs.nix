@@ -179,7 +179,7 @@ in
     pkgs.nodePackages.eslint
     pkgs.pyright
     pkgs.python39Packages.isort
-    pkgs.python39Packages.pylint
+    pkgsUnstable.python39Packages.pylint
     pkgs.python39Packages.yapf
   ];
 }
