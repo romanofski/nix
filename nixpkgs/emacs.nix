@@ -177,6 +177,7 @@ in
     pkgs.nodePackages.typescript
     pkgs.nodePackages.vscode-html-languageserver-bin
     pkgs.nodePackages.eslint
+    pkgs.nodePackages.yaml-language-server
     pkgs.pyright
     pkgs.python39Packages.isort
     pkgsUnstable.python39Packages.pylint
