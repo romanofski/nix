@@ -89,6 +89,7 @@ let
         lsp-ui
         lsp-treemacs
         helm-lsp
+        bazel
       ];
     }
     {
