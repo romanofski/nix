@@ -102,3 +102,7 @@
 
 ;; show trailing whitespace
 (setq-default show-trailing-whitespace t)
+
+;; avoid processes which watch files trip up on the lock files
+;; see https://github.com/angular/angular-cli/issues/18342
+(setq create-lockfiles nil)
