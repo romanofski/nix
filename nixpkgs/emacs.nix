@@ -90,6 +90,7 @@ let
         lsp-treemacs
         helm-lsp
         bazel
+        powershell
       ];
     }
     {

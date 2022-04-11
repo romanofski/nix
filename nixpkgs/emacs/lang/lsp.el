@@ -1,8 +1,11 @@
+(use-package powershell)
+
 (use-package lsp-mode
   :commands (lsp-deferred)
   :hook ((typescript-mode . lsp-deferred)
          (haskell-mode . lsp-deferred)
          (yaml-mode . lsp-deferred)
+         (powershell-mode . lsp-deferred)
          )
   :config
   (setq-default lsp-prefer-flymake t
