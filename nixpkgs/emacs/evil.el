@@ -2,7 +2,9 @@
 
 (use-package undo-tree
   :commands global-undo-tree-mode
-  :init (global-undo-tree-mode 1))
+  :init (global-undo-tree-mode 1)
+  (setq undo-tree-auto-save-history nil) ;; avoid undo history files created
+  )
 
 (use-package evil
   :ensure t
