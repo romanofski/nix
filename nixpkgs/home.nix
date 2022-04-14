@@ -50,6 +50,7 @@ in with secrets; {
     ./programs/tmux.nix
     ./programs/autorandr.nix
     ./programs/ghci.nix
+    ./programs/mcfly.nix
     ./services/gpg-agent.nix
     ./services/screen-locker.nix
     ./services/syncthing.nix
