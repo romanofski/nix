@@ -45,7 +45,7 @@
                 "pq" 'projectile-switch-open-project
                 "pr" 'projectile-replace
                 "pu" 'projectile-run-project
-                "/"  'projectile-ag)
+                "/"  'projectile-ripgrep)
 
   :config
   (projectile-mode 1)

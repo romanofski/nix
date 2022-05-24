@@ -45,7 +45,7 @@ let
       file = ./emacs/helm.el;
       pkgs = epkgs: with epkgs; [
         helm
-        helm-ag
+        helm-rg
       ];
     }
     {
@@ -169,7 +169,7 @@ in
     pkgs.aspellDicts.en
     pkgs.shellcheck
     pkgs.nodePackages.prettier
-    pkgs.silver-searcher
+    pkgs.ripgrep
     pkgs.victor-mono
     pkgs.discount
     # emacs lsp support

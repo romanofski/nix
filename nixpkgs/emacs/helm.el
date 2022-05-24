@@ -37,8 +37,5 @@
         helm-window-prefer-horizontal-split t))
 
 
-(use-package helm-ag
-  :after helm
-
-  :config
-  (setq helm-ag-insert-at-point 'symbol))
+(use-package helm-rg
+  :after helm)
