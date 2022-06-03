@@ -50,7 +50,7 @@
 
     programs.mosh.enable = true;
     services.openssh.enable = true;
-    services.dbus.packages = with pkgs; [ gnome3.dconf ];
+    services.dbus.packages = with pkgs; [ pkgs.dconf ];
 
     # Enable the X11 windowing system.
     services.xserver = {
