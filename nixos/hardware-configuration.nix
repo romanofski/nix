@@ -46,6 +46,7 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
+  hardware.trackpoint.enable = true;
   hardware.opengl = {
     enable = true;
     driSupport = true;
