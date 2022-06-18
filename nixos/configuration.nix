@@ -22,6 +22,12 @@
 
     systemd.tmpfiles.rules = [ "d /tmp 1777 root root 10d"];
 
+    nix = {
+      package = pkgs.nixFlakes;
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+    };
     networking.networkmanager.enable = true;
     networking.networkmanager.dns = "systemd-resolved";
     networking.hostName = "krombopulos"; # Define your hostname.
