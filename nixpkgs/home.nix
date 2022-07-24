@@ -82,7 +82,7 @@ in with secrets; {
         smtp.host = mailhost;
         smtp.tls.enable = true;
         smtp.tls.useStartTls = true;
-        passwordCommand = "${pkgs.pass}/bin/pass bromeco";
+        passwordCommand = "${pkgs.pass}/bin/pass flyingcircus-bromeco/roman@bromeco-password";
         imap = {
           host = mailhost;
           tls = {
