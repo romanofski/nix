@@ -67,15 +67,15 @@ myManageHook = composeAll
 
 myWorkspaces = ["1:main", "2:web", "3:virtualbox", "4:whatever"]
 
-myXPConfig = defaultXPConfig { fgColor = "#eee8d5" -- white
-                             , bgColor = "#002b36" -- bright black
-                             , bgHLight = "#d33682" -- magenta
-                             , fgHLight = "#eee8d5"
-                             , borderColor = "#002b36"
-                             , position = Bottom
-                             , font = "xft:Input Mono:size=8"
-                             , autoComplete = Just 1
-                             }
+myXPConfig = def { fgColor = "#eee8d5" -- white
+                 , bgColor = "#002b36" -- bright black
+                 , bgHLight = "#d33682" -- magenta
+                 , fgHLight = "#eee8d5"
+                 , borderColor = "#002b36"
+                 , position = Bottom
+                 , font = "xft:Input Mono:size=8"
+                 , autoComplete = Just 1
+                 }
 
 searchEngineMap method = M.fromList $
   [ ((0, xK_d), method S.duckduckgo)
@@ -93,7 +93,7 @@ main = do
         , layoutHook         = myLayout
         , terminal           = "termonad"
         , borderWidth        = 3
-        , logHook            = dynamicLogString defaultPP >>= xmonadPropLog
+        , logHook            = dynamicLogString def >>= xmonadPropLog
         , handleEventHook    = ewmhDesktopsEventHook
         , startupHook        = do
             ewmhDesktopsStartup >> setWMName "LG3D"
