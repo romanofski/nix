@@ -21,6 +21,7 @@
 Example configuration, currently used for testing which demonstrates various
 ways to overwrite the configuration.
 -}
+import Control.Monad.IO.Class (liftIO)
 import Purebred
 import qualified Purebred.Plugin.ICU
 import qualified Data.ByteString as B
@@ -34,13 +35,13 @@ import Data.MIME (matchContentType)
 
 myBrowseThreadsKbs :: [Keybinding 'Threads 'ListOfThreads]
 myBrowseThreadsKbs =
-  [ Keybinding (EvKey (KChar 'a') []) (setTags [RemoveTag "inbox", AddTag "archive"] `chain` continue)
-  , Keybinding (EvKey (KChar 'S') []) (setTags [RemoveTag "inbox", AddTag "spam"] `chain` continue)
+  [ Keybinding (EvKey (KChar 'a') []) (setTags [RemoveTag "inbox", AddTag "archive"])
+  , Keybinding (EvKey (KChar 'S') []) (setTags [RemoveTag "inbox", AddTag "spam"])
   ]
 
 myMailKeybindings :: [Keybinding 'ViewMail 'ScrollingMailView]
 myMailKeybindings =
-    [ Keybinding (EvKey (KChar 'a') []) (setTags [RemoveTag "inbox", AddTag "archive"] `chain` continue)
+    [ Keybinding (EvKey (KChar 'a') []) (setTags [RemoveTag "inbox", AddTag "archive"])
     ]
 
 fromMail :: [Mailbox]
@@ -51,20 +52,25 @@ fromMail =
     ]
 
 main :: IO ()
-main = purebred [ usePlugin $ tweakConfig tweak ] where
-  tweak =
-    over (confIndexView . ivBrowseThreadsKeybindings) (`union` myBrowseThreadsKbs)
-    . over (confMailView . mvKeybindings) (`union` myMailKeybindings)
-    . set (confFileBrowserView . fbHomePath) getCurrentDirectory
-    . set (confComposeView . cvIdentities) fromMail
-    . set (confComposeView . cvSendMailCmd) (sendmail "/home/rjoost/.nix-profile/bin/msmtp")
-    . over confTheme (applyAttrMappings myColoredTags)
-    . Purebred.Plugin.ICU.enable
+main = purebred
+  [ usePlugin $ tweakConfig tweak
+  , usePlugin $ tweakConfigWithIO $ \conf -> do
+    cwd <- liftIO getCurrentDirectory
+    pure $ set (confFileBrowserView . fbHomePath) cwd conf
+  ]
+  where
+    tweak =
+      over (confIndexView . ivBrowseThreadsKeybindings) (`union` myBrowseThreadsKbs)
+      . over (confMailView . mvKeybindings) (`union` myMailKeybindings)
+      . set (confComposeView . cvIdentities) fromMail
+      . set (confComposeView . cvSendMailCmd) (sendmail "/home/rjoost/.nix-profile/bin/msmtp")
+      . over confTheme (applyAttrMappings myColoredTags)
+      . Purebred.Plugin.ICU.enable
 
 myColoredTags :: [(AttrName, Attr)]
 myColoredTags =
-  [ (mailTagAttr <> "inbox", fg blue)
-  , (mailTagAttr <> "archive", fg cyan)
-  , (mailTagAttr <> "signed", fg green)
-  , (mailTagAttr <> "attachment", fg magenta)
+  [ (mailTagAttr <> attrName "inbox", fg blue)
+  , (mailTagAttr <> attrName "archive", fg cyan)
+  , (mailTagAttr <> attrName "signed", fg green)
+  , (mailTagAttr <> attrName "attachment", fg magenta)
   ]
