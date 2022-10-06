@@ -5,6 +5,6 @@
   services.printing = {
     enable = true;
     browsing = true;
-    drivers = [ pkgs.brlaser pkgs.foomatic-filters ];
+    drivers = [ (pkgs.callPackage printers/hll3230cdw.nix {}) ];
   };
 }
