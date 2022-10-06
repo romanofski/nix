@@ -81,7 +81,6 @@ in with secrets; {
         flavor = "plain";
         smtp.host = mailhost;
         smtp.tls.enable = true;
-        smtp.tls.useStartTls = true;
         passwordCommand = "${pkgs.pass}/bin/pass flyingcircus-bromeco/roman@bromeco-password";
         imap = {
           host = mailhost;
@@ -121,7 +120,7 @@ in with secrets; {
       defaults
       syslog on
       domain bromeco.de
-      port 587
+      port 465
     '';
   };
 }
