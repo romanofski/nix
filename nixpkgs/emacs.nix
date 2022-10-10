@@ -153,7 +153,7 @@ in
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs;
+    package = pkgs.emacsNativeComp;
     extraPackages = epkgs: builtins.concatMap (config: config.pkgs epkgs) configs ++ [];
   };
 
