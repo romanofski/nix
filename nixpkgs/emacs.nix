@@ -58,6 +58,8 @@ let
         hl-todo
         nyan-mode
         all-the-icons-dired
+        tree-sitter
+        tree-sitter-langs
       ];
     }
     {
