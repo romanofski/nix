@@ -1,5 +1,5 @@
 -- This file is part of purebred
--- Copyright (C) 2019 Róman Joost
+-- Copyright (C) 2023 Róman Joost
 --
 -- purebred is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU Affero General Public License as published by
@@ -62,8 +62,20 @@ addressRetriever aliasfile = AddressBookSettings {
 main :: IO ()
 main = do
   cwd <- getCurrentDirectory
+
+  addressBook <-
+    initMuttAliasFileAddressBook "/home/rjoost/.config/purebred/alias"
+    >>= either (die . show) pure
+
   purebred
-    [ usePlugin $ tweakConfig (tweak cwd)
+    [ usePlugin . tweakConfig $
+          over (confIndexView . ivBrowseThreadsKeybindings) (`union` myBrowseThreadsKbs)
+          . over (confMailView . mvKeybindings) (`union` myMailKeybindings)
+          . set (confComposeView . cvIdentities) fromMail
+          . set (confComposeView . cvSendMailCmd) (sendmail "/home/rjoost/.nix-profile/bin/msmtp")
+          . over confTheme (applyAttrMappings myColoredTags)
+          . set confAddressBook [addressBook]
+          . Purebred.Plugin.ICU.enable
     , usePlugin $ tweakConfigWithIO $ \conf -> do
       pure $ set (confFileBrowserView . fbHomePath) cwd conf
     ]
