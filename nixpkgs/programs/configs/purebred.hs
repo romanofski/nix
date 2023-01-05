@@ -51,20 +51,30 @@ fromMail =
           (AddrSpec "roman" (DomainDotAtom $ "bromeco" :| ["de"]))
     ]
 
+addressRetriever :: FilePath -> AddressBookSettings
+addressRetriever aliasfile = AddressBookSettings {
+          _abRetrievers = [
+            AddressRetriever
+            { _runAddressRetriever = runMuttAliasRetriever aliasfile }
+          ]
+        }
+
 main :: IO ()
-main = purebred
-  [ usePlugin $ tweakConfig tweak
-  , usePlugin $ tweakConfigWithIO $ \conf -> do
-    cwd <- liftIO getCurrentDirectory
-    pure $ set (confFileBrowserView . fbHomePath) cwd conf
-  ]
+main = do
+  cwd <- getCurrentDirectory
+  purebred
+    [ usePlugin $ tweakConfig (tweak cwd)
+    , usePlugin $ tweakConfigWithIO $ \conf -> do
+      pure $ set (confFileBrowserView . fbHomePath) cwd conf
+    ]
   where
-    tweak =
+    tweak cwd =
       over (confIndexView . ivBrowseThreadsKeybindings) (`union` myBrowseThreadsKbs)
       . over (confMailView . mvKeybindings) (`union` myMailKeybindings)
       . set (confComposeView . cvIdentities) fromMail
       . set (confComposeView . cvSendMailCmd) (sendmail "/home/rjoost/.nix-profile/bin/msmtp")
       . over confTheme (applyAttrMappings myColoredTags)
+      . set confAddressBook (addressRetriever "/home/rjoost/.config/purebred/alias")
       . Purebred.Plugin.ICU.enable
 
 myColoredTags :: [(AttrName, Attr)]
