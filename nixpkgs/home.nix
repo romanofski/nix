@@ -15,12 +15,6 @@ in with secrets; {
         overrides = hself: hsuper: {
           workbalance = hsuper.callPackage ./overlays/packages/workbalance.nix {};
           gtfsschedule = hsuper.callPackage ./overlays/packages/gtfsschedule.nix {};
-          # latest release is b0rked with Cabal version
-          protocol-buffers = hsuper.callPackage ./overlays/packages/protocol-buffers.nix {};
-          # tests currently b0rked
-          # *** Exception: <stdout>: hPutChar: resource vanished (Broken pipe)
-          # Test suite doctests: FAIL
-          termonad = pkgs.haskell.lib.dontCheck hsuper.termonad;
         };
       };
       gtfsschedule-with-packages = super.callPackage ./overlays/packages/gtfsschedule-with-packages.nix {
@@ -108,8 +102,13 @@ in with secrets; {
     };
   };
 
-  home.sessionVariables = {
-    EDITOR = "vim";
+  home = {
+    stateVersion = "22.11";
+    username = "rjoost";
+    homeDirectory = "/home/rjoost";
+    sessionVariables = {
+      EDITOR = "vim";
+    };
   };
 
   programs.home-manager = {

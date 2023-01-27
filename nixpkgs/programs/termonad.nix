@@ -2,7 +2,7 @@
 
 {
   home.packages = [
-    pkgs.termonad-with-packages
+    pkgs.termonad
   ];
   xdg = {
     enable = true;

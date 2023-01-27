@@ -52,7 +52,7 @@ in
     pkgs.xss-lock
     pkgsUnstable.firefox
     pkgsUnstable.hamster
-    pkgsUnstable.xfce4-14.thunar
-    pkgsUnstable.xfce4-14.thunar-volman
+    pkgsUnstable.xfce.thunar
+    pkgsUnstable.xfce.thunar-volman
   ];
 }

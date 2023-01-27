@@ -27,7 +27,6 @@ let
       pkgs = epkgs: with epkgs; [
         evil
         evil-surround
-        evil-ediff
         evil-collection
         evil-visualstar
         undo-tree
