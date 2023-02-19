@@ -20,6 +20,12 @@ in with secrets; {
       gtfsschedule-with-packages = super.callPackage ./overlays/packages/gtfsschedule-with-packages.nix {
         inherit (self.haskellPackages) ghcWithPackages;
       };
+
+    })
+
+    (self: super:
+    {
+      getmail6 = super.callPackage ./overlays/packages/getmail6.nix {};
     })
   ];
 
