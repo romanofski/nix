@@ -109,7 +109,7 @@ solarizedDark =
 
 myFontConfig :: FontConfig
 myFontConfig = FontConfig
-            { fontFamily = "IBM Plex Mono Medium"
+            { fontFamily = "Victor Mono Medium"
             , fontSize = FontSizePoints 8
             }
 
