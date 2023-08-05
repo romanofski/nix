@@ -20,6 +20,18 @@
     ./services/gvfs.nix
     ];
 
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+
+    # Setup keyfile
+    boot.initrd.secrets = {
+      "/crypto_keyfile.bin" = null;
+    };
+
+    # Enable swap on luks
+    boot.initrd.luks.devices."luks-e0a30253-b542-40c1-889a-94b809b6b651".device = "/dev/disk/by-uuid/e0a30253-b542-40c1-889a-94b809b6b651";
+    boot.initrd.luks.devices."luks-e0a30253-b542-40c1-889a-94b809b6b651".keyFile = "/crypto_keyfile.bin";
+
     systemd.tmpfiles.rules = [ "d /tmp 1777 root root 10d"];
 
     nix = {
@@ -38,7 +50,19 @@
     # Select internationalisation properties.
     console.keyMap = "us";
     console.font = "Lat2-Terminus16";
+
     i18n.defaultLocale = "en_AU.UTF-8";
+    i18n.extraLocaleSettings = {
+      LC_ADDRESS = "en_AU.UTF-8";
+      LC_IDENTIFICATION = "en_AU.UTF-8";
+      LC_MEASUREMENT = "en_AU.UTF-8";
+      LC_MONETARY = "en_AU.UTF-8";
+      LC_NAME = "en_AU.UTF-8";
+      LC_NUMERIC = "en_AU.UTF-8";
+      LC_PAPER = "en_AU.UTF-8";
+      LC_TELEPHONE = "en_AU.UTF-8";
+      LC_TIME = "en_AU.UTF-8";
+    };
 
     # Set your time zone.
     time.timeZone = "Australia/Brisbane";
@@ -94,24 +118,50 @@
     # Enable touchpad support.
     services.xserver.libinput.enable = true;
 
+    sound.enable = true;
+    hardware.pulseaudio.enable = false;
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
+
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
+
     # Define a user account. Don't forget to set a password with ‘passwd’.
+    users.groups = {
+      rjoost = { };
+    };
     users.users.rjoost = {
       createHome = true;
       extraGroups = ["wheel" "video" "audio" "disk" "networkmanager"];
       group = "rjoost";
       home = "/home/rjoost";
+      description = "Roman Joost";
       isNormalUser = true;
       uid = 1000;
       shell = pkgs.zsh;
+      packages = with pkgs; [
+        zsh
+      ];
     };
+    programs.zsh.enable = true;
 
-    users.groups.rjoost.gid = 1000;
+    # users.groups.rjoost.gid = 1000;
 
-    # This value determines the NixOS release with which your system is to be
-    # compatible, in order to avoid breaking some software such as database
-    # servers. You should change this only after NixOS release notes say you
-    # should.
-    system.stateVersion = "19.03"; # Did you read the comment?
+    # This value determines the NixOS release from which the default
+    # settings for stateful data, like file locations and database versions
+    # on your system were taken. It‘s perfectly fine and recommended to leave
+    # this value at the release version of the first install of this system.
+    # Before changing this value read the documentation for this option
+    # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+    system.stateVersion = "23.05"; # Did you read the comment?
 
     nix.gc.automatic = true;
     nix.gc.dates = "weekly";
