@@ -18,6 +18,7 @@
     ./services/tor.nix
     ./services/upower.nix
     ./services/gvfs.nix
+    ./services/mysql.nix
     ];
 
     boot.loader.systemd-boot.enable = true;

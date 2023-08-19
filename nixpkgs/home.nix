@@ -46,6 +46,7 @@ in with secrets; {
     ./programs/autorandr.nix
     ./programs/ghci.nix
     ./programs/mcfly.nix
+    ./programs/xmobar.nix
     ./services/gpg-agent.nix
     ./services/screen-locker.nix
     ./services/syncthing.nix
@@ -54,6 +55,9 @@ in with secrets; {
   home.packages = [
     pkgs.weechat
     pkgs.nix-index
+    pkgs.unrar
+    pkgs.chromium
+    pkgs.digikam
   ];
 
   nixpkgs.config.allowUnfree = true;
