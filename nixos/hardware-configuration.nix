@@ -29,7 +29,6 @@
     [ { device = "/dev/disk/by-uuid/9029006f-3943-4825-bc8e-d71c268143dc"; }
     ];
 
-  nix.maxJobs = lib.mkDefault 8;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

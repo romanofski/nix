@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
@@ -166,5 +166,6 @@
     nix.gc.automatic = true;
     nix.gc.dates = "weekly";
     nix.gc.options = "--delete-older-than 14d";
-    nix.trustedUsers = ["root" "rjoost"];
+    nix.settings.trusted-users = ["root" "rjoost"];
+    nix.settings.max-jobs = lib.mkDefault 8;
 }
