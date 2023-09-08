@@ -32,6 +32,7 @@ in with secrets; {
     ./programs/zsh.nix
     ./programs/notmuch.nix
     ./programs/purebred.nix
+    ./programs/git.nix
     # currently uses dconf which is stuffy
     #./programs/gtk.nix
     ./programs/tmux.nix
