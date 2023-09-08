@@ -152,7 +152,7 @@ in
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsNativeComp;
+    package = pkgsUnstable.emacs29-gtk3;
     extraPackages = epkgs: builtins.concatMap (config: config.pkgs epkgs) configs ++ [];
   };
 
