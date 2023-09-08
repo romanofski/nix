@@ -86,9 +86,6 @@ let
     {
       file = ./emacs/lang/lsp.el;
       pkgs = epkgs: with epkgs; [
-        lsp-mode
-        lsp-ui
-        lsp-treemacs
         helm-lsp
         bazel
         powershell
