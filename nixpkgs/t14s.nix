@@ -42,6 +42,7 @@ in with secrets; {
   ];
 
   nixpkgs.config.allowUnfree = true;
+  home.stateVersion = "23.05"; # Please read the comment before changing.
 
   home.packages = [
     pkgs.bzip2
