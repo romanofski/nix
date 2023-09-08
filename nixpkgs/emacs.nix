@@ -168,7 +168,7 @@ in
     pkgs.shellcheck
     pkgs.nodePackages.prettier
     pkgs.ripgrep
-    pkgs.victor-mono
+    pkgs.jetbrains-mono
     pkgs.discount
     # emacs lsp support
     pkgs.haskellPackages.haskell-language-server
