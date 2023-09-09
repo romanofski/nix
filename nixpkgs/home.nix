@@ -14,12 +14,13 @@ in with secrets; {
       haskellPackages = super.haskellPackages.override {
         overrides = hself: hsuper: {
           workbalance = hsuper.callPackage ./overlays/packages/workbalance.nix {};
-          gtfsschedule = hsuper.callPackage ./overlays/packages/gtfsschedule.nix {};
+          # gtfsschedule = hsuper.callPackage ./overlays/packages/gtfsschedule.nix {};
+          # protocol-buffers = hsuper.callPackage ./overlays/packages/protocol-buffers.nix {};
         };
       };
-      gtfsschedule-with-packages = super.callPackage ./overlays/packages/gtfsschedule-with-packages.nix {
-        inherit (self.haskellPackages) ghcWithPackages;
-      };
+      # gtfsschedule-with-packages = super.callPackage ./overlays/packages/gtfsschedule-with-packages.nix {
+      #  inherit (self.haskellPackages) ghcWithPackages;
+      # };
 
     })
 
@@ -33,7 +34,7 @@ in with secrets; {
     ./essential-packages.nix
     ./emacs.nix
     ./programs/vim.nix
-    ./programs/gtfsschedule.nix
+    # ./programs/gtfsschedule.nix
     ./programs/termonad.nix
     ./programs/zsh.nix
     ./programs/dunst.nix
