@@ -62,6 +62,9 @@ in with secrets; {
     pkgs.socat
     pkgs.tmux
     pkgs.iproute
+    pkgs.nodejs-18_x
+    pkgs.yarn-berry
+    pkgs.python39
   ];
 
   # Home Manager needs a bit of information about you and the
