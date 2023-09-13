@@ -26,6 +26,11 @@ in with secrets; {
     })
   ];
 
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = ["nix-command" "flakes"];
+  };
+
   imports = [
     ./emacs.nix
     ./programs/vim.nix
