@@ -59,6 +59,7 @@ let
         all-the-icons-dired
         tree-sitter
         tree-sitter-langs
+        ligature
       ];
     }
     {
@@ -169,6 +170,7 @@ in
     pkgs.nodePackages.prettier
     pkgs.ripgrep
     pkgs.jetbrains-mono
+    pkgs.cascadia-code
     pkgs.discount
     # emacs lsp support
     pkgs.haskellPackages.haskell-language-server
