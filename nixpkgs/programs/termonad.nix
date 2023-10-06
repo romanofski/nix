@@ -3,6 +3,7 @@
 {
   home.packages = [
     pkgs.termonad
+    pkgs.victor-mono
   ];
   xdg = {
     enable = true;
