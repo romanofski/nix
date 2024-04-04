@@ -37,7 +37,6 @@ in with secrets; {
     ./programs/zsh.nix
     ./programs/notmuch.nix
     ./programs/purebred.nix
-    ./programs/git.nix
     # currently uses dconf which is stuffy
     #./programs/gtk.nix
     ./programs/tmux.nix
@@ -46,6 +45,8 @@ in with secrets; {
     ./services/hamster.nix
     ./services/emacs.nix
   ];
+
+  programs.git = import ./programs/git.nix { pkgs = pkgs; useGCM =true; };
 
   nixpkgs.config.allowUnfree = true;
   home.stateVersion = "23.05"; # Please read the comment before changing.
