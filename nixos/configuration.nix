@@ -77,6 +77,9 @@
       nix-prefetch-scripts
       linuxPackages.tp_smapi
       git
+      jellyfin
+      jellyfin-web
+      jellyfin-ffmpeg
     ];
 
     programs.mosh.enable = true;
@@ -86,17 +89,18 @@
     # Enable the X11 windowing system.
     services.xserver = {
       enable = true;
-      layout = "us";
-      xkbModel = "pc105";
       desktopManager.xterm.enable = false;
       desktopManager.xfce = {
         enable = true;
         noDesktop = true;
         enableXfwm = true;
       };
-      displayManager.defaultSession = "xfce";
       displayManager.lightdm.enable = true;
-      xkbOptions = "compose:ralt";
+      xkb = {
+        options = "compose:ralt";
+        model = "pc105";
+        layout = "us";
+      };
       exportConfiguration = true;
       videoDrivers = ["intel" "vesa"];
       deviceSection = ''
@@ -109,15 +113,17 @@
       '';
 
     };
-    fonts.fonts = [
+    fonts.packages = [
       pkgs.dejavu_fonts
       pkgs.fira
       pkgs.fira-code
       pkgs.fira-mono
     ];
+    
+    services.displayManager.defaultSession = "xfce";
 
     # Enable touchpad support.
-    services.xserver.libinput.enable = true;
+    services.libinput.enable = true;
 
     sound.enable = true;
     hardware.pulseaudio.enable = false;
@@ -141,7 +147,7 @@
     };
     users.users.rjoost = {
       createHome = true;
-      extraGroups = ["wheel" "video" "audio" "disk" "networkmanager"];
+      extraGroups = ["wheel" "video" "audio" "disk" "networkmanager" "jellyfin"];
       group = "rjoost";
       home = "/home/rjoost";
       description = "Roman Joost";
