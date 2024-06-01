@@ -50,7 +50,7 @@ in
     pkgs.wget
     pkgs.xlockmore
     pkgs.xss-lock
-    pkgsUnstable.firefox
+    pkgs.firefox
     pkgsUnstable.hamster
     pkgsUnstable.xfce.thunar
     pkgsUnstable.xfce.thunar-volman
