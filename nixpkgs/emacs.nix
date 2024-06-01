@@ -195,5 +195,8 @@ in
     ))
 
     pkgs.pyright
+    pkgs.python311Packages.isort
+    pkgs.python311Packages.pylint
+    pkgs.python311Packages.yapf
   ];
 }
