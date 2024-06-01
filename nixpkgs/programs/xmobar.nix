@@ -3,7 +3,6 @@
 {
   home.packages = [
     pkgs.xmobar
-    pkgs.haskellPackages.workbalance
   ];
 
   xdg = {

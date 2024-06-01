@@ -2,8 +2,6 @@
 { pkgs, ... }:
 
 let
-  sources = import ./nixpkgsource.nix;
-  pkgsUnstable = import sources.nixos-unstable { };
   configs = [
     {
       file = ./emacs/init.el;
@@ -149,7 +147,7 @@ in
 {
   programs.emacs = {
     enable = true;
-    package = pkgsUnstable.emacs29-gtk3;
+    package = pkgs.emacs29-gtk3;
     extraPackages = epkgs: builtins.concatMap (config: config.pkgs epkgs) configs ++ [];
   };
 
@@ -190,5 +188,8 @@ in
     ))
 
     pkgs.pyright
+    pkgs.python311Packages.isort
+    pkgs.python311Packages.pylint
+    pkgs.python311Packages.yapf
   ];
 }
