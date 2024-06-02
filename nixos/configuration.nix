@@ -19,6 +19,7 @@
     ./services/upower.nix
     ./services/gvfs.nix
     ./services/mysql.nix
+    ./services/media-server.nix
     ];
 
     boot.loader.systemd-boot.enable = true;
