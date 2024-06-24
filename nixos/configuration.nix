@@ -81,6 +81,8 @@
       jellyfin
       jellyfin-web
       jellyfin-ffmpeg
+      # used also by pipewire - pactl
+      pkgs.pulseaudio
     ];
 
     programs.mosh.enable = true;
@@ -120,13 +122,16 @@
       pkgs.fira-code
       pkgs.fira-mono
     ];
-    
+
     services.displayManager.defaultSession = "xfce";
 
     # Enable touchpad support.
-    services.libinput.enable = true;
+    services.libinput = {
+      enable = true;
+      mouse.naturalScrolling = true;
+    };
 
-    sound.enable = true;
+    sound.enable = false;
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
