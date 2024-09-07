@@ -87,7 +87,11 @@
 
     programs.mosh.enable = true;
     services.openssh.enable = true;
-    services.dbus.packages = with pkgs; [ pkgs.dconf ];
+    services.dbus.packages = with pkgs; [
+      pkgs.dconf
+      # used by pinentry-gnome3
+      pkgs.gcr
+    ];
 
     # Enable the X11 windowing system.
     services.xserver = {
