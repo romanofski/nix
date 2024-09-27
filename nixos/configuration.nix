@@ -75,6 +75,7 @@
     environment.sessionVariables = { PATH="/run/current-system/sw/bin"; };
 
     environment.systemPackages = with pkgs; [
+      opentabletdriver
       nix-prefetch-scripts
       linuxPackages.tp_smapi
       git
