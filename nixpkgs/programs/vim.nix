@@ -7,8 +7,7 @@ let
 in {
   programs.neovim = {
     enable = true;
-    package = pkgsUnstable.neovim-unwrapped;
-    plugins = with pkgsUnstable.vimPlugins; [
+    plugins = with pkgs.vimPlugins; [
       coc-nvim
       nvim-treesitter
       bufexplorer

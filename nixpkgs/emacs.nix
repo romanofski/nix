@@ -162,7 +162,7 @@ in
 
   home.packages = [
     pkgs.emacs-all-the-icons-fonts
-    pkgs.nixfmt
+    pkgs.nixfmt-classic
     pkgs.aspellDicts.de
     pkgs.aspellDicts.en
     pkgs.shellcheck
@@ -175,12 +175,20 @@ in
     pkgs.haskellPackages.hie-bios
     pkgs.nodePackages.typescript-language-server
     pkgs.nodePackages.typescript
-    pkgs.nodePackages.vscode-html-languageserver-bin
+    pkgs.nodePackages.vscode-langservers-extracted
     pkgs.nodePackages.eslint
     pkgs.nodePackages.yaml-language-server
+
+    (pkgs.python311.withPackages (
+      ps:
+      with ps; [
+        isort
+        yapf
+        pylint
+        pip
+      ]
+    ))
+
     pkgs.pyright
-    pkgs.python39Packages.isort
-    pkgsUnstable.python39Packages.pylint
-    pkgs.python39Packages.yapf
   ];
 }

@@ -42,7 +42,6 @@ in with secrets; {
     ./programs/tmux.nix
     ./programs/ghci.nix
     ./services/gpg-agent.nix
-    ./services/hamster.nix
     ./services/emacs.nix
   ];
 
@@ -51,21 +50,21 @@ in with secrets; {
   nixpkgs.config.allowUnfree = true;
   home.stateVersion = "23.05"; # Please read the comment before changing.
 
-  home.packages = [
-    pkgs.bzip2
-    pkgs.elinks
-    pkgs.feh
-    pkgs.gcc
-    pkgs.git-lfs
-    pkgs.glibcLocales
-    pkgs.haskellPackages.workbalance
-    pkgs.nix-index
-    pkgs.socat
-    pkgs.tmux
-    pkgs.iproute
-    pkgs.nodejs-18_x
-    pkgs.yarn-berry
-    pkgs.python39
+
+  home.packages = with pkgs; [
+    bzip2
+    elinks
+    feh
+    gcc
+    git-lfs
+    glibcLocales
+    haskellPackages.workbalance
+    nix-index
+    socat
+    tmux
+    iproute
+    nodejs_20
+    yarn-berry
   ];
 
   # Home Manager needs a bit of information about you and the
@@ -135,6 +134,8 @@ in with secrets; {
   };
 
   programs.zsh.loginExtra = ''
-  export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
+    export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
+    export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock
+    export DOCKER_COMMAND=podman
   '';
 }
