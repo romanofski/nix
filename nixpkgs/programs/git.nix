@@ -31,5 +31,6 @@ in with secrets;
   extraConfig = if useGCM then gcm else {};
   userEmail = "${email}";
   userName = "${realName}";
+  lfs.enable = true;
 }
 
