@@ -57,6 +57,7 @@ let
         all-the-icons-dired
         tree-sitter
         tree-sitter-langs
+        treesit-grammars.with-all-grammars
       ];
     }
     {
@@ -87,6 +88,12 @@ let
         helm-lsp
         bazel
         powershell
+      ];
+    }
+    {
+      file = ./emacs/lang/rust.el;
+      pkgs = epkgs: with epkgs; [
+        rustic
       ];
     }
     {
@@ -188,8 +195,5 @@ in
     ))
 
     pkgs.pyright
-    pkgs.python311Packages.isort
-    pkgs.python311Packages.pylint
-    pkgs.python311Packages.yapf
   ];
 }
