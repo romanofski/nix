@@ -65,6 +65,10 @@ in with secrets; {
     iproute
     nodejs_20
     yarn-berry
+    (google-cloud-sdk.withExtraComponents ([
+      google-cloud-sdk.components.cloud-datastore-emulator
+      google-cloud-sdk.components.app-engine-python
+    ]))
   ];
 
   # Home Manager needs a bit of information about you and the
