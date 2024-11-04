@@ -174,6 +174,7 @@ in
     pkgs.nodePackages.prettier
     pkgs.ripgrep
     pkgs.jetbrains-mono
+    pkgs.fira-code
     pkgs.discount
     # emacs lsp support
     pkgs.haskellPackages.haskell-language-server

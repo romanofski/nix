@@ -59,8 +59,8 @@
 
 ;; fonts and ligatures
 (when (window-system)
-  ;;(add-to-list 'default-frame-alist '(font . "JetBrains Mono NL Medium"))
-  (set-face-attribute 'default nil :weight 'normal :height 90 :font "JetBrains Mono NL Medium"))
+  ;;(add-to-list 'default-frame-alist '(font . "Fira Code Medium"))
+  (set-face-attribute 'default nil :weight 'normal :height 90 :font "Fira Code Medium"))
 
 ;; transparent title bar
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
