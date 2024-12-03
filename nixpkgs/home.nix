@@ -39,7 +39,6 @@ in with secrets; {
     ./programs/zsh.nix
     ./programs/dunst.nix
     ./programs/notmuch.nix
-    ./programs/git.nix
     ./programs/xsession.nix
     ./programs/purebred.nix
     ./programs/gtk.nix
@@ -59,7 +58,11 @@ in with secrets; {
     pkgs.unrar
     pkgs.chromium
     pkgs.digikam
+    pkgs.freecad
+    pkgs.simple-scan
   ];
+
+  programs.git = import ./programs/git.nix { pkgs = pkgs; useGCM = false; };
 
   nixpkgs.config.allowUnfree = true;
 
