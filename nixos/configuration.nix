@@ -11,7 +11,6 @@
     ./hardware-configuration.nix
     ./configs/yubikey.nix
     ./configs/printing.nix
-    ./configs/virtualisation.nix
     ./configs/firewall.nix
     ./configs/unfree.nix
     ./services/ntp.nix
@@ -36,12 +35,7 @@
 
     systemd.tmpfiles.rules = [ "d /tmp 1777 root root 10d"];
 
-    nix = {
-      package = pkgs.nixFlakes;
-      extraOptions = ''
-        experimental-features = nix-command flakes
-      '';
-    };
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
     networking.networkmanager.enable = true;
     networking.networkmanager.dns = "systemd-resolved";
     networking.hostName = "krombopulos"; # Define your hostname.
@@ -94,6 +88,17 @@
       pkgs.gcr
     ];
 
+    # Enable touchpad support.
+    services.libinput = {
+      enable = true;
+      touchpad = {
+        accelProfile = "flat";
+        accelSpeed = "0.6";
+        naturalScrolling = false;
+        tapping = true;
+      };
+    };
+
     # Enable the X11 windowing system.
     services.xserver = {
       enable = true;
@@ -109,18 +114,13 @@
         model = "pc105";
         layout = "us";
       };
-      exportConfiguration = true;
-      videoDrivers = ["intel" "vesa"];
-      deviceSection = ''
-        Option "TearFree" "true"
-      '';
       serverFlagsSection = ''
         Option "OffTime" "10"
         Option "SuspendTime" "5"
         Option "StandbyTime" "3"
       '';
-
     };
+
     fonts.packages = [
       pkgs.dejavu_fonts
       pkgs.fira
@@ -129,15 +129,8 @@
     ];
 
     services.displayManager.defaultSession = "xfce";
+    services.fwupd.enable = true;
 
-    # Enable touchpad support.
-    services.libinput = {
-      enable = true;
-      mouse.naturalScrolling = true;
-    };
-
-    sound.enable = false;
-    hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
@@ -151,6 +144,13 @@
       # no need to redefine it in your config for now)
       #media-session.enable = true;
     };
+
+    # opentabletdriver
+    nixpkgs.config.permittedInsecurePackages = [
+      "dotnet-runtime-6.0.36"
+      "dotnet-sdk-wrapped-6.0.428"
+      "dotnet-sdk-6.0.428"
+    ];
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.groups = {

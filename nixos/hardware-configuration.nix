@@ -41,10 +41,6 @@
         "rd.udev.log_level=3"
         "udev.log_priority=3"
       ];
-      # Hide the OS choice for bootloaders.
-      # It's still possible to open the bootloader list by pressing any key
-      # It will just not appear on screen unless a key is pressed
-      loader.timeout = 0;
     };
 
     fileSystems."/" =
@@ -74,16 +70,8 @@
           # networking.interfaces.wlp61s0.useDHCP = lib.mkDefault true;
 
           nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-          hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-          hardware.trackpoint.enable = true;
-          hardware.opengl = {
-            enable = true;
-            driSupport = true;
-            driSupport32Bit = true;
-          };
-
-          hardware.bluetooth.enable = true;
+          hardware.opentabletdriver.enable = true;
 
           services.tlp.enable = true;
           hardware.sane.enable = true;
