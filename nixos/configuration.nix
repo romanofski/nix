@@ -19,6 +19,7 @@
     ./services/gvfs.nix
     ./services/mysql.nix
     ./services/media-server.nix
+    ./services/image-server.nix
     ];
 
     boot.loader.systemd-boot.enable = true;
