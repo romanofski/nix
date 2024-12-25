@@ -43,6 +43,7 @@ in with secrets; {
     ./programs/purebred.nix
     ./programs/gtk.nix
     ./programs/tmux.nix
+    ./programs/maildrop.nix
     ./programs/autorandr.nix
     ./programs/ghci.nix
     ./programs/mcfly.nix
