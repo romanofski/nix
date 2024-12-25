@@ -2,8 +2,6 @@
 
 let
   config = ./vim/config.vim;
-  sources = import ../nixpkgsource.nix;
-  pkgsUnstable = import sources.nixos-unstable { };
 in {
   programs.neovim = {
     enable = true;

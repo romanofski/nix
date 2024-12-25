@@ -4,7 +4,7 @@
   gtk = {
     enable = true;
     theme = {
-      package = pkgs.gnome3.gnome-themes-extra;
+      package = pkgs.gnome.gnome-themes-extra;
       name = "Adwaita";
     };
   };

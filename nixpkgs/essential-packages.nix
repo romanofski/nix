@@ -24,7 +24,7 @@ in
     pkgs.file
     pkgs.gimp
     pkgs.git
-    pkgs.gnome3.cheese
+    pkgs.cheese
     pkgs.gnupg
     pkgs.haskellPackages.xmobar
     pkgs.ibm-plex

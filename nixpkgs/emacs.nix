@@ -180,7 +180,7 @@ in
     pkgs.haskellPackages.hie-bios
     pkgs.nodePackages.typescript-language-server
     pkgs.nodePackages.typescript
-    pkgs.nodePackages.vscode-langservers-extracted
+    pkgs.vscode-langservers-extracted
     pkgs.nodePackages.eslint
     pkgs.nodePackages.yaml-language-server
 
@@ -195,8 +195,5 @@ in
     ))
 
     pkgs.pyright
-    pkgs.python311Packages.isort
-    pkgs.python311Packages.pylint
-    pkgs.python311Packages.yapf
   ];
 }
