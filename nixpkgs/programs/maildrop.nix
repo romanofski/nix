@@ -4,7 +4,6 @@ let
   secrets = import ../secrets.nix;
 in {
   home.file.".HMmailfilter" = {
-    source = ./configs/mailfilter.rc;
     text = ''
       import PATH
       DEFAULT="$HOME/Maildir"
