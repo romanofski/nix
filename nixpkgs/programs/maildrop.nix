@@ -2,6 +2,8 @@
 
 let
   secrets = import ../secrets.nix;
+  mapped = builtins.map (x: "hasaddr(${x})") secrets.mailfilter.whitelist;
+  whitelist = builtins.concatStringsSep " || " mapped;
 in {
   home.file.".HMmailfilter" = {
     text = ''
@@ -48,7 +50,7 @@ in {
       }
 
       # anything not addressed to me
-      if ( ! hasaddr(${secrets.email}) )
+      if ( ! ${whitelist} )
       {
       to "| notmuch insert +spam"
       }
