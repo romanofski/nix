@@ -7,7 +7,6 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-    <nixos-hardware/lenovo/thinkpad/t480s>
     ./hardware-configuration.nix
     ./configs/yubikey.nix
     ./configs/printing.nix
@@ -36,7 +35,12 @@
 
     systemd.tmpfiles.rules = [ "d /tmp 1777 root root 10d"];
 
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix = {
+      package = pkgs.nixVersions.stable;
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+    };
     networking.networkmanager.enable = true;
     networking.networkmanager.dns = "systemd-resolved";
     networking.hostName = "krombopulos"; # Define your hostname.
