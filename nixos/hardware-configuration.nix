@@ -43,6 +43,9 @@
       ];
     };
 
+    hardware.bluetooth.enable = true;
+    hardware.bluetooth.powerOnBoot = true;
+
     fileSystems."/" =
       { device = "/dev/disk/by-uuid/55c276d1-e1e5-4f86-bb76-bfc34946d112";
       fsType = "ext4";
