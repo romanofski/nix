@@ -35,6 +35,11 @@ in {
       to "| notmuch insert +spam -inbox"
       }
 
+      if (/^From:.*@eq.edu.au$/:H)
+      {
+      to "| notmuch insert +inbox +school"
+      }
+
       if (/^To:.*romanofski.de$/:H)
       {
       to "| notmuch insert +spam -inbox"
@@ -50,7 +55,7 @@ in {
       }
 
       # anything not addressed to me
-      if ( ! ${whitelist} )
+      if ( ! (${whitelist}) )
       {
       to "| notmuch insert +spam"
       }
