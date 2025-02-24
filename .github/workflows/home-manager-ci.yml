@@ -4,25 +4,32 @@ on:
   - pull_request
 jobs:
   linux:
+    strategy:
+      matrix:
+        mapping:
+          - { filename: home.nix, channel: nixos-unstable , home-manager-release: release-23.05 }
+          - { filename: t14.nix, channel: nixos-unstable, home-manager-release: master }
+
     name: Nix
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v12
+        uses: cachix/install-nix-action@v22
         with:
-          nix_path: "nixpkgs=channel:nixos-unstable"
+          nix_path: "nixpkgs=channel:${{ matrix.mapping.channel }}"
 
       - name: Install home-manager channel
         run: |
-          nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+          nix-channel --add https://github.com/nix-community/home-manager/archive/${{ matrix.mapping.home-manager-release }}.tar.gz home-manager
           nix-channel --update
 
       - name: Link home.nix
         run: |
-          mkdir -p $HOME/.config/nixpkgs
-          cd $HOME/.config/nixpkgs && ln -s $GITHUB_WORKSPACE/nixpkgs/home.nix $HOME/.config/nixpkgs/home.nix
+          CONFIGPATH=$HOME/.config/home-manager
+          mkdir -p "${CONFIGPATH}"
+          cd "${CONFIGPATH}" && ln -s $GITHUB_WORKSPACE/nixpkgs/${{ matrix.mapping.filename }} "${CONFIGPATH}"/home.nix
 
       - name: Create secrets.nix
         run: |
