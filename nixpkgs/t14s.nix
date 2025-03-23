@@ -62,9 +62,10 @@ in with secrets; {
     nix-index
     socat
     tmux
-    iproute
-    nodejs_20
+    iproute2
+    nodejs_22
     yarn-berry
+    bazel_7
     (google-cloud-sdk.withExtraComponents ([
       google-cloud-sdk.components.cloud-datastore-emulator
       google-cloud-sdk.components.app-engine-python
