@@ -1,1 +1,1 @@
-(use-package ansible)
+(use-package yaml-mode)

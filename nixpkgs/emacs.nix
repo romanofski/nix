@@ -88,17 +88,7 @@ let
         helm-lsp
         bazel
         powershell
-      ];
-    }
-    {
-      file = ./emacs/lang/rust.el;
-      pkgs = epkgs: with epkgs; [
-        rustic
-      ];
-    }
-    {
-      file = ./emacs/lang/adoc.el;
-      pkgs = epkgs: with epkgs; [
+        typescript-mode
         adoc-mode
         markup-faces
       ];
@@ -118,29 +108,10 @@ let
       ];
     }
     {
-      file = ./emacs/lang/js.el;
-      pkgs = epkgs: with epkgs; [
-        prettier-js
-        web-mode
-        typescript-mode
-        ecukes
-      ];
-    }
-    {
-      file = ./emacs/lang/yaml.el;
-      pkgs = epkgs: with epkgs; [
-        ansible
-        yaml-mode
-        yasnippet
-        auto-complete
-      ];
-    }
-    {
       file = ./emacs/lang/python.el;
       pkgs = epkgs: with epkgs; [
         lsp-pyright
         yapfify
-        pyvenv
       ];
     }
     {
@@ -154,7 +125,7 @@ in
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs29-gtk3;
+    package = pkgs.emacs30-gtk3;
     extraPackages = epkgs: builtins.concatMap (config: config.pkgs epkgs) configs ++ [];
   };
 
@@ -177,6 +148,8 @@ in
     pkgs.fira-code
     pkgs.discount
     # emacs lsp support
+    pkgs.yaml-language-server
+    pkgs.bash-language-server
     pkgs.haskellPackages.haskell-language-server
     pkgs.haskellPackages.hie-bios
     pkgs.nodePackages.typescript-language-server
@@ -190,7 +163,6 @@ in
       with ps; [
         isort
         yapf
-        pylint
         pip
       ]
     ))
