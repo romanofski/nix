@@ -7,6 +7,9 @@ let
       helper = "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe";
     };
   };
+  extraConfig = {
+    http.version = "HTTP/1.1";
+  };
 in with secrets;
 {
     enable = true;
@@ -30,5 +33,7 @@ in with secrets;
     };
     userEmail = "${email}";
     userName = "${realName}";
+    extraConfig = if useGCM then extraConfig // gcm else extraConfig;
+    lfs.enable = true;
 }
 
