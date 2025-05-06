@@ -2,11 +2,17 @@
 #r "C:\Program Files\workspacer\plugins\workspacer.Bar\workspacer.Bar.dll"
 #r "C:\Program Files\workspacer\plugins\workspacer.ActionMenu\workspacer.ActionMenu.dll"
 #r "C:\Program Files\workspacer\plugins\workspacer.FocusIndicator\workspacer.FocusIndicator.dll"
+#r "C:\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Outlook\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Outlook.dll"
+#r "C:\Windows\assembly\GAC_MSIL\office\15.0.0.0__71e9bce111e9429c\OFFICE.DLL"
+
+using Microsoft.Office.Interop.Outlook;
 
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 using SD = System.Drawing;
 using System.Net;
+using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml;
@@ -21,6 +27,139 @@ using workspacer.FocusIndicator;
 
 public record WeatherData(int Temperature);
 
+class CalendarMonitor : BarWidgetBase
+{
+    private int _interval;
+    private Timer _timer;
+    private string _error;
+    private List<AppointmentItem> _data;
+
+    public CalendarMonitor(int interval)
+    {
+        _interval = interval;
+    }
+
+    public override IBarWidgetPart[] GetParts()
+    {
+        string msg;
+        int ellipsisMaxLength = 40;
+
+        if (_data.Count == 0)
+        {
+            msg = "0 mtgs";
+            return Parts(Part(msg));
+        }
+        else
+        {
+            List<AppointmentItem> toDisplay = _data.Take(2).ToList();
+            List<IBarWidgetPart> parts = new List<IBarWidgetPart>();
+            foreach (AppointmentItem item in toDisplay)
+            {
+                Color color = Color.White;
+                TimeSpan toMeeting = item.Start - DateTime.Now;
+                if (toMeeting <= TimeSpan.FromMinutes(30))
+                {
+                    color = Color.Lime;
+                }
+                if (toMeeting <= TimeSpan.FromMinutes(15))
+                {
+                    color = Color.Red;  
+                }
+                string ellipsis = item.Subject.Length > ellipsisMaxLength ? string.Concat(item.Subject.AsSpan(0, ellipsisMaxLength), "...") : item.Subject;
+                parts.Add(Part($"{item.Start:HH:mm} {ellipsis} - ", color, fontname: FontName));
+            }
+            return parts.ToArray();
+        }
+    }
+
+    public override void Initialize()
+    {
+        _timer = new Timer(_interval);
+        _timer.Elapsed += (s, e) => {
+            try
+            {
+                // Create an Outlook application instance
+                Application outlookApp = new Application();
+
+                // Get the namespace (MAPI)
+                NameSpace outlookNamespace = outlookApp.GetNamespace("MAPI");
+
+                Items restrictedItems = GetCalendarItems(outlookNamespace);
+
+                List<AppointmentItem> eventsToConsider = new List<AppointmentItem>();
+
+                foreach(AppointmentItem item in restrictedItems)
+                {
+                    if (item.Subject.StartsWith("Canceled")) 
+                    { 
+                        continue; 
+                    }
+                    if (item.Start >= DateTime.Now)
+                    {
+                        eventsToConsider.Add(item);
+                    }
+                }
+                _data = eventsToConsider;
+            }
+            catch (System.Exception ex)
+            {
+                _error = ex.Message;
+            }
+            MarkDirty();
+        };
+        _timer.Enabled = true;
+    }
+
+    static Items GetCalendarItems(NameSpace outlookNamespace, int hoursToQuery = 8)
+    {
+        // Get the default calendar folder
+        MAPIFolder calendarFolder = outlookNamespace.GetDefaultFolder(OlDefaultFolders.olFolderCalendar);
+
+        // Get the items in the calendar folder
+        Items calendarItems = calendarFolder.Items;
+
+        // Restrict the items to the next 8 hours
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = startTime.AddHours(hoursToQuery);
+        string filter = $"[Start] >= '{startTime:g}' AND [Start] <= '{endTime:g}'";
+
+
+        Items restrictedItems = calendarItems.Restrict(filter);
+
+        // Sort the items by start time
+        restrictedItems.Sort("[Start]");
+        restrictedItems.IncludeRecurrences = true;
+
+        return restrictedItems;
+    }
+    public List<AppointmentItem> Main()
+    {
+            // Create an Outlook application instance
+            Application outlookApp = new Application();
+
+            // Get the namespace (MAPI)
+            NameSpace outlookNamespace = outlookApp.GetNamespace("MAPI");
+
+            Items restrictedItems = GetCalendarItems(outlookNamespace);
+
+            List<AppointmentItem> eventsToConsider = new List<AppointmentItem>();
+
+            foreach(AppointmentItem item in restrictedItems)
+            {
+                if (item.Subject.StartsWith("Canceled")) 
+                { 
+                    continue; 
+                }
+                if (item.Start >= DateTime.Now)
+                {
+                    eventsToConsider.Add(item);
+                }
+            }
+
+            return eventsToConsider;
+    }
+}
+
 class ProcessMonitor : BarWidgetBase {
     private int _interval;
     private Timer _timer;
@@ -28,7 +167,7 @@ class ProcessMonitor : BarWidgetBase {
     private string _args;
     private string _stdout;
 
-    public ProcessMonitor(string cmd, string args, int interval)
+    public ProcessMonitor(string cmd, string args = null, int interval = 1000 * 60)
     {
         _cmd = cmd;
         _args = args;
@@ -55,7 +194,10 @@ class ProcessMonitor : BarWidgetBase {
     {
         Process proc = new Process();
         proc.StartInfo.FileName = cmd;
-        proc.StartInfo.Arguments = args;
+        if (args != null)
+        {
+            proc.StartInfo.Arguments = args;
+        }
         proc.StartInfo.UseShellExecute = false;
         proc.StartInfo.RedirectStandardOutput = true;
         proc.StartInfo.CreateNoWindow = true;
@@ -217,7 +359,10 @@ Action<IConfigContext> doConfig = (context) =>
 
     int oneMinute = 1000 * 60;
 
-    context.AddBar( new BarPluginConfig() {
+    context.ConsoleLogLevel = LogLevel.Debug;
+    context.FileLogLevel = LogLevel.Debug;
+
+    context.AddBar(new BarPluginConfig() {
         BarTitle = "workspacer.Bar",
         Background = backgroundColor,
         DefaultWidgetBackground = backgroundColor,
@@ -227,6 +372,9 @@ Action<IConfigContext> doConfig = (context) =>
         FontName = "IBM Plex Mono",
 
         RightWidgets = () => new IBarWidget[] {
+            new TextWidget("|>"),
+            new CalendarMonitor(oneMinute * 5),
+            new TextWidget(" | "),
             new ProcessMonitor("wsl.exe", "-d NixOS workbalance", oneMinute),
             new TextWidget(" | "),
             new UVWidget("bri", 1000),
@@ -235,12 +383,18 @@ Action<IConfigContext> doConfig = (context) =>
             new TextWidget(" | "),
             new WeatherWidget("Brisbane", "YBBN", 1000),
             },
-    });
+    }); ; ;
     context.AddFocusIndicator();
 
     context.WorkspaceContainer.CreateWorkspaces("1", "2", "3", "4", "5");
-    context.CanMinimizeWindows = true; // false by default
+    context.CanMinimizeWindows = false; // false by default
 
     context.Keybinds.Subscribe(KeyModifiers.Alt, Keys.Tab, () => context.Workspaces.FocusedWorkspace.FocusNextWindow(), "cycle through windows on current workspace");
+
+    context.WindowRouter.AddFilter((window) => !window.ProcessName.Contains("1Password"));
+    context.WindowRouter.AddFilter((window) => !window.ProcessName.Contains("mstsc"));
+    context.WindowRouter.AddFilter((window) => !window.Title.Contains("Windows Security"));
+    context.WindowRouter.AddRoute((window) => window.ProcessName.Contains("firefox") ? context.WorkspaceContainer["2"] : null);
+    context.WindowRouter.AddRoute((window) => window.ProcessName.Contains("edge") ? context.WorkspaceContainer["2"] : null);
 };
 return doConfig;
