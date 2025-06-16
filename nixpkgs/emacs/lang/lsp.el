@@ -1,5 +1,20 @@
 (use-package powershell)
 
+(use-package copilot-chat
+  :general
+  (general-nmap :prefix "SPC"
+                "c" '(:ignore t :wk "copilot")
+                "cd" 'copilot-chat-display
+                "cy" 'copilot-chat-yank
+                "yp" 'copilot-chat-yank-pop
+                "bd" 'evil-delete-buffer
+		)
+  :config
+  ;;(setopt copilot-chat-default-model "claude-sonnet-4")
+  (setopt copilot-chat-model "claude-sonnet-4")
+  (setopt copilot-chat-frontend 'markdown)
+  )
+
 (use-package eglot
   :hook ((typescript-mode . eglot-ensure)
          (haskell-mode . eglot-ensure)

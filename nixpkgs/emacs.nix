@@ -91,6 +91,7 @@ let
         typescript-mode
         adoc-mode
         markup-faces
+        copilot-chat
       ];
     }
     {
