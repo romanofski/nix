@@ -48,6 +48,8 @@
     services.resolved.enable = true;
     services.resolved.dnssec = "false";
 
+    services.blueman.enable = true;
+
     # Select internationalisation properties.
     console.keyMap = "us";
     console.font = "Lat2-Terminus16";
