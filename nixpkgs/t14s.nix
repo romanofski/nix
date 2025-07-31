@@ -66,6 +66,7 @@ in with secrets; {
     nodejs_22
     yarn-berry
     bazel_7
+    gnumake
     (google-cloud-sdk.withExtraComponents ([
       google-cloud-sdk.components.cloud-datastore-emulator
       google-cloud-sdk.components.app-engine-python
