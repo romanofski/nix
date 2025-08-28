@@ -1,8 +1,6 @@
-{ pkgs, ... }:
+{ secrets, pkgs, ... }:
 
-let
-  secrets = import ../secrets.nix;
-in with secrets; {
+with secrets; {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -10,9 +8,8 @@ in with secrets; {
       c = "cd ..";
     };
     loginExtra = ''
-      if [ -O "$HOME/.nix-profile/etc/profile.d/nix.sh" ]
-      then
-      . /home/rjoost/.nix-profile/etc/profile.d/nix.sh
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
       [ -z "$LOCALE_ARCHIVE" ] && LOCALE_ARCHIVE="${pkgs.glibcLocales}/lib/locale/locale-archive"
       if env | grep -q ^LOCALE_ARCHIVE=
