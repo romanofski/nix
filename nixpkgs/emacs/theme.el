@@ -141,13 +141,3 @@
   :init (nyan-mode t)
   )
 
-(use-package tree-sitter
-    :ensure t
-
-    :hook (after-init . global-tree-sitter-mode)
-    :init
-    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-(use-package tree-sitter-langs
-    :ensure t
-    :after tree-sitter)

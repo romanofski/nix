@@ -1,7 +1,6 @@
-{ pkgs, useGCM ? false }:
+{ secrets, pkgs, useGCM ? false }:
 
 let
-  secrets = import ../secrets.nix;
   gcm = {
     credential = {
       helper = "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe";

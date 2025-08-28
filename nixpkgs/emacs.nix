@@ -55,8 +55,6 @@ let
         hl-todo
         nyan-mode
         all-the-icons-dired
-        tree-sitter
-        tree-sitter-langs
         treesit-grammars.with-all-grammars
       ];
     }
@@ -92,6 +90,9 @@ let
         adoc-mode
         markup-faces
         copilot-chat
+        bicep-ts-mode
+        lsp-pyright
+        yapfify
       ];
     }
     {
@@ -106,13 +107,6 @@ let
         haskell-mode
         lsp-haskell
         flycheck-haskell
-      ];
-    }
-    {
-      file = ./emacs/lang/python.el;
-      pkgs = epkgs: with epkgs; [
-        lsp-pyright
-        yapfify
       ];
     }
     {
@@ -158,6 +152,7 @@ in
     pkgs.vscode-langservers-extracted
     pkgs.nodePackages.eslint
     pkgs.nodePackages.yaml-language-server
+    pkgs.bicep-lsp
 
     (pkgs.python311.withPackages (
       ps:

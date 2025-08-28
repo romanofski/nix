@@ -1,8 +1,6 @@
-{ pkgs, ... }:
+{ secrets, pkgs, ... }:
 
-let
-  secrets = import ./secrets.nix;
-in with secrets; {
+{
 
   nixpkgs.overlays = [
     (self: super:
@@ -45,7 +43,7 @@ in with secrets; {
     ./services/emacs.nix
   ];
 
-  programs.git = import ./programs/git.nix { pkgs = pkgs; useGCM =true; };
+  programs.git = import ./programs/git.nix { secrets = secrets; pkgs = pkgs; useGCM =true; };
 
   nixpkgs.config.allowUnfree = true;
   home.stateVersion = "23.05"; # Please read the comment before changing.
@@ -66,6 +64,7 @@ in with secrets; {
     nodejs_22
     yarn-berry
     bazel_7
+    jre
     gnumake
     (google-cloud-sdk.withExtraComponents ([
       google-cloud-sdk.components.cloud-datastore-emulator
@@ -85,8 +84,8 @@ in with secrets; {
   accounts.email = {
     accounts = {
       clipchamp = {
-        realName = "${realName}";
-        address = "${email}";
+        realName = "${secrets.realName}";
+        address = "${secrets.email}";
         userName = "roman.joost@clipchamp.com";
         primary = true;
         flavor = "gmail.com";
