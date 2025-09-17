@@ -51,7 +51,7 @@ in
     pkgs.xlockmore
     pkgs.xss-lock
     pkgs.firefox
-    pkgsUnstable.hamster
+    pkgs.hamster
     pkgsUnstable.xfce.thunar
     pkgsUnstable.xfce.thunar-volman
   ];
