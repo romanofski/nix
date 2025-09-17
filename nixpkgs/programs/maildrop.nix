@@ -1,7 +1,6 @@
-{pkgs, config, ...}:
+{secrets, pkgs, config, ...}:
 
 let
-  secrets = import ../secrets.nix;
   mapped = builtins.map (x: "hasaddr(${x})") secrets.mailfilter.whitelist;
   whitelist = builtins.concatStringsSep " || " mapped;
 in {

@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1756022458,
-        "narHash": "sha256-J1i35r4HfNDdPpwL0vOBaZopQudAUVtartEerc1Jryc=",
+        "lastModified": 1758085625,
+        "narHash": "sha256-D0KVKNgWSDVjYFgPLEtSQvSKchTBT0YqSbNlH7OQ+bo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9e3a33c0bcbc25619e540b9dfea372282f8a9740",
+        "rev": "fb928abb67bd4df99040721ed48c3b42e24b1d08",
         "type": "github"
       },
       "original": {
@@ -78,11 +78,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1756125398,
-        "narHash": "sha256-XexyKZpf46cMiO5Vbj+dWSAXOnr285GHsMch8FBoHbc=",
+        "lastModified": 1757745802,
+        "narHash": "sha256-hLEO2TPj55KcUFUU1vgtHE9UEIOjRcH/4QbmfHNF820=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3b9f00d7a7bf68acd4c4abb9d43695afb04e03a5",
+        "rev": "c23193b943c6c689d70ee98ce3128239ed9e32d1",
         "type": "github"
       },
       "original": {
@@ -102,14 +102,17 @@
     },
     "secrets": {
       "locked": {
-        "lastModified": 1758056912,
-        "narHash": "sha256-hRzVJ8uUQh0PDtPcZKxGrWl5505SoR6BOW+x070kwts=",
-        "path": "/home/rjoost/works/configs/nixsecrets",
-        "type": "path"
+        "lastModified": 1758095624,
+        "narHash": "sha256-gpw8NaMPWTV2q335INEWX1eZFAqPenFAsz+yGIQZdRo=",
+        "ref": "refs/heads/master",
+        "rev": "0ca7ae434eca5eb04306fa1799dc563d288f6bba",
+        "revCount": 2,
+        "type": "git",
+        "url": "file://ssh:krombopulos.lan:/home/rjoost/works/configs/nixsecrets"
       },
       "original": {
-        "path": "/home/rjoost/works/configs/nixsecrets",
-        "type": "path"
+        "type": "git",
+        "url": "file://ssh:krombopulos.lan:/home/rjoost/works/configs/nixsecrets"
       }
     }
   },

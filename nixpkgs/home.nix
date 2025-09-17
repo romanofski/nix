@@ -1,11 +1,6 @@
-{ pkgs, lib, ... }:
+{ secrets, pkgs, lib, ... }:
 
-let
-  sources = import ./nixpkgsource.nix;
-  pkgsUnstable = import sources.nixos-unstable { };
-  secrets = import ./secrets.nix;
-  homemanagerRelease = lib.fileContents ../release;
-in with secrets; {
+{
 
   nixpkgs.overlays = [
     (self: super:
@@ -19,14 +14,9 @@ in with secrets; {
         };
       };
       # gtfsschedule-with-packages = super.callPackage ./overlays/packages/gtfsschedule-with-packages.nix {
-      #  inherit (self.haskellPackages) ghcWithPackages;
-      # };
+        #  inherit (self.haskellPackages) ghcWithPackages;
+        # };
 
-    })
-
-    (self: super:
-    {
-      getmail6 = super.callPackage ./overlays/packages/getmail6.nix {};
     })
   ];
 
@@ -63,7 +53,7 @@ in with secrets; {
     pkgs.simple-scan
   ];
 
-  programs.git = import ./programs/git.nix { pkgs = pkgs; useGCM = false; };
+  programs.git = import ./programs/git.nix { secrets = secrets; pkgs = pkgs; useGCM = false; };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -78,19 +68,19 @@ in with secrets; {
   accounts.email = {
     accounts = {
       bromeco = {
-        realName = "${realName}";
-        address = "${email}";
-        userName = "${email}";
+        realName = "${secrets.realName}";
+        address = "${secrets.email}";
+        userName = "${secrets.email}";
         primary = true;
         flavor = "plain";
         smtp = {
-          host = mailhost;
+          host = secrets.mailhost;
           tls.enable = true;
           tls.useStartTls = true;
         };
         passwordCommand = "${pkgs.pass}/bin/pass flyingcircus-bromeco/roman@bromeco-password";
         imap = {
-          host = mailhost;
+          host = secrets.mailhost;
           tls = {
             enable = true;
             useStartTls = true;
@@ -119,11 +109,6 @@ in with secrets; {
     sessionVariables = {
       EDITOR = "vim";
     };
-  };
-
-  programs.home-manager = {
-    enable = true;
-    path = "https://github.com/nix-community/home-manager/archive/release-" + homemanagerRelease + ".tar.gz";
   };
 
   programs.msmtp = {
