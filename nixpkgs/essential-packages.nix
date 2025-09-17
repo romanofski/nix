@@ -1,9 +1,5 @@
 { pkgs, ... }:
 
-let 
-sources = import ./nixpkgsource.nix;
-pkgsUnstable = import sources.nixos-unstable { };
-in 
 {
   home.packages = [
     pkgs.a2ps
@@ -52,7 +48,7 @@ in
     pkgs.xss-lock
     pkgs.firefox
     pkgs.hamster
-    pkgsUnstable.xfce.thunar
-    pkgsUnstable.xfce.thunar-volman
+    pkgs.xfce.thunar
+    pkgs.xfce.thunar-volman
   ];
 }
