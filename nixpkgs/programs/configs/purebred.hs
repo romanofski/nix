@@ -31,10 +31,15 @@ import System.Environment (lookupEnv)
 import System.Directory (getCurrentDirectory)
 import System.Exit (die)
 
+import System.IO (stderr, hPutStrLn)
+
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as T
+import qualified Data.CaseInsensitive as CI
+
 import Data.MIME (matchContentType)
 
 import Purebred
-import Purebred.Storage.AddressBook.MuttAliasFile
 
 myBrowseThreadsKbs :: [Keybinding 'Threads 'ListOfThreads]
 myBrowseThreadsKbs =
@@ -50,7 +55,7 @@ myMailKeybindings =
 fromMail :: [Mailbox]
 fromMail =
     [ Mailbox
-          (Just "Roman Joost")
+          (Just "Róman Joost")
           (AddrSpec "roman" (DomainDotAtom $ "bromeco" :| ["de"]))
     ]
 
@@ -58,8 +63,7 @@ main :: IO ()
 main = do
   cwd <- getCurrentDirectory
 
-  addressBook <-
-    initMuttAliasFileAddressBook "/home/rjoost/.config/purebred/alias"
+  a <- initMuttAliasFileAddressBook "/home/rjoost/.config/purebred/alias"
     >>= either (die . show) pure
 
   purebred
@@ -69,7 +73,7 @@ main = do
           . set (confComposeView . cvIdentities) fromMail
           . set (confComposeView . cvSendMailCmd) (sendmail "/home/rjoost/.nix-profile/bin/msmtp")
           . over confTheme (applyAttrMappings myColoredTags)
-          . set confAddressBook [addressBook]
+          . set confAddressBook [a]
           . Purebred.Plugin.ICU.enable
     , usePlugin $ tweakConfigWithIO $ \conf -> do
       pure $ set (confFileBrowserView . fbHomePath) cwd conf
