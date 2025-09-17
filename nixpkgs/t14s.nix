@@ -65,6 +65,9 @@
     yarn-berry
     bazel_7
     jre
+    jq
+    unzip
+    dig
     gnumake
     (google-cloud-sdk.withExtraComponents ([
       google-cloud-sdk.components.cloud-datastore-emulator
