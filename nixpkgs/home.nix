@@ -54,6 +54,7 @@
   ];
 
   programs.git = import ./programs/git.nix { secrets = secrets; pkgs = pkgs; useGCM = false; };
+  programs.home-manager.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
