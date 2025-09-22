@@ -51,11 +51,11 @@
         "rev": "0ca7ae434eca5eb04306fa1799dc563d288f6bba",
         "revCount": 2,
         "type": "git",
-        "url": "ssh://krombopulos.lan:/home/rjoost/works/configs/nixsecrets"
+        "url": "ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets"
       },
       "original": {
         "type": "git",
-        "url": "ssh://krombopulos.lan:/home/rjoost/works/configs/nixsecrets"
+        "url": "ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets"
       }
     }
   },
