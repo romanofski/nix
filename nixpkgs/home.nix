@@ -6,6 +6,11 @@
     (self: super:
 
     {
+      getmail6 = super.getmail6.overrideAttrs (oldAttrs: {
+        meta = oldAttrs.meta // {
+          mainProgram = "getmail";
+        };
+      });
       haskellPackages = super.haskellPackages.override {
         overrides = hself: hsuper: {
           workbalance = hsuper.callPackage ./overlays/packages/workbalance.nix {};
