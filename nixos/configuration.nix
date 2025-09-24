@@ -41,8 +41,13 @@
         experimental-features = nix-command flakes
       '';
     };
-    networking.networkmanager.enable = true;
-    networking.networkmanager.dns = "systemd-resolved";
+    networking.networkmanager = {
+      enable = true;
+      dns = "systemd-resolved";
+      plugins = with pkgs; [
+        networkmanager-openvpn
+      ];
+    };
     networking.hostName = "krombopulos"; # Define your hostname.
 
     services.resolved.enable = true;
