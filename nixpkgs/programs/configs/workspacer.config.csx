@@ -146,7 +146,7 @@ class CalendarMonitor : BarWidgetBase
 
             foreach(AppointmentItem item in restrictedItems)
             {
-                if (item.Subject.StartsWith("Canceled")) 
+                if (item.Subject.StartsWith("Canceled") || item.Subject.StartsWith("Declined")) 
                 { 
                     continue; 
                 }
