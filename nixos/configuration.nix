@@ -90,6 +90,7 @@
       jellyfin-ffmpeg
       # used also by pipewire - pactl
       pkgs.pulseaudio
+      btrfs-progs
     ];
 
     programs.mosh.enable = true;

@@ -43,6 +43,24 @@
       ];
     };
 
+    # backup drive
+    boot.initrd.luks.devices."backupdrive" = {
+      device = "/dev/disk/by-uuid/8aa83b91-7636-4a1d-a875-e8931c6331e5";
+      allowDiscards = true; # optional for SSDs
+    };
+    filesystems."/mnt/backup" = {
+      device="/dev/mapper/backup";
+      fsType="btrfs";
+      options=[
+        "noauto"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=300" # unmount after 5min idle
+      ];
+    };
+    services.udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="S415NW0R102710B", RUN+="${pkgs.systemd}/bin/systemctl start mnt-backup.automount"
+    '';
+
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;
 
