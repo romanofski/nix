@@ -4,96 +4,96 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-    boot = {
-      initrd = {
-        verbose = false;
-        systemd.enable = true;
-        availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "uas" "sd_mod" ];
-        kernelModules = [ ];
-      };
-      kernelModules = [ "kvm-intel" ];
-      extraModulePackages = [ ];
+  boot = {
+    initrd = {
+      verbose = false;
+      systemd.enable = true;
+      availableKernelModules =
+        [ "xhci_pci" "nvme" "usb_storage" "uas" "sd_mod" ];
+      kernelModules = [ ];
+    };
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
 
-      # mostly copied from https://wiki.nixos.org/wiki/Plymouth
-      plymouth = {
-        enable = true;
-        theme = "rings";
-        themePackages = with pkgs; [
+    # mostly copied from https://wiki.nixos.org/wiki/Plymouth
+    plymouth = {
+      enable = true;
+      theme = "rings";
+      themePackages = with pkgs;
+        [
           # By default we would install all themes
-          (adi1090x-plymouth-themes.override {
-            selected_themes = [ "rings" ];
-          })
+          (adi1090x-plymouth-themes.override { selected_themes = [ "rings" ]; })
         ];
-      };
-
-      # Enable "Silent Boot"
-      consoleLogLevel = 0;
-      kernelParams = [
-        "quiet"
-        "splash"
-        "boot.shell_on_fail"
-        "loglevel=3"
-        "rd.systemd.show_status=false"
-        "rd.udev.log_level=3"
-        "udev.log_priority=3"
-      ];
     };
 
-    # backup drive
-    boot.initrd.luks.devices."backupdrive" = {
-      device = "/dev/disk/by-uuid/8aa83b91-7636-4a1d-a875-e8931c6331e5";
-      allowDiscards = true; # optional for SSDs
-    };
-    filesystems."/mnt/backup" = {
-      device="/dev/mapper/backup";
-      fsType="btrfs";
-      options=[
-        "noauto"
-        "x-systemd.automount"
-        "x-systemd.idle-timeout=300" # unmount after 5min idle
-      ];
-    };
-    services.udev.extraRules = ''
-      ACTION=="add", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="S415NW0R102710B", RUN+="${pkgs.systemd}/bin/systemctl start mnt-backup.automount"
-    '';
+    # Enable "Silent Boot"
+    consoleLogLevel = 0;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "loglevel=3"
+      "rd.systemd.show_status=false"
+      "rd.udev.log_level=3"
+      "udev.log_priority=3"
+    ];
+  };
 
-    hardware.bluetooth.enable = true;
-    hardware.bluetooth.powerOnBoot = true;
+  # backup drive
+  boot.initrd.luks.devices."backupdrive" = {
+    device = "/dev/disk/by-uuid/8aa83b91-7636-4a1d-a875-e8931c6331e5";
+    allowDiscards = true; # optional for SSDs
+    optional = true;
+    keyFile = "none";
+  };
+  fileSystems."/mnt/backup" = {
+    device = "/dev/mapper/backup";
+    fsType = "btrfs";
+    options = [
+      "noauto"
+      "x-systemd.automount"
+      "x-systemd.idle-timeout=300" # unmount after 5min idle
+    ];
+  };
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="S415NW0R102710B", RUN+="${pkgs.systemd}/bin/systemctl start mnt-backup.automount"
+  '';
 
-    fileSystems."/" =
-      { device = "/dev/disk/by-uuid/55c276d1-e1e5-4f86-bb76-bfc34946d112";
-      fsType = "ext4";
-      };
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
-      boot.initrd.luks.devices."luks-94dd41e9-d81b-4cf2-9272-080e3a99b27a".device = "/dev/disk/by-uuid/94dd41e9-d81b-4cf2-9272-080e3a99b27a";
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/55c276d1-e1e5-4f86-bb76-bfc34946d112";
+    fsType = "ext4";
+  };
 
-      fileSystems."/boot" =
-        { device = "/dev/disk/by-uuid/A7B1-2C27";
-        fsType = "vfat";
-        };
+  boot.initrd.luks.devices."luks-94dd41e9-d81b-4cf2-9272-080e3a99b27a".device =
+    "/dev/disk/by-uuid/94dd41e9-d81b-4cf2-9272-080e3a99b27a";
 
-        swapDevices =
-          [ { device = "/dev/disk/by-uuid/9029006f-3943-4825-bc8e-d71c268143dc"; }
-          ];
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/A7B1-2C27";
+    fsType = "vfat";
+  };
 
-          powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  swapDevices =
+    [{ device = "/dev/disk/by-uuid/9029006f-3943-4825-bc8e-d71c268143dc"; }];
 
-          # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-          # (the default) this is the recommended approach. When using systemd-networkd it's
-          # still possible to use this option, but it's recommended to use it in conjunction
-          # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-          networking.useDHCP = lib.mkDefault true;
-          # networking.interfaces.enp0s31f6.useDHCP = lib.mkDefault true;
-          # networking.interfaces.wlp61s0.useDHCP = lib.mkDefault true;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-          nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp0s31f6.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp61s0.useDHCP = lib.mkDefault true;
 
-          hardware.opentabletdriver.enable = true;
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-          services.tlp.enable = true;
-          hardware.sane.enable = true;
+  hardware.opentabletdriver.enable = true;
+
+  services.tlp.enable = true;
+  hardware.sane.enable = true;
 }
