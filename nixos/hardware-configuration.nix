@@ -42,24 +42,25 @@
   };
 
   # backup drive
-  boot.initrd.luks.devices."backupdrive" = {
-    device = "/dev/disk/by-uuid/8aa83b91-7636-4a1d-a875-e8931c6331e5";
-    allowDiscards = true; # optional for SSDs
-    optional = true;
-    keyFile = "none";
-  };
-  fileSystems."/mnt/backup" = {
+  fileSystems."/mnt/immich-borg" = {
     device = "/dev/mapper/backup";
     fsType = "btrfs";
     options = [
       "noauto"
       "x-systemd.automount"
       "x-systemd.idle-timeout=300" # unmount after 5min idle
+      "subvol=/immich-borg"
     ];
   };
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="S415NW0R102710B", RUN+="${pkgs.systemd}/bin/systemctl start mnt-backup.automount"
   '';
+  environment.etc.crypttab = {
+    mode = "0600";
+    text = ''
+      backup UUID=58377753-f993-4902-8876-b483bb8119d9 /root/backupdrive.key luks,noauto
+    '';
+  };
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;

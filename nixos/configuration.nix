@@ -19,6 +19,7 @@
     ./services/mysql.nix
     ./services/media-server.nix
     ./services/image-server.nix
+    ./services/backup.nix
     ];
 
     boot.loader.systemd-boot.enable = true;
@@ -85,6 +86,7 @@
       nix-prefetch-scripts
       linuxPackages.tp_smapi
       git
+      borgbackup
       jellyfin
       jellyfin-web
       jellyfin-ffmpeg
