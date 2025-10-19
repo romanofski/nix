@@ -2,11 +2,12 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
+    aispamclassifier.url = "github:romanofski/aispamclassifier";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, secrets, home-manager }:
+  outputs = inputs@{ self, nixpkgs, secrets, aispamclassifier, home-manager }:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -25,7 +26,8 @@
         modules = [
           ./home.nix
         ];
-        extraSpecialArgs = {inherit inputs; secrets =
+        extraSpecialArgs = {inherit inputs; aispamclassifier =
+        aispamclassifier; secrets =
           secrets.homeSecrets;};
       };
     };

@@ -1,4 +1,4 @@
-{ secrets, pkgs, lib, ... }:
+{ secrets, aispamclassifier, pkgs, lib, ... }:
 
 {
 
@@ -45,7 +45,6 @@
     ./programs/xmobar.nix
     ./services/gpg-agent.nix
     ./services/screen-locker.nix
-    ./services/syncthing.nix
   ];
 
   home.packages = [
@@ -56,6 +55,8 @@
     pkgs.digikam
     pkgs.freecad
     pkgs.simple-scan
+    pkgs.android-studio
+    aispamclassifier.packages.x86_64-linux.default
   ];
 
   programs.git = import ./programs/git.nix { secrets = secrets; pkgs = pkgs; useGCM = false; };
@@ -126,5 +127,16 @@
       port 587
       tls_starttls on
     '';
+  };
+
+  systemd.user.services = {
+    aispamclassifier = {
+      Unit = { Description = "AI Spam classifier service"; };
+      Service = { 
+        ExecStart = "${aispamclassifier.packages.x86_64-linux.default}/bin/server";
+        Environment = "AISPAMCLASSIFIER_MODEL=/home/rjoost/works/aispamclassifier/bert-spam-classifier-final";
+    };
+      Install = { WantedBy = [ "default.target" ]; };
+    };
   };
 }
