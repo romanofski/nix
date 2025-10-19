@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "aispamclassifier": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "pyproject-build-systems": "pyproject-build-systems",
+        "pyproject-nix": "pyproject-nix",
+        "uv2nix": "uv2nix"
+      },
+      "locked": {
+        "lastModified": 1760955255,
+        "narHash": "sha256-twXvJmpMw3zdR/cJg7D7P/g1kiw7XZSodqneZ63J8pQ=",
+        "owner": "romanofski",
+        "repo": "aispamclassifier",
+        "rev": "754f13a41ff7e5f6f18944f98b56be52155f2e6e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "romanofski",
+        "repo": "aispamclassifier",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -24,6 +45,22 @@
       "locked": {
         "lastModified": 1758070117,
         "narHash": "sha256-uLwwHFCZnT1c3N3biVe/0hCkag2GSrf9+M56+Okf+WY=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e9b7f2ff62b35f711568b1f0866243c7c302028d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1758070117,
+        "narHash": "sha256-uLwwHFCZnT1c3N3biVe/0hCkag2GSrf9+M56+Okf+WY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "e9b7f2ff62b35f711568b1f0866243c7c302028d",
@@ -36,10 +73,61 @@
         "type": "github"
       }
     },
+    "pyproject-build-systems": {
+      "inputs": {
+        "nixpkgs": [
+          "aispamclassifier",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "aispamclassifier",
+          "pyproject-nix"
+        ],
+        "uv2nix": [
+          "aispamclassifier",
+          "uv2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1757296493,
+        "narHash": "sha256-6nzSZl28IwH2Vx8YSmd3t6TREHpDbKlDPK+dq1LKIZQ=",
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "rev": "5b8e37fe0077db5c1df3a5ee90a651345f085d38",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "type": "github"
+      }
+    },
+    "pyproject-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "aispamclassifier",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758265079,
+        "narHash": "sha256-amLaLNwKSZPShQHzfgmc/9o76dU8xzN0743dWgvYlr8=",
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "rev": "02e9418fd4af638447dca4b17b1280da95527fc9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "aispamclassifier": "aispamclassifier",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "secrets": "secrets"
       }
     },
@@ -56,6 +144,31 @@
       "original": {
         "type": "git",
         "url": "ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets"
+      }
+    },
+    "uv2nix": {
+      "inputs": {
+        "nixpkgs": [
+          "aispamclassifier",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "aispamclassifier",
+          "pyproject-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758933732,
+        "narHash": "sha256-HAmm1GBS1myZCFuog0DC2ZLaynvZtiUI2Crmo+cdQI0=",
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "rev": "273ce18f913d8559e0d04f820d724308966d7c4d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "type": "github"
       }
     }
   },
