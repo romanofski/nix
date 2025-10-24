@@ -1,0 +1,11 @@
+{
+    "editor.fontFamily": "'Fira Code Medium', 'JetBrains Mono'",
+    "editor.fontLigatures": true,
+    "vscode-neovim.neovimInitPath": "~/.config/nvim/vscode/init.lua",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1,
+        "zenMode.centerLayout": false,
+        "zenMode.hideLineNumbers": false,
+        "zenMode.showTabs": "single"
+    }
+}

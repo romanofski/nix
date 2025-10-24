@@ -2,6 +2,7 @@
 
 let
   config = ./vim/config.vim;
+  luaConfig = ./vim/luaConfig.lua;
 in {
   programs.neovim = {
     enable = true;
@@ -18,6 +19,7 @@ in {
     vimAlias = true;
     withNodeJs = true;
     withPython3 = true;
-    extraConfig = builtins.readFile config + "\n";
+    extraLuaConfig = builtins.readFile luaConfig;
+    # extraConfig = builtins.readFile config + "\n";
   };
 }

@@ -36,7 +36,7 @@ set spelllang=en
 set spell
 set tags=tags;/
 " colour the textwidth
-set statusline=%{fugitive#statusline()}<%f%=\ [%1*%M%*%n%R%H]\ %-19(%3l,%02c%03V%)'%02b'%{&enc}%h>
+" set statusline=%{fugitive#statusline()}<%f%=\ [%1*%M%*%n%R%H]\ %-19(%3l,%02c%03V%)'%02b'%{&enc}%h>
 " Always show the status line
 set laststatus=2
 " I like a fancy cursorline
