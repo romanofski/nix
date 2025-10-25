@@ -8,7 +8,7 @@ let
   };
   extraConfig = {
     http.version = "HTTP/1.1";
-    branch.sort = "committerdate";
+    branch.sort = "-committerdate";
   };
 in with secrets;
 {
