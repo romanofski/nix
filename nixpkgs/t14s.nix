@@ -64,6 +64,7 @@
     nodejs_22
     yarn-berry
     bazel_7
+    buildifier
     jre
     jq
     unzip
