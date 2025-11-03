@@ -93,6 +93,9 @@
       # used also by pipewire - pactl
       pkgs.pulseaudio
       btrfs-progs
+      # niri
+      fuzzel
+      alacritty
     ];
 
     programs.mosh.enable = true;
@@ -114,27 +117,23 @@
       };
     };
 
-    # Enable the X11 windowing system.
-    services.xserver = {
+    programs.niri.enable = true;
+    services.greetd = {
       enable = true;
-      desktopManager.xterm.enable = false;
-      desktopManager.xfce = {
-        enable = true;
-        noDesktop = true;
-        enableXfwm = true;
+      settings = {
+        default_session.command = ''
+          ${pkgs.greetd.tuigreet}/bin/tuigreet \
+          --time \
+          --asterisks \
+          --user-menu \
+          --cmd niri
+        '';
       };
-      displayManager.lightdm.enable = true;
-      xkb = {
-        options = "compose:ralt";
-        model = "pc105";
-        layout = "us";
-      };
-      serverFlagsSection = ''
-        Option "OffTime" "10"
-        Option "SuspendTime" "5"
-        Option "StandbyTime" "3"
-      '';
     };
+
+    environment.etc."greetd/environments".text = ''
+      niri
+    '';
 
     fonts.packages = [
       pkgs.dejavu_fonts
