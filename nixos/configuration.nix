@@ -51,6 +51,11 @@
     };
     networking.hostName = "krombopulos"; # Define your hostname.
 
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
     services.resolved.enable = true;
     services.resolved.dnssec = "false";
 
