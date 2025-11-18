@@ -5,9 +5,10 @@
     aispamclassifier.url = "github:romanofski/aispamclassifier";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixgl.url = "github:nix-community/nixGL";
   };
 
-  outputs = inputs@{ self, nixpkgs, secrets, aispamclassifier, home-manager }:
+  outputs = inputs@{ self, nixpkgs, secrets, aispamclassifier, home-manager, nixgl }:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -25,10 +26,15 @@
         inherit pkgs;
         modules = [
           ./home.nix
+        ] ++ [
+          ({
+            nixpkgs.overlays = [ nixgl.overlay ];
+
+          })
         ];
         extraSpecialArgs = {inherit inputs; aispamclassifier =
-        aispamclassifier; secrets =
-          secrets.homeSecrets;};
+          aispamclassifier; secrets =
+            secrets.homeSecrets;};
       };
     };
   };

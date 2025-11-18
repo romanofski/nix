@@ -32,7 +32,6 @@
     # ./programs/gtfsschedule.nix
     ./programs/termonad.nix
     ./programs/zsh.nix
-    ./programs/dunst.nix
     ./programs/notmuch.nix
     ./programs/xsession.nix
     ./programs/purebred.nix
@@ -42,10 +41,12 @@
     ./programs/autorandr.nix
     ./programs/ghci.nix
     ./programs/mcfly.nix
-    ./programs/xmobar.nix
+    ./programs/niri.nix
     ./services/gpg-agent.nix
-    ./services/screen-locker.nix
+    # ./services/screen-locker.nix
   ];
+
+  services.gnome-keyring.enable = true;
 
   home.packages = [
     pkgs.weechat
@@ -57,6 +58,10 @@
     pkgs.simple-scan
     pkgs.android-studio
     aispamclassifier.packages.x86_64-linux.default
+    # niri
+    pkgs.wireplumber
+    pkgs.xwayland-satellite
+    pkgs.swaybg # wallpaper
   ];
 
   programs.git = import ./programs/git.nix { secrets = secrets; pkgs = pkgs; useGCM = false; };

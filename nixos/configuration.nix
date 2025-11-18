@@ -98,12 +98,10 @@
       # used also by pipewire - pactl
       pkgs.pulseaudio
       btrfs-progs
-      # niri
-      fuzzel
-      alacritty
     ];
 
     programs.mosh.enable = true;
+    programs.dconf.enable = true;
     services.openssh.enable = true;
     services.dbus.packages = with pkgs; [
       pkgs.dconf
@@ -131,13 +129,14 @@
           --time \
           --asterisks \
           --user-menu \
-          --cmd niri
+          --cmd niri-session
         '';
       };
     };
 
     environment.etc."greetd/environments".text = ''
       niri
+      zsh
     '';
 
     fonts.packages = [
@@ -147,7 +146,6 @@
       pkgs.fira-mono
     ];
 
-    services.displayManager.defaultSession = "xfce";
     services.fwupd.enable = true;
 
     security.rtkit.enable = true;
