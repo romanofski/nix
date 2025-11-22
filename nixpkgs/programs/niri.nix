@@ -1,13 +1,29 @@
 
 { config, pkgs, ... }:
 
-{
+let
+  displayOutput = "eDP-1";
+in {
   programs.alacritty.enable = true; # Super+T in the default setting (terminal)
   programs.fuzzel.enable = true; # Super+D in the default setting (app launcher)
   services.polkit-gnome.enable = true; # polkit
   programs.swaylock.enable = true; # Super+Alt+L in the default setting (screen locker)
   services.mako.enable = true; # notification daemon
-  services.swayidle.enable = true; # idle management daemon
+
+  services.swayidle = {
+    enable = true;
+    events = [
+      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -fF"; }
+      { event = "lock"; command = "lock"; }
+    ];
+    timeouts = [
+      {
+        timeout = 300;
+        command = "${pkgs.niri}/bin/niri msg output ${displayOutput} off";
+        resumeCommand = "${pkgs.niri}/bin/niri msg output ${displayOutput} on";
+      }
+    ];
+  };
 
   programs.waybar = {
     enable = true;

@@ -59,6 +59,7 @@
     pkgs.freecad
     pkgs.simple-scan
     pkgs.android-studio
+    pkgs.jq
     aispamclassifier.packages.x86_64-linux.default
     # niri
     pkgs.wireplumber
