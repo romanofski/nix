@@ -34,7 +34,7 @@
         ];
         extraSpecialArgs = {inherit inputs; aispamclassifier =
           aispamclassifier; secrets =
-            secrets.homeSecrets;};
+            secrets.homeSecrets; };
       };
     };
   };

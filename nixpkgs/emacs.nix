@@ -153,6 +153,8 @@ in
     pkgs.nodePackages.eslint
     pkgs.nodePackages.yaml-language-server
     pkgs.bicep-lsp
+    # for compiling treesit language grammars
+    pkgs.gcc
 
     (pkgs.python311.withPackages (
       ps:
