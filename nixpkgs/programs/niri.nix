@@ -10,6 +10,20 @@ in {
   programs.swaylock.enable = true; # Super+Alt+L in the default setting (screen locker)
   services.mako.enable = true; # notification daemon
 
+  home.packages = [
+    pkgs.sway-audio-idle-inhibit
+  ];
+
+  systemd.user.services = {
+    sway-audio-idle-inhibit = {
+      Unit = { Description = "Sway Audio Inhibitor"; };
+      Service = {
+        ExecStart = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit";
+      };
+      Install = { WantedBy = [ "graphical-session.target" ]; };
+    };
+  };
+
   services.swayidle = {
     enable = true;
     events = [
