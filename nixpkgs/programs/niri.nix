@@ -460,7 +460,7 @@ in {
       // or do a four-finger swipe up on a touchpad.
       Mod+O repeat=false { toggle-overview; }
 
-      Mod+Q repeat=false { close-window; }
+      Mod+Shift+C repeat=false { close-window; }
 
       Mod+Left  { focus-column-left; }
       Mod+Down  { focus-window-down; }
