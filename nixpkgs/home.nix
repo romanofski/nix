@@ -140,9 +140,9 @@
   systemd.user.services = {
     aispamclassifier = {
       Unit = { Description = "AI Spam classifier service"; };
-      Service = { 
-      ExecStart = "${aispamclassifier.packages.x86_64-linux.default}/bin/server";
-      Environment = "AISPAMCLASSIFIER_MODEL=/home/rjoost/works/aispamclassifier/bert-spam-classifier-final";
+      Service = {
+        ExecStart = "${aispamclassifier.packages.x86_64-linux.default}/bin/server";
+        Environment = "AISPAMCLASSIFIER_MODEL=/home/rjoost/works/aispamclassifier/bert-spam-classifier-final";
       };
       Install = { WantedBy = [ "default.target" ]; };
     };
