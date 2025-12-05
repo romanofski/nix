@@ -1,15 +1,15 @@
 { pkgs, ... }:
 
 {
+  home.packages = [
+    pkgs.victor-mono
+  ];
   programs.alacritty = {
     enable = true;
+    theme = "solarized_dark";
     settings = {
       general = {
         live_config_reload = true;
-      };
-      window = {
-        opacity = 0.8;
-        blur = true;
       };
       font = {
         normal = { family = "Victor Mono Medium"; style = "Regular";};
