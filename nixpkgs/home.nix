@@ -1,4 +1,4 @@
-{ secrets, aispamclassifier, pkgs, lib, ... }:
+{ secrets, aispamclassifier, purebred, pkgs, lib, ... }:
 
 {
 
@@ -61,6 +61,7 @@
     pkgs.android-studio
     pkgs.jq
     aispamclassifier.packages.x86_64-linux.default
+    purebred.packages.x86_64-linux.default
     # niri
     pkgs.wireplumber
     pkgs.xwayland-satellite

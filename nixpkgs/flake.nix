@@ -3,12 +3,13 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
     aispamclassifier.url = "github:romanofski/aispamclassifier";
+    purebred.url = "github:purebred-mua/purebred/fix/muttaliasparsing";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixgl.url = "github:nix-community/nixGL";
   };
 
-  outputs = inputs@{ self, nixpkgs, secrets, aispamclassifier, home-manager, nixgl }:
+  outputs = inputs@{ self, nixpkgs, secrets, aispamclassifier, home-manager, nixgl, purebred }:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -34,7 +35,7 @@
         ];
         extraSpecialArgs = {inherit inputs; aispamclassifier =
           aispamclassifier; secrets =
-            secrets.homeSecrets; };
+            secrets.homeSecrets; purebred = purebred; };
       };
     };
   };
