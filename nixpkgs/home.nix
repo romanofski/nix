@@ -30,7 +30,7 @@
     ./emacs.nix
     ./programs/vim.nix
     # ./programs/gtfsschedule.nix
-    ./programs/termonad.nix
+    ./programs/terminal.nix
     ./programs/zsh.nix
     ./programs/notmuch.nix
     ./programs/xsession.nix

@@ -4,7 +4,6 @@
 let
   displayOutput = "eDP-1";
 in {
-  programs.alacritty.enable = true; # Super+T in the default setting (terminal)
   programs.fuzzel.enable = true; # Super+D in the default setting (app launcher)
   services.polkit-gnome.enable = true; # polkit
   programs.swaylock.enable = true; # Super+Alt+L in the default setting (screen locker)
