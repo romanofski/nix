@@ -73,6 +73,14 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  xdg.mime.enable = true;
+  xdg.mime.desktopFileUtilsPackage = pkgs.desktop-file-utils;
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/pdf" = ["org.gnome.Evince.desktop"];
+    };
+  };
 
   services.getmail.enable = true;
   services.redshift = {
