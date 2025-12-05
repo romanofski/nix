@@ -6,7 +6,9 @@
     enableSshSupport = true;
     enableZshIntegration = true;
     # see services.dbus.packages in system configuration too
-    pinentryPackage = pkgs.pinentry-gnome3;
+    pinentry = {
+      package = pkgs.pinentry-gnome3;
+    };
     # 1year
     defaultCacheTtl = 34560000;
     maxCacheTtl = 34560000;
