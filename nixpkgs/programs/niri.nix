@@ -144,7 +144,7 @@ in {
       // Find more information on the wiki:
       // https://yalter.github.io/niri/Configuration:-Outputs
       // Remember to uncomment the node by removing "/-"!
-      /-output "eDP-1" {
+      output "${displayOutput}" {
       // Uncomment this line to disable this output.
       // off
 
@@ -157,7 +157,7 @@ in {
       mode "1920x1080@120.030"
 
       // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-      scale 2
+      scale 1
 
       // Transform allows to rotate the output counter-clockwise, valid values are:
       // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -172,7 +172,18 @@ in {
       // so to put another output directly adjacent to it on the right, set its x to 1920.
       // If the position is unset or results in an overlap, the output is instead placed
       // automatically.
-      position x=1280 y=0
+      position x=0 y=0
+      }
+      output "DP-4" {
+      scale 1
+      transform "normal"
+      position x=0 y=1080
+      }
+
+      output "DP-5" {
+      scale 2.0
+      transform "normal"
+      position x=1920 y=1080
       }
 
       // Settings that influence how windows are positioned and sized.
@@ -266,7 +277,7 @@ in {
       // If you enable the border, you probably want to disable the focus ring.
       off
 
-      width 4
+      width 2
       active-color "#ffc87f"
       inactive-color "#505050"
 
@@ -335,12 +346,7 @@ in {
       // Note that running niri as a session supports xdg-desktop-autostart,
       // which may be more convenient to use.
       // See the binds section below for more spawn examples.
-
-      // This line starts waybar, a commonly used bar for Wayland compositors.
-      // spawn-at-startup "systemctl --user import-environment"
-      // spawn-at-startup "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"
       spawn-at-startup "swaybg" "-i" "${config.home.homeDirectory}/Pictures/Perspective_view_of_Korolev_crater.jpg" "-o" "*" "-m" "fill"
-      // spawn-at-startup "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
       spawn-at-startup "waybar"
 
       hotkey-overlay {
@@ -371,22 +377,12 @@ in {
       // off
 
       // Slow down all animations by this factor. Values below 1 speed them up instead.
-      // slowdown 3.0
+      slowdown 3.0
       }
 
       // Window rules let you adjust behavior for individual windows.
       // Find more information on the wiki:
       // https://yalter.github.io/niri/Configuration:-Window-Rules
-
-      // Work around WezTerm's initial configure bug
-      // by setting an empty default-column-width.
-      window-rule {
-      // This regular expression is intentionally made as specific as possible,
-      // since this is the default config, and we want no false positives.
-      // You can get away with just app-id="wezterm" if you want.
-      match app-id=r#"^org\.wezfurlong\.wezterm$"#
-      default-column-width {}
-      }
 
       // Open the Firefox picture-in-picture player as floating by default.
       window-rule {
@@ -434,7 +430,7 @@ in {
       // Suggested binds for running programs: terminal, app launcher, screen locker.
       Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel" "alacritty"; }
       Mod+P hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-      Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+      Shift+Super+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
       // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
       // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
