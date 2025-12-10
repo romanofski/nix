@@ -7,7 +7,6 @@ in {
   programs.fuzzel.enable = true; # Super+D in the default setting (app launcher)
   services.polkit-gnome.enable = true; # polkit
   programs.swaylock.enable = true; # Super+Alt+L in the default setting (screen locker)
-  services.mako.enable = true; # notification daemon
 
   home.packages = [
     pkgs.sway-audio-idle-inhibit

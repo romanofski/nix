@@ -42,6 +42,7 @@
     ./programs/ghci.nix
     ./programs/mcfly.nix
     ./programs/niri.nix
+    ./programs/notification.nix
     ./programs/passwordmanagement.nix
     ./services/gpg-agent.nix
     ./services/filesync.nix

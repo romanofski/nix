@@ -1,35 +1,28 @@
 { pkgs, ... }:
 
 {
-  services.dunst = {
+
+  services.mako = {
     enable = true;
-    iconTheme = {
-      package = pkgs.gnome-themes-extra;
-      name = "Adwaita";
-    };
     settings = {
-      global = {
-        geometry = "500x5-30+50";
-        transparency = 10;
-        font = "Roboto 13";
-        padding = 15;
-        horizontal_padding = 17;
-        word_wrap = true;
-        follow = "keyboard";
-        format = "%s %p %I\n%b";
-        markup = "full";
-      };
+      actions = true;
+      anchor = "top-right";
+      background-color = "#000000";
+      border-color = "#FFFFFF";
+      border-radius = 0;
+      default-timeout = 0;
+      font = "monospace 10";
+      height = 100;
+      width = 300;
+      icons = true;
+      ignore-timeout = false;
+      layer = "top";
+      margin = 10;
+      markup = true;
 
-      urgency_low = {
-        timeout = 5;
-      };
-
-      urgency_normal = {
-        timeout = 10;
-      };
-
-      urgency_critical = {
-        timeout = 15;
+      # Section example
+      "actionable=true" = {
+        anchor = "top-left";
       };
     };
   };
