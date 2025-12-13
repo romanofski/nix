@@ -67,6 +67,20 @@
     pkgs.wireplumber
     pkgs.xwayland-satellite
     pkgs.swaybg # wallpaper
+    pkgs.poppler-utils # pdftotext
+    (pkgs.writeShellScriptBin "viewpdfwrapper"
+    ''
+      #!/bin/bash
+
+      if [ -n "$SSH_CONNECTION" ]; then
+      # When connected remotely
+      ${pkgs.poppler-utils}/bin/pdftotext "$@" - | less
+      else
+      # When locally on Wayland
+      ${pkgs.evince}/bin/evince "$@"
+      fi
+    ''
+    )
   ];
 
   programs.git = import ./programs/git.nix { secrets = secrets; pkgs = pkgs; useGCM = false; };
@@ -76,10 +90,19 @@
 
   xdg.mime.enable = true;
   xdg.mime.desktopFileUtilsPackage = pkgs.desktop-file-utils;
+  xdg.desktopEntries = {
+    viewpdfwrapper = {
+      name = "viewpdfwrapper";
+      exec = "viewpdfwrapper %f";
+      type = "Application";
+      terminal = false;
+      mimeType = ["application/pdf"];
+    };
+  };
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "application/pdf" = ["org.gnome.Evince.desktop"];
+      "application/pdf" = ["viewpdfwrapper.desktop"];
       "text/html" = ["firefox.desktop"];
       "x-scheme-handler/http" = ["firefox.desktop"];
       "x-scheme-handler/https" = ["firefox.desktop"];
