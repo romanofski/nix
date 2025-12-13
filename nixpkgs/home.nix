@@ -98,6 +98,21 @@
       terminal = false;
       mimeType = ["application/pdf"];
     };
+    FirefoxGL = {
+      name = "Firefox (GL)";
+      type = "Application";
+      icon = "firefox";
+      exec = "${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel firefox --name firefox %U";
+      genericName = "Web Browser";
+      mimeType = [
+        "text/html"
+        "text/xml"
+        "application/xhtml+xml"
+        "application/vnd.mozilla.xul+xml"
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+      ];
+    };
   };
   xdg.mimeApps = {
     enable = true;
