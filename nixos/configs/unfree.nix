@@ -4,6 +4,6 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     steam
-    steam-run-native
+    steam-run
   ];
 }
