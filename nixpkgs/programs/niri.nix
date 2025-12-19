@@ -8,6 +8,11 @@ in {
   services.polkit-gnome.enable = true; # polkit
   programs.swaylock.enable = true; # Super+Alt+L in the default setting (screen locker)
 
+  home.file.".local/bin/arpansauv" = {
+    enable = true;
+    executable = true;
+    text = builtins.readFile ../scripts/arpansa.py;
+  };
   home.packages = [
     pkgs.sway-audio-idle-inhibit
     pkgs.wttrbar
@@ -138,7 +143,14 @@ in {
       spacing = 5;
       modules-left = [ "niri/workspaces" "niri/window" ];
       modules-center = [ "clock" ];
-      modules-right = [ "wlr/taskbar" "custom/weather" "pulseaudio" "cpu" "network" "battery" ];
+      modules-right = [ "wlr/taskbar" "custom/uv" "custom/weather" "pulseaudio" "cpu" "network" "battery" ];
+      "custom/uv" = {
+        format = "UV: {}";
+        interval = 3600;
+        tooltip = false;
+        return-type  = "json";
+        exec = "${config.home.homeDirectory}/.local/bin/arpansauv Brisbane";
+      };
       "wlr/taskbar" = {
         format = "{icon}";
         icon-size = 16;
