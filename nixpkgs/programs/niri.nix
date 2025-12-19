@@ -10,6 +10,9 @@ in {
 
   home.packages = [
     pkgs.sway-audio-idle-inhibit
+    pkgs.wttrbar
+    pkgs.fira-code
+    pkgs.fira-code-symbols
   ];
 
   systemd.user.services = {
@@ -39,12 +42,119 @@ in {
 
   programs.waybar = {
     enable = true;
+    systemd = {
+      enable = true;
+    };
+    style = ''
+      * {
+      font-size: 10pt;
+      font-family: Fira Code;
+      min-height: 0;
+      padding: 0.1rem;
+      }
+
+      window#waybar {
+      background: rgba(255, 255, 255, 0.5);
+      color: rgb(0, 0, 0);
+      }
+
+      tooltip {
+      background: #000000;
+      }
+      tooltip label {
+      color: white;
+      }
+
+      #workspaces button {
+      padding: 0 5px;
+      background: transparent;
+      color: white;
+      border-bottom: 3px solid transparent;
+      }
+
+      #workspaces button.focused {
+      background: #64727d;
+      border-bottom: 3px solid white;
+      }
+
+      #mode,
+      #clock,
+      #battery {
+      padding: 0 10px;
+      }
+
+      #mode {
+      background: #64727d;
+      border-bottom: 3px solid white;
+      }
+
+      #clock,
+      #battery,
+      #cpu,
+      #memory,
+      #disk,
+      #temperature,
+      #backlight,
+      #network,
+      #pulseaudio,
+      #wireplumber,
+      #custom-media,
+      #tray,
+      #mode,
+      #idle_inhibitor,
+      #scratchpad,
+      #mpd {
+      margin: 2px;
+      padding-left: 4px;
+      padding-right: 4px;
+      color: #000000;
+      }
+
+      .modules-left > widget:first-child > #workspaces {
+      margin-left: 0;
+      }
+
+      .modules-right > widget:last-child > #workspaces {
+      margin-right: 0;
+      }
+
+      #battery {
+      border-radius: 1rem;
+      }
+
+      #battery icon {
+      color: red;
+      }
+
+      #battery.charging,
+      #battery.plugged {
+      color: #ffffff;
+      background-color: #26a65b;
+      }
+    '';
     settings = [{
       layer = "top";
-      height = 30;
+      height = 24;
+      spacing = 5;
       modules-left = [ "niri/workspaces" "niri/window" ];
-      modules-center = [ "custom/clock" ];
-      modules-right = [ "custom/org-clock" "pulseaudio" "cpu" "network" "battery" "clock" ];
+      modules-center = [ "clock" ];
+      modules-right = [ "wlr/taskbar" "custom/weather" "pulseaudio" "cpu" "network" "battery" ];
+      "wlr/taskbar" = {
+        format = "{icon}";
+        icon-size = 16;
+        spacing = 3;
+        on-click-middle = "close";
+        tooltip-format = "{title}";
+        ignore-list = [];
+        on-click = "activate";
+      };
+      "custom/weather" = {
+        format = "{}";
+        "tooltip" = true;
+        interval = 3600;
+        exec = "${pkgs.wttrbar}/bin/wttrbar --location Bellbowrie --custom-indicator '{ICON} {FeelsLikeC}°C ({areaName})'";
+        return-type = "json";
+      };
       battery = {
         format = "{capacity}% {icon}";
         format-icons = [ "" "" "" "" ""];
@@ -61,10 +171,9 @@ in {
         format-disconnected = "Disconnected ⚠";
         format-alt = "{ifname}: {ipaddr}/{cidr}";
       };
-      "custom/clock" = {
-        interval = 10;
-        exec = "date '+%a %d %b W%V-%u %R'";
-        format-alt = "{:%a, %d. %b  %H:%M}";
+      "clock" = {
+        format = "{:%a %d %b %R %Z}";
+        timezones = ["Australia/Brisbane" "Europe/Berlin"];
       };
       "pulseaudio" = {
         "scroll-step" = 1;
@@ -345,7 +454,6 @@ in {
       // which may be more convenient to use.
       // See the binds section below for more spawn examples.
       spawn-at-startup "swaybg" "-i" "${config.home.homeDirectory}/Pictures/Perspective_view_of_Korolev_crater.jpg" "-o" "*" "-m" "fill"
-      spawn-at-startup "waybar"
 
       hotkey-overlay {
       // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
