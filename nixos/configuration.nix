@@ -129,7 +129,7 @@
           --time \
           --asterisks \
           --user-menu \
-          --cmd niri-session
+          --cmd "${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel ${config.programs.niri.package}/bin/niri-session"
         '';
       };
     };
