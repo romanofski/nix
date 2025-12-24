@@ -6,6 +6,44 @@ let
 in {
   programs.fuzzel.enable = true; # Super+D in the default setting (app launcher)
   services.polkit-gnome.enable = true; # polkit
+  # external display management
+  services.kanshi = {
+    enable = true;
+    settings = [
+      {
+        output.criteria = "Chimei Innolux Corporation 0x14C9 Unknown";
+      }
+      {
+        profile.name = "docked";
+        profile.outputs = [
+          {
+            criteria = "Chimei Innolux Corporation 0x14C9 Unknown";
+            status = "disable";
+          }
+          {
+            criteria = "HP Inc. HP E273 CNK016397W";
+            status = "enable";
+            position = "0,1080";
+          }
+          {
+            criteria = "Dell Inc. DELL U2723QE FWY9J04";
+            status = "enable";
+            scale = 1.5;
+            position = "1920,1080";
+          }
+        ];
+      }
+      {
+        profile.name = "undocked";
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
+            status = "enable";
+          }
+        ];
+      }
+    ];
+  };
   programs.swaylock.enable = true; # Super+Alt+L in the default setting (screen locker)
 
   home.file.".local/bin/arpansauv" = {
