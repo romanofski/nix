@@ -38,7 +38,6 @@
     ./programs/gtk.nix
     ./programs/tmux.nix
     ./programs/maildrop.nix
-    ./programs/autorandr.nix
     ./programs/ghci.nix
     ./programs/mcfly.nix
     ./programs/niri.nix
@@ -46,7 +45,7 @@
     ./programs/passwordmanagement.nix
     ./services/gpg-agent.nix
     ./services/filesync.nix
-    # ./services/screen-locker.nix
+    ./services/phoneconnect.nix
   ];
 
   services.gnome-keyring.enable = true;
@@ -68,6 +67,7 @@
     pkgs.xwayland-satellite
     pkgs.swaybg # wallpaper
     pkgs.poppler-utils # pdftotext
+    pkgs.signal-desktop
     (pkgs.writeShellScriptBin "viewpdfwrapper"
     ''
       #!/bin/bash
