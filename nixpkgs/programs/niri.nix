@@ -77,8 +77,8 @@ in {
     timeouts = [
       {
         timeout = 300;
-        command = "${pkgs.niri}/bin/niri msg output ${displayOutput} off";
-        resumeCommand = "${pkgs.niri}/bin/niri msg output ${displayOutput} on";
+        command = "${pkgs.niri}/bin/niri msg action power-off-monitors";
+        resumeCommand = "${pkgs.niri}/bin/niri msg action power-on-monitors";
       }
     ];
   };
