@@ -181,7 +181,14 @@ in {
       spacing = 5;
       modules-left = [ "niri/workspaces" "niri/window" ];
       modules-center = [ "clock" ];
-      modules-right = [ "wlr/taskbar" "custom/uv" "custom/weather" "pulseaudio" "cpu" "network" "battery" ];
+      modules-right = [ "wlr/taskbar" "custom/uv" "custom/weather" "pulseaudio" "cpu" "network" "battery" "idle_inhibitor" ];
+      "idle_inhibitor" = {
+        "format" = "{icon}";
+        "format-icons" = {
+          "activated" = "";
+          "deactivated" = "";
+        };
+      };
       "custom/uv" = {
         format = "UV: {}";
         interval = 3600;
