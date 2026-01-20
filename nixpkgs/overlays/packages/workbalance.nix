@@ -6,7 +6,7 @@ mkDerivation {
     owner = "romanofski";
     repo = "workbalance";
     rev = "master";
-    sha256 = "sha256-BseMCei/2iSFpiG0pSCEa+NiIzIqfi4x75o0451tMnY=";
+    sha256 = "sha256-5SB+GN1Zj7YtO0+RBsBez9DDgqxLaL/PqRSIshug5x4=";
   };
   isLibrary = false;
   isExecutable = true;

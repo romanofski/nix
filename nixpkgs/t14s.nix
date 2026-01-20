@@ -41,6 +41,7 @@
     ./programs/ghci.nix
     ./services/gpg-agent.nix
     ./services/emacs.nix
+    ./services/hamster.nix
   ];
 
   programs.git = import ./programs/git.nix { secrets = secrets; pkgs = pkgs; useGCM =true; };
@@ -50,6 +51,7 @@
 
 
   home.packages = with pkgs; [
+    hamster
     bzip2
     elinks
     feh
