@@ -65,7 +65,7 @@
     iproute2
     nodejs_22
     yarn-berry
-    bazel_7
+    bazel_8
     jre
     jq
     unzip
