@@ -60,10 +60,32 @@
         "type": "github"
       }
     },
+    "korrosync": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "git-hooks-nix": "git-hooks-nix",
+        "nixpkgs": "nixpkgs_2",
+        "rust-overlay": "rust-overlay",
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1767957633,
+        "narHash": "sha256-UaPuxIcR7UB3yZOMCyYoYPHZG6yWF+zuDitUZyWqINM=",
+        "owner": "szaffarano",
+        "repo": "korrosync",
+        "rev": "0a4d52e1f96f29a618910bb16e7a57f7af2b061e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "szaffarano",
+        "repo": "korrosync",
+        "type": "github"
+      }
+    },
     "nixgl": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1762090880,
@@ -216,10 +238,32 @@
       "inputs": {
         "aispamclassifier": "aispamclassifier",
         "home-manager": "home-manager",
+        "korrosync": "korrosync",
         "nixgl": "nixgl",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "purebred": "purebred",
         "secrets": "secrets"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "korrosync",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762742448,
+        "narHash": "sha256-XMxV0h13gg63s0sV6beihCIqdpcJhtbse6DHI743nvo=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "7f3556887e3375dc26ff1601b57c93ee286f2c5e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "secrets": {

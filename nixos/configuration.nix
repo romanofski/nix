@@ -19,6 +19,7 @@
     ./services/mysql.nix
     ./services/media-server.nix
     ./services/image-server.nix
+    ./services/bookreader.nix
     ./services/backup.nix
     ];
 
@@ -176,7 +177,7 @@
 
     users.users.rjoost = {
       createHome = true;
-      extraGroups = ["wheel" "video" "audio" "disk" "networkmanager" "jellyfin"];
+      extraGroups = ["wheel" "video" "audio" "disk" "networkmanager" "jellyfin" "calibre-server"];
       group = "rjoost";
       home = "/home/rjoost";
       description = "Roman Joost";

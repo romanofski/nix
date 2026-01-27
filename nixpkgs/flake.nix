@@ -7,12 +7,15 @@
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixgl.url = "github:nix-community/nixGL";
+    korrosync.url = "github:szaffarano/korrosync";
   };
 
-  outputs = inputs@{ self, nixpkgs, secrets, aispamclassifier, home-manager, nixgl, purebred }:
+  outputs = inputs@{ self, nixpkgs, secrets, aispamclassifier, home-manager, nixgl, purebred, korrosync }:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    korroPkg = korrosync.packages.${system}.default;
+    korrosyncNoTests = korroPkg.overrideAttrs (old: { doCheck = false; });
   in {
     homeConfigurations = {
       "rjoost@work" = home-manager.lib.homeManagerConfiguration {
@@ -30,12 +33,14 @@
         ] ++ [
           ({
             nixpkgs.overlays = [ nixgl.overlay ];
-
           })
         ];
-        extraSpecialArgs = {inherit inputs; aispamclassifier =
-          aispamclassifier; secrets =
-            secrets.homeSecrets; purebred = purebred; };
+        extraSpecialArgs = {inherit inputs;
+        aispamclassifier = aispamclassifier;
+        secrets = secrets.homeSecrets;
+        purebred = purebred;
+        korrosync = korrosyncNoTests;
+        };
       };
     };
   };

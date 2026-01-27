@@ -1,4 +1,4 @@
-{ secrets, aispamclassifier, purebred, pkgs, lib, ... }:
+{ secrets, aispamclassifier, purebred, korrosync, pkgs, lib, config, ... }:
 
 {
 
@@ -194,6 +194,18 @@
       Service = {
         ExecStart = "${aispamclassifier.packages.x86_64-linux.default}/bin/server";
         Environment = "AISPAMCLASSIFIER_MODEL=/home/rjoost/works/aispamclassifier/bert-spam-classifier-final";
+      };
+      Install = { WantedBy = [ "default.target" ]; };
+    };
+    korrosync = {
+      Unit = { Description = "KOReader Sync Server"; };
+      Service = {
+        ExecStart = "${korrosync}/bin/korrosync";
+        Environment = [
+          "KORROSYNC_DB_PATH=${config.home.homeDirectory}/works/korrosync"
+        ];
+        Restart = "on-failure";
+        RestartSec = "5s";
       };
       Install = { WantedBy = [ "default.target" ]; };
     };
