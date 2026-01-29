@@ -19,7 +19,6 @@
     ./services/mysql.nix
     ./services/media-server.nix
     ./services/image-server.nix
-    ./services/bookreader.nix
     ./services/backup.nix
     ];
 
