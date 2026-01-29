@@ -26,6 +26,13 @@
         extraSpecialArgs = {inherit inputs; secrets =
           secrets.workSecrets;};
       };
+      "rjoost@yoga" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          ./yoga.nix
+        ];
+        extraSpecialArgs = {inherit inputs; secrets = secrets.homeSecrets;};
+      };
       "rjoost@home" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
