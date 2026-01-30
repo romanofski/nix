@@ -144,7 +144,7 @@
   };
 
   programs.zsh.loginExtra = ''
-    export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
+    export DISPLAY=localhost:0.0
     export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock
     export DOCKER_COMMAND=podman
   '';
