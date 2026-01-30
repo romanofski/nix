@@ -1,8 +1,8 @@
 { config, korrosync, ... }:
 
 let
-  statedir = "/srv/Books/State";
-  bookdir = "/srv/Books/Repo";
+  statedir = "/srv/books/State";
+  bookdir = "/srv/books/Repo";
 in
 {
   services.calibre-server = {

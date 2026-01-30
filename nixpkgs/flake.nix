@@ -28,7 +28,8 @@
         modules = [
           ./yoga.nix
         ];
-        extraSpecialArgs = {inherit inputs; secrets = secrets.homeSecrets;};
+        extraSpecialArgs = {inherit inputs; secrets =
+          secrets.yogaSecrets ;};
       };
       "rjoost@home" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;

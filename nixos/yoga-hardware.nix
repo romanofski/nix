@@ -18,6 +18,48 @@
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
+  fileSystems."/srv/images" = {
+    device = "/dev/mapper/data";
+    fsType = "btrfs";
+    options = [
+      "subvol=images"
+      "compress=zstd"
+      "noatime"
+      "noauto"
+      "x-systemd.automount"
+    ];
+  };
+  fileSystems."/srv/videos" = {
+    device = "/dev/mapper/data";
+    fsType = "btrfs";
+    options = [
+      "subvol=videos"
+      "compress=zstd"
+      "noatime"
+      "noauto"
+      "x-systemd.automount"
+    ];
+  };
+  fileSystems."/srv/books" = {
+    device = "/dev/mapper/data";
+    fsType = "btrfs";
+    options = [
+      "subvol=books"
+      "compress=zstd"
+      "noatime"
+      "noauto"
+      "x-systemd.automount"
+    ];
+  };
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="ZPV0VPZW", RUN+="${pkgs.systemd}/bin/systemctl start mnt-backup.automount"
+  '';
+  environment.etc.crypttab = {
+    mode = "0600";
+    text = ''
+      data UUID=a161ed87-67dc-4e60-9036-8bb1ba1a6fee /root/usb-datadisk-seagate.key luks,noauto
+    '';
+  };
 
   boot.initrd.luks.devices."luks-5fc2fe7f-ceec-4c3b-83c4-5c7377498627".device = "/dev/disk/by-uuid/5fc2fe7f-ceec-4c3b-83c4-5c7377498627";
 
