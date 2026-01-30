@@ -11,6 +11,7 @@
       ./configs/firewall.nix
       ./services/ntp.nix
       ./services/upower.nix
+      ./services/media-server.nix
     ];
 
   # Bootloader.
