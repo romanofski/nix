@@ -60,6 +60,12 @@
 
     services.blueman.enable = true;
 
+    services.logind.settings.Login = {
+      HandleLidSwitchDocked = "ignore";
+      idleAction = "ignore";
+      KillUserProcesses = false;
+    };
+
     # Select internationalisation properties.
     console.keyMap = "us";
     console.font = "Lat2-Terminus16";
