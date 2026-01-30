@@ -46,6 +46,11 @@
     LC_TIME = "en_AU.UTF-8";
   };
 
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    KillUserProcesses = false;
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
