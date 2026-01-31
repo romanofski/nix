@@ -17,7 +17,6 @@
     ./services/upower.nix
     ./services/gvfs.nix
     ./services/mysql.nix
-    ./services/image-server.nix
     ./services/backup.nix
     ];
 
