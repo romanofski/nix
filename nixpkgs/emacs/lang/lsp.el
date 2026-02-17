@@ -41,8 +41,7 @@
                 "bd" 'evil-delete-buffer
 		)
   :config
-  ;;(setopt copilot-chat-default-model "claude-sonnet-4")
-  (setopt copilot-chat-model "claude-sonnet-4")
+  (setopt copilot-chat-default-model "gpt-5.2")
   (setopt copilot-chat-frontend 'markdown)
   )
 
