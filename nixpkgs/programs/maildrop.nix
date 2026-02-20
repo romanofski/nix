@@ -1,9 +1,23 @@
 {secrets, pkgs, config, ...}:
 
 let
-  mapped = builtins.map (x: "hasaddr(${x})") secrets.mailfilter.whitelist;
-  whitelist = builtins.concatStringsSep " || " mapped;
+  regexEscape = s:
+  builtins.replaceStrings
+  [ "\\" "." "+" "*" "?" "^" "$" "(" ")" "[" "]" "{" "}" "|" ]
+  [ "\\\\" "\\." "\\+" "\\*" "\\?" "\\^" "\\$" "\\(" "\\)" "\\[" "\\]" "\\{" "\\}" "\\|" ]
+  s;
+  mkListRegexp = xs: builtins.concatStringsSep "|" (map regexEscape xs);
+  whitelistRe = if secrets.mailfilter.whitelist == [] then "(?!)"
+  else "${mkListRegexp secrets.mailfilter.whitelist}";
+  blacklistRe = if secrets.mailfilter.blacklist == [] then "(?!)"
+  else "${mkListRegexp secrets.mailfilter.blacklist}";
 in {
+  home.file.".maildrop/variables.inc" = {
+    text = ''
+      WHITELIST="(${whitelistRe})"
+      BLACKLIST="(${blacklistRe})"
+    '';
+  };
   home.file.".HMmailfilter" = {
     text = ''
       import PATH
@@ -11,60 +25,62 @@ in {
       PATH=$HOME/.nix-profile/bin:$HOME/.local/bin:$PATH
       NOTMUCH_CONFIG="$HOME/.config/notmuch/notmuchrc"
 
-      if (/^(From|To):.*@gnome.org/:h)
-      {
-      to "| notmuch insert +list -inbox"
-      }
+      include "$HOME/.maildrop/variables.inc"
 
-      # Handle spam
-      if (/^From: messages-noreply@linkedin.com/:H)
+      logfile "$HOME/.maildrop/mailfilter.log"
+      log "---- new message ----"
+
+      if ( /^X-getmail-retrieved-from-mailbox:[[:space:]]*(Junk|Spam|Trash)[[:space:]]*$/ )
       {
-      to "| notmuch insert +spam -inbox"
-      }
-      if (/^X-getmail-retrieved-from-mailbox:.*Trash$/)
-      {
-      to "| notmuch insert +spam +inbox"
-      }
-      if (/^To: onitburger@bromeco.de$/:H)
-      {
-      to "| notmuch insert +spam -inbox"
+      log "Matched Trash mailbox"
+      to "| notmuch insert +spam"
+      exit
       }
       if (/^To:$/:H)
       {
+      log "Matched empty To:"
       to "| notmuch insert +spam -inbox"
+      exit
       }
 
       if (/^From:.*@eq.edu.au$/:H)
       {
+      log "Matched school sender"
       to "| notmuch insert +inbox +school"
-      }
-
-      if (/^To:.*romanofski.de$/:H)
-      {
-      to "| notmuch insert +spam -inbox"
-      }
-
-      if (/^To:.*goodness@bromeco.de$/:H || /^To: roman+jw@bromeco.de$/:H )
-      {
-      to "| notmuch insert +spam"
-      }
-      if (/^To:.*undisclosed-recipients.*/:H)
-      {
-      to "| notmuch insert +spam"
-      }
-
-      # anything not addressed to me
-      if ( ! (${whitelist}) )
-      {
-      to "| notmuch insert +spam"
+      exit
       }
 
       # anything clearly labelled as spam
-      if (/^X-Spam:?Yes$/:H)
+      if ( /^X-Spam:[[:space:]]*Yes$/:H )
       {
+      log "Matched X-Spam"
       to "| notmuch insert +spam"
+      exit
       }
 
+
+      # Anything addressed to these go right in the bin
+      if ( /^To:.*$BLACKLIST/:H || /^Cc:.*$BLACKLIST/:H || /^Delivered-To:.*$BLACKLIST/:H \
+      || /^X-Original-To:.*$BLACKLIST/:H || /^Envelope-To:.*$BLACKLIST/:H )
+      {
+      log "Matched blacklist"
+      to "| notmuch insert +spam +inbox"
+      exit
+      }
+
+      # whitelisted addresses - anything there we don't treat as spam
+      if ( /^To:.*$WHITELIST/:H )
+      {
+      log "Matched whitelist"
+      to "| notmuch insert +inbox"
+      exit
+      }
+      else
+      {
+      log "Didn't match whitelist"
+      to "| notmuch insert +spam +inbox"
+      exit
+      }
 
       to  "| notmuch insert"
     '';

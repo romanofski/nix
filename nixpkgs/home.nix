@@ -43,6 +43,7 @@
     ./programs/niri.nix
     ./programs/notification.nix
     ./programs/passwordmanagement.nix
+    ./programs/maildrop.nix
     ./services/gpg-agent.nix
     ./services/filesync.nix
     ./services/phoneconnect.nix

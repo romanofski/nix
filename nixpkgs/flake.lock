@@ -293,11 +293,11 @@
     },
     "secrets": {
       "locked": {
-        "lastModified": 1769762392,
-        "narHash": "sha256-GuJcxZBteXzS3l2VkY9ZadrkO756YzUeUAvw6enhhv8=",
+        "lastModified": 1771622007,
+        "narHash": "sha256-XmqTiKcsi8/+a2pdacfZ1OHFR32CQEvPB7vJRswecyY=",
         "ref": "refs/heads/master",
-        "rev": "8a2303b0c921d1c8d9fff2814f53f9fb61f9026d",
-        "revCount": 3,
+        "rev": "54febdc216f0cc7092a5f4b8e33b78398b35d915",
+        "revCount": 4,
         "type": "git",
         "url": "ssh://rjoost@krombopulos.lan/home/rjoost/works/configs/nixsecrets"
       },
