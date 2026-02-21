@@ -13,4 +13,8 @@
       createDB = true;
     };
   };
+  environment.systemPackages = with pkgs; [
+    immich-cli
+    immich-go
+  ];
 }
