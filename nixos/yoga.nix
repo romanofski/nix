@@ -87,7 +87,15 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.rjoost = {
-      extraGroups = ["wheel" "video" "audio" "disk" "networkmanager" "jellyfin"];
+      extraGroups = [
+        "wheel"
+        "video"
+        "audio"
+        "disk"
+        "networkmanager"
+        "jellyfin"
+        "immich"
+      ];
       description = "Roman Joost";
       isNormalUser = true;
       shell = pkgs.zsh;
