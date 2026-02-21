@@ -29,13 +29,13 @@
     pkgs.killall
     pkgs.libreoffice-fresh
     pkgs.lsof
-    pkgs.noto-fonts-emoji
+    pkgs.noto-fonts-color-emoji
     pkgs.pandoc
     pkgs.parallel
     pkgs.pass
     pkgs.pavucontrol
-    pkgs.pinentry
-    pkgs.poppler_utils
+    pkgs.pinentry-gnome3
+    pkgs.poppler-utils
     pkgs.powertop
     pkgs.silver-searcher
     pkgs.sshpass
