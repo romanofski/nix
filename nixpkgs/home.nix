@@ -69,6 +69,8 @@
     pkgs.swaybg # wallpaper
     pkgs.poppler-utils # pdftotext
     pkgs.signal-desktop
+    pkgs.mpv
+    pkgs.nixgl.nixGLIntel
     (pkgs.writeShellScriptBin "viewpdfwrapper"
     ''
       #!/bin/bash
