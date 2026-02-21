@@ -29,6 +29,7 @@
         ./services/bookserver.nix
         ./services/media-server.nix
         ./services/image-server.nix
+        ./services/vpn.nix
       ];
     };
   };
