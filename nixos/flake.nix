@@ -18,6 +18,7 @@
       modules = [
         ./configuration.nix
         nixos-hardware.nixosModules.lenovo-thinkpad-t480s
+        ./services/vpn.nix
       ] ++ [
         ({
           nixpkgs.overlays = [ nixgl.overlay ];
