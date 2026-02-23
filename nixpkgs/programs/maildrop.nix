@@ -43,7 +43,7 @@ in {
       exit
       }
 
-      if (/^From:.*@eq.edu.au$/:H)
+      if (/^From:.*@eq\.edu\.au/:H)
       {
       log "Matched school sender"
       to "| notmuch insert +inbox +school"
