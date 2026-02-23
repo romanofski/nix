@@ -7,15 +7,16 @@ let
   [ "\\\\" "\\." "\\+" "\\*" "\\?" "\\^" "\\$" "\\(" "\\)" "\\[" "\\]" "\\{" "\\}" "\\|" ]
   s;
   mkListRegexp = xs: builtins.concatStringsSep "|" (map regexEscape xs);
-  whitelistRe = if secrets.mailfilter.whitelist == [] then "(?!)"
-  else "${mkListRegexp secrets.mailfilter.whitelist}";
-  blacklistRe = if secrets.mailfilter.blacklist == [] then "(?!)"
-  else "${mkListRegexp secrets.mailfilter.blacklist}";
+  makeRe = xs: if xs == [] then "(?!)" else "${mkListRegexp xs}";
+  whitelistRe = makeRe secrets.mailfilter.whitelist;
+  blacklistRe = makeRe secrets.mailfilter.blacklist_to;
+  blacklistFromRe = makeRe secrets.mailfilter.blacklist_from;
 in {
   home.file.".maildrop/variables.inc" = {
     text = ''
       WHITELIST="(${whitelistRe})"
-      BLACKLIST="(${blacklistRe})"
+      BLACKLISTTO="(${blacklistRe})"
+      BLACKLISTFROM="(${blacklistFromRe})"
     '';
   };
   home.file.".HMmailfilter" = {
@@ -60,10 +61,15 @@ in {
 
 
       # Anything addressed to these go right in the bin
-      if ( /^To:.*$BLACKLIST/:H || /^Cc:.*$BLACKLIST/:H || /^Delivered-To:.*$BLACKLIST/:H \
-      || /^X-Original-To:.*$BLACKLIST/:H || /^Envelope-To:.*$BLACKLIST/:H )
+      if ( /^To:.*$BLACKLISTTO/:H )
       {
       log "Matched blacklist"
+      to "| notmuch insert +spam +inbox"
+      exit
+      }
+      if ( /^From:.*$BLACKLISTFROM/:H )
+      {
+      log "Matched blacklist (From:)"
       to "| notmuch insert +spam +inbox"
       exit
       }
