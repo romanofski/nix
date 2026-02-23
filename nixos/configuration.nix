@@ -192,8 +192,6 @@
       ];
     };
 
-    users.users.immich.extraGroups = [ "video" "render" ];
-
     programs.zsh.enable = true;
 
     # users.groups.rjoost.gid = 1000;
