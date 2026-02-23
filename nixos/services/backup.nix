@@ -1,23 +1,41 @@
 { config, pkgs, ... }:
 {
   services.borgbackup = {
-    jobs.immichBackup = {
-      repo = "/mnt/immich-borg";
-      encryption.mode = "none";
-      paths = [
-        "/var/lib/immich/library"
-        "/var/lib/immich/upload"
-        "/var/lib/immich/profile"
-      ];
-      prune.keep = {
-        daily = 7;
-        weekly = 4;
-        monthly = 6;
+    jobs = {
+      immichBackup = {
+        repo = "/mnt/immich-borg";
+        encryption.mode = "none";
+        paths = [
+          "/var/lib/immich/library"
+          "/var/lib/immich/upload"
+          "/var/lib/immich/profile"
+        ];
+        prune.keep = {
+          daily = 7;
+          weekly = 4;
+          monthly = 6;
+        };
+
+        startAt = "daily";
+
+        compression = "lz4";
       };
+      mailBackup = {
+        repo = "/mnt/mail-borg";
+        encryption.mode = "none";
+        paths = [
+          "/home/rjoost/Maildir"
+        ];
+        prune.keep = {
+          daily = 7;
+          weekly = 4;
+          monthly = 6;
+        };
 
-      startAt = "daily";
+        startAt = "daily";
 
-      compression = "lz4";
+        compression = "lz4";
+      };
     };
   };
 
@@ -31,6 +49,14 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.systemd}/bin/systemctl start borgbackup-job-immichBackup.service";
+    };
+  };
+  systemd.services."trigger-mail-backup-onplugin" = {
+    wantedBy = [ "mnt-mail\\x2dborg.mount" ];
+    after = [ "mnt-mail\\x2borg.mount" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.systemd}/bin/systemctl start borgbackup-job-mailBackup.service";
     };
   };
 }

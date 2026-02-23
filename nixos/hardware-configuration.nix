@@ -52,6 +52,16 @@
       "subvol=/immich-borg"
     ];
   };
+  fileSystems."/mnt/mail-borg" = {
+    device = "/dev/mapper/backup";
+    fsType = "btrfs";
+    options = [
+      "noauto"
+      "x-systemd.automount"
+      "x-systemd.idle-timeout=300" # unmount after 5min idle
+      "subvol=/mail"
+    ];
+  };
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="S415NW0R102710B", RUN+="${pkgs.systemd}/bin/systemctl start mnt-backup.automount"
   '';
