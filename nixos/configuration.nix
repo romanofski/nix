@@ -67,7 +67,7 @@
 
     # Select internationalisation properties.
     console.keyMap = "us";
-    console.font = "Lat2-Terminus16";
+    console.font = "${pkgs.kbd}/share/consolefonts/Lat2-Terminus16.psfu.gz";
 
     i18n.defaultLocale = "en_AU.UTF-8";
     i18n.extraLocaleSettings = {
