@@ -1,4 +1,4 @@
-{ secrets, pkgs, ... }:
+{ secrets, pkgs, nixpkgsUnstable, ... }:
 
 {
 
@@ -71,6 +71,7 @@
     unzip
     dig
     gnumake
+    nixpkgsUnstable.claude-code
     (google-cloud-sdk.withExtraComponents ([
       google-cloud-sdk.components.cloud-datastore-emulator
       google-cloud-sdk.components.app-engine-python

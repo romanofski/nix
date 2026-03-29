@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
     aispamclassifier.url = "github:romanofski/aispamclassifier";
     purebred.url = "github:purebred-mua/purebred/fix/muttaliasparsing";
@@ -9,7 +10,7 @@
     nixgl.url = "github:nix-community/nixGL";
   };
 
-  outputs = inputs@{ self, nixpkgs, secrets, aispamclassifier, home-manager, nixgl, purebred}:
+  outputs = inputs@{ self, nixpkgs, nixpkgsUnstable, secrets, aispamclassifier, home-manager, nixgl, purebred}:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -20,8 +21,14 @@
         modules = [
           ./t14s.nix
         ];
-        extraSpecialArgs = {inherit inputs; secrets =
-          secrets.workSecrets;};
+        extraSpecialArgs = {
+          inherit inputs;
+          nixpkgsUnstable = import nixpkgsUnstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          secrets = secrets.workSecrets;
+        };
       };
       "rjoost@yoga" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
