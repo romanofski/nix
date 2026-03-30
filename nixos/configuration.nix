@@ -124,6 +124,13 @@
       };
     };
 
+    services.xserver = {
+      xkb = {
+        options = "compose:ralt";
+        model = "pc105";
+        layout = "us";
+      };
+    };
     programs.niri.enable = true;
     services.greetd = {
       enable = true;
