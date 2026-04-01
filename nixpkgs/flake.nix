@@ -20,6 +20,7 @@
         inherit pkgs;
         modules = [
           ./t14s.nix
+          ./services/llm.nix
         ];
         extraSpecialArgs = {
           inherit inputs;
