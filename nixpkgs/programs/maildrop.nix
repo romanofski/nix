@@ -25,11 +25,17 @@ in {
       DEFAULT="$HOME/Maildir"
       PATH=$HOME/.nix-profile/bin:$HOME/.local/bin:$PATH
       NOTMUCH_CONFIG="$HOME/.config/notmuch/notmuchrc"
-
       include "$HOME/.maildrop/variables.inc"
 
       logfile "$HOME/.maildrop/mailfilter.log"
       log "---- new message ----"
+
+      if (/^From:.*${mkListRegexp [secrets.email]}/:H)
+      {
+      log "Matched ${secrets.email}"
+      to "| notmuch insert +inbox"
+      exit
+      }
 
       if ( /^X-getmail-retrieved-from-mailbox:[[:space:]]*(Junk|Spam|Trash)[[:space:]]*$/ )
       {
@@ -59,6 +65,11 @@ in {
       exit
       }
 
+      if ( /^List-Id:.*/:H )
+      {
+      log "Matched List-Id"
+      to "| notmuch insert +inbox +list"
+      }
 
       # Anything addressed to these go right in the bin
       if ( /^To:.*$BLACKLISTTO/:H )
