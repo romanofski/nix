@@ -4,8 +4,9 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixgl.url = "github:nix-community/nixGL";
     korrosync.url = "github:szaffarano/korrosync";
+    secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
   };
-  outputs = { self, nixpkgs, nixos-hardware, nixgl, korrosync }@attrs:
+  outputs = { self, nixpkgs, nixos-hardware, nixgl, korrosync, secrets }@attrs:
   let 
     system = "x86_64-linux";
     korroPkg = korrosync.packages.${system}.default;
@@ -23,13 +24,14 @@
       ];
     };
     nixosConfigurations.yoga = nixpkgs.lib.nixosSystem {
-      specialArgs = { korrosync = korrosyncNoTests; };
+      specialArgs = { korrosync = korrosyncNoTests; secrets = secrets.homeSecrets; };
       modules = [
         ./yoga.nix
         ./services/bookserver.nix
         ./services/media-server.nix
         ./services/image-server.nix
         ./services/vpn.nix
+        ./services/home-automation.nix
       ];
     };
   };

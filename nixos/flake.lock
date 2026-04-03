@@ -221,7 +221,8 @@
         "korrosync": "korrosync",
         "nixgl": "nixgl",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_3",
+        "secrets": "secrets"
       }
     },
     "rust-overlay": {
@@ -243,6 +244,21 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "type": "github"
+      }
+    },
+    "secrets": {
+      "locked": {
+        "lastModified": 1774848689,
+        "narHash": "sha256-ld3czmvpvO7j7VCjNmBMMJ7bF7ribyaTqQs+AyTIESs=",
+        "ref": "refs/heads/master",
+        "rev": "c90656da29cef8620eef6613d8fdbc21ffb3b1d6",
+        "revCount": 8,
+        "type": "git",
+        "url": "ssh://rjoost@krombopulos.lan/home/rjoost/works/configs/nixsecrets"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://rjoost@krombopulos.lan/home/rjoost/works/configs/nixsecrets"
       }
     },
     "systems": {
