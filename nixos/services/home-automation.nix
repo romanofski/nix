@@ -18,8 +18,28 @@ in
       '';
     };
 
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+    };
+
+    services.matter-server = {
+      enable = true;
+      extraArgs = ["--primary-interface" "wlp0s20f3" ];
+    };
+    services.openthread-border-router = {
+      enable = true;
+      backboneInterfaces = [ "wlp0s20f3" ];
+      radio = {
+        device = "/dev/ttyACM0";
+        baudRate = 460800;
+        flowControl = true;
+      };
+    };
+
     services.home-assistant = {
       enable = true;
+      openFirewall = true;
       extraPackages = python3Packages: with python3Packages; [
         gtts
         pymiele
@@ -40,6 +60,7 @@ in
         "zha"
         "matter"
         "thread"
+        "otbr"
         "homeassistant_hardware"
         "homeassistant_sky_connect"
       ];
