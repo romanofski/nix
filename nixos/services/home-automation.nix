@@ -22,6 +22,7 @@ in
         gtts
         pymiele
         aiohue
+        ical
       ];
       extraComponents = [
         "default_config"
