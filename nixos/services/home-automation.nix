@@ -6,6 +6,8 @@ in
   {
     networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+    users.users.hass.extraGroups = [ "dialout" ]; # ZBT-2
+
     services.caddy = {
       enable = true;
 
@@ -35,6 +37,11 @@ in
         "hue"
         "miele"
         "forecast_solar"
+        "zha"
+        "matter"
+        "thread"
+        "homeassistant_hardware"
+        "homeassistant_sky_connect"
       ];
 
       config = {
