@@ -45,27 +45,40 @@ in
         pymiele
         aiohue
         ical
+        gcal-sync
       ];
       extraComponents = [
         "default_config"
-        "met"
-        "openweathermap"
         "esphome"
-        "google_translate"
-        "radio_browser"
-        "glances"
-        "hue"
-        "miele"
         "forecast_solar"
-        "zha"
-        "matter"
-        "thread"
-        "otbr"
+        "glances"
+        "google_translate"
+        "history"
+        "history_stats"
         "homeassistant_hardware"
         "homeassistant_sky_connect"
+        "hue"
+        "logbook"
+        "matter"
+        "met"
+        "miele"
+        "mobile_app"
+        "moon"
+        "openweathermap"
+        "otbr"
+        "persistent_notification"
+        "radio_browser"
+        "recorder"
+        "statistics"
+        "sun"
+        "system_health"
+        "thread"
+        "zeroconf"
+        "zha"
       ];
 
       config = {
+        history = {};
         mobile_app = {};
         http = {
           use_x_forwarded_for = true;
