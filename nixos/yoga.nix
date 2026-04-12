@@ -26,6 +26,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.unmanaged = [ "wlp0s20f3" ];
+  networking.wireless.enable = false;
 
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
@@ -101,6 +103,8 @@
       shell = pkgs.zsh;
       packages = with pkgs; [
         zsh
+        iputils
+        jq
       ];
     };
 
