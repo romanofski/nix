@@ -36,6 +36,14 @@
         ./services/image-server.nix
         ./services/vpn.nix
         ./services/home-automation.nix
+        ./services/home-automation/matterjs-server-service.nix
+        ({ pkgs, ... }: {
+          nixpkgs.overlays = [
+            (final: prev: {
+              matterjs-server = final.callPackage ./pkgs/matterjs-server.nix {};
+            })
+          ];
+        })
         ({nixpkgs-otbr, ...}: {
           imports = [
             (nixpkgs-otbr.outPath +

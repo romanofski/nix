@@ -1,7 +1,9 @@
-{ config,secrets, ... }:
+{ pkgs,config,secrets, ... }:
 
 let
   tailscaleDomain = "mystique.kamori-gila.ts.net";
+  networkInterface = "enp0s20f0u3u3";
+  vendorID = "4939";
 in
   {
     networking.firewall.allowedTCPPorts = [ 80 443 ];
@@ -23,13 +25,15 @@ in
       nssmdns4 = true;
     };
 
-    services.matter-server = {
+    services.matter-server.enable = false;
+    services.matterjs-server = {
       enable = true;
-      extraArgs = ["--primary-interface" "wlp0s20f3" ];
+      primaryInterface = networkInterface;
+      vendorID = vendorID;
     };
     services.openthread-border-router = {
       enable = true;
-      backboneInterfaces = [ "wlp0s20f3" ];
+      backboneInterfaces = [ networkInterface ];
       radio = {
         device = "/dev/ttyACM0";
         baudRate = 460800;
