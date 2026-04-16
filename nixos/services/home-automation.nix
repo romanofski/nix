@@ -6,7 +6,16 @@ let
   vendorID = "4939";
 in
   {
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedTCPPorts = [
+      443
+      5580 # matter-server dashboard
+    ];
+    networking.firewall.allowedUDPPorts = [
+      5353  # mDNS/ how phone finds thread border router
+      5540  # matter protocol
+      49154  # MeshCoP / Thread commissioning service port
+    ];
+    networking.firewall.trustedInterfaces = [ "wpan0" ];
 
     users.users.hass.extraGroups = [ "dialout" ]; # ZBT-2
 
