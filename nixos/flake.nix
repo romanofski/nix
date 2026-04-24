@@ -27,7 +27,7 @@
     nixosConfigurations.yoga = nixpkgs.lib.nixosSystem {
       specialArgs = { 
         korrosync = korrosyncNoTests;
-        secrets = secrets.homeSecrets; 
+        secrets = secrets.yogaSecrets; 
       } // { inherit nixpkgs-otbr; };
       modules = [
         ./yoga.nix
@@ -37,6 +37,7 @@
         ./services/vpn.nix
         ./services/home-automation.nix
         ./services/home-automation/matterjs-server-service.nix
+        ./services/rtl2832.nix
         ({ pkgs, ... }: {
           nixpkgs.overlays = [
             (final: prev: {

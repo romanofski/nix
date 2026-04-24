@@ -97,6 +97,7 @@
         "networkmanager"
         "jellyfin"
         "immich"
+        "plugdev"  # home-assistant rtl2832
       ];
       description = "Roman Joost";
       isNormalUser = true;

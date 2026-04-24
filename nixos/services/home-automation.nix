@@ -4,6 +4,40 @@ let
   tailscaleDomain = "mystique.kamori-gila.ts.net";
   networkInterface = "enp0s20f0u3u3";
   vendorID = "4939";
+  sensorsDefinitions = [
+    { 
+      name = "Roof Cavity";
+      id = "213";
+    }
+    {
+      name = "Outdoor";
+      id = "197";
+    }
+  ];
+  mkMQTTSensors = { name, id }: [
+            {
+              name = "${name} Temperature";
+              state_topic = "rtl_433/Nexus-TH/${id}";
+              value_template = "{{ value_json.temperature_C }}";
+              unit_of_measurement = "°C";
+              device_class = "temperature";
+              unique_id = "nexus_th_${id}_temp";
+            }
+            {
+              name = "${name} Humidity";
+              state_topic = "rtl_433/Nexus-TH/${id}";
+              value_template = "{{ value_json.humidity }}";
+              unit_of_measurement = "%";
+              device_class = "humidity";
+              unique_id = "nexus_th_${id}_humidity";
+            }
+            {
+              name = "${name} Battery";
+              state_topic = "rtl_433/Nexus-TH/${id}";
+              value_template = "{{ value_json.battery_ok }}";
+              unique_id = "nexus_th_${id}_battery";
+            }
+  ];
 in
   {
     networking.firewall.allowedTCPPorts = [
@@ -18,6 +52,19 @@ in
     networking.firewall.trustedInterfaces = [ "wpan0" ];
 
     users.users.hass.extraGroups = [ "dialout" ]; # ZBT-2
+
+    services.mosquitto = {
+      enable = true;
+      listeners = [
+        {
+          acl = [
+            "topic readwrite #"
+          ];
+          omitPasswordAuth = true;
+          settings.allow_anonymous = true;
+        }
+      ];
+    };
 
     services.caddy = {
       enable = true;
@@ -72,11 +119,17 @@ in
         "homeassistant_sky_connect"
         "hue"
         "logbook"
+        "manual_mqtt"
         "matter"
         "met"
         "miele"
         "mobile_app"
         "moon"
+        "mqtt"
+        "mqtt_eventstream"
+        "mqtt_json"
+        "mqtt_room"
+        "mqtt_statestream"
         "openweathermap"
         "otbr"
         "persistent_notification"
@@ -100,6 +153,28 @@ in
             "::1"
           ];
         };
+        mqtt = {
+          sensor = builtins.concatMap mkMQTTSensors sensorsDefinitions;
+        };
+        sensor = [
+          {
+            platform = "template";
+            sensors = {
+              ambient_temperature_min = {
+                friendly_name = "Ambient Temperature";
+                unit_of_measurement = "°C";
+                device_class = "temperature";
+                value_template = ''
+                  {{ [
+                  states('sensor.roof_cavity_temperature') | float,
+                  states('sensor.outdoor_temperature') | float
+                  ] | min
+                  }}
+                '';
+              };
+            };
+          }
+        ];
         automation = "!include automations.yaml";
         logger = {
           default = "warning";
@@ -112,9 +187,9 @@ in
         };
         homeassistant = {
           name = "Home";
-          latitude = secrets.latitude;
-          longitude = secrets.longitude;
-          elevation = secrets.elevation;
+          latitude = secrets.homeassistant.latitude;
+          longitude = secrets.homeassistant.longitude;
+          elevation = secrets.homeassistant.elevation;
           unit_system = "metric";
           temperature_unit = "C";
           time_zone = "Australia/Brisbane";
