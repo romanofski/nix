@@ -4,6 +4,15 @@ let
   tailscaleDomain = "mystique.kamori-gila.ts.net";
   networkInterface = "enp0s20f0u3u3";
   vendorID = "4939";
+  rainGaugeIds = ["213" "5"]; # also found 11 and 10 but didn't change
+  rainGaugeSensors = map (id: {
+    name = "Rain Gauge ${id}";
+    state_topic = "rtl_433/Acurite-Rain/${id}";
+    value_template = "{{ value_json.rain_mm | float }}";
+    unit_of_measurement = "mm";
+    device_class = "precipitation";
+    unique_id = "rain_gauge_${id}";
+  }) rainGaugeIds;
   sensorsDefinitions = [
     { 
       name = "Roof Cavity";
@@ -146,6 +155,7 @@ in
       config = {
         history = {};
         mobile_app = {};
+        logbook = {};
         http = {
           use_x_forwarded_for = true;
           trusted_proxies = [
@@ -154,7 +164,36 @@ in
           ];
         };
         mqtt = {
-          sensor = builtins.concatMap mkMQTTSensors sensorsDefinitions;
+          sensor = builtins.concatMap mkMQTTSensors sensorsDefinitions
+          ++ rainGaugeSensors;
+        };
+        template = [
+          {
+            sensor = [
+              {
+                name = "Rain Gauge Average";
+                unit_of_measurement = "mm";
+                device_class = "precipitation";
+                unique_id = "rain_gauge_average";
+                state = ''
+                  {{ [
+                  ${builtins.concatStringsSep ",\n    " (map (id: "states('sensor.rain_gauge_${id}') | float") rainGaugeIds)}
+                  ] | average }}
+                '';
+              }
+            ];
+          }
+        ];
+
+        utility_meter = {
+          daily_rainfall = {
+            source = "sensor.rain_gauge_average";
+            cycle = "daily";
+          };
+          monthly_rainfall = {
+            source = "sensor.rain_gauge_average";
+            cycle = "monthly";
+          };
         };
         sensor = [
           {
