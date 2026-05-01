@@ -5,10 +5,12 @@
     nixpkgs-otbr.url = "github:NixOS/nixpkgs/pull/502388/head";
     nixgl.url = "github:nix-community/nixGL";
     korrosync.url = "github:szaffarano/korrosync";
-    secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+    };
   };
-  outputs = { self, nixpkgs, nixos-hardware, nixpkgs-otbr, nixgl, korrosync, secrets }@attrs:
-  let 
+  outputs = { self, nixpkgs, nixos-hardware, nixpkgs-otbr, nixgl, korrosync, sops-nix }@attrs:
+  let
     system = "x86_64-linux";
     korroPkg = korrosync.packages.${system}.default;
     korrosyncNoTests = korroPkg.overrideAttrs (old: { doCheck = false; });
@@ -16,6 +18,7 @@
     nixosConfigurations.krombopulos = nixpkgs.lib.nixosSystem {
       specialArgs = attrs;
       modules = [
+        sops-nix.nixosModules.sops
         ./configuration.nix
         nixos-hardware.nixosModules.lenovo-thinkpad-t480s
         ./services/vpn.nix
@@ -26,11 +29,11 @@
       ];
     };
     nixosConfigurations.yoga = nixpkgs.lib.nixosSystem {
-      specialArgs = { 
+      specialArgs = {
         korrosync = korrosyncNoTests;
-        secrets = secrets.yogaSecrets; 
       } // { inherit nixpkgs-otbr; };
       modules = [
+        sops-nix.nixosModules.sops
         ./yoga.nix
         ./services/bookserver.nix
         ./services/media-server.nix
@@ -54,7 +57,7 @@
           nixpkgs.overlays = [
             (final: prev: {
               openthread-border-router =
-              nixpkgs-otbr.legacyPackages.x86_64-linux.openthread-border-router;
+                nixpkgs-otbr.legacyPackages.x86_64-linux.openthread-border-router;
             })
           ];
         })

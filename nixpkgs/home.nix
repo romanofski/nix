@@ -1,7 +1,8 @@
-{ secrets, aispamclassifier, purebred, korrosync, pkgs, lib, config, ... }:
+{ aispamclassifier, purebred, korrosync, pkgs, lib, config, ... }:
 
 {
 
+  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
   nixpkgs.overlays = [
     (self: super:
 
