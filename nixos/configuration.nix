@@ -40,6 +40,9 @@
         experimental-features = nix-command flakes
       '';
     };
+    networking = {
+      enableIPv6 = false;
+    };
     networking.networkmanager = {
       enable = true;
       dns = "systemd-resolved";
