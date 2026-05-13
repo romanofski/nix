@@ -1,17 +1,10 @@
 { secrets, pkgs, nixpkgsUnstable, ... }:
 
 {
-  programs.claude-code = {
-    enable = true;
-    package = nixpkgsUnstable.claude-code;
-    mcpServers = {
-      azure-devops = {
-        type = "stdio";
-        command = "npx";
-        args = ["-y" "@azure-devops/mcp@latest" "onedrive"];
-      };
-    };
-  };
+  home.packages = with pkgs; [
+    gh
+    nixpkgsUnstable.github-copilot-cli
+  ];
   services.ollama = {
     enable = true;
     acceleration = "rocm";

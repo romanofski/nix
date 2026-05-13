@@ -71,7 +71,6 @@
     unzip
     dig
     gnumake
-    github-copilot-cli
     (google-cloud-sdk.withExtraComponents ([
       google-cloud-sdk.components.cloud-datastore-emulator
       google-cloud-sdk.components.app-engine-python
