@@ -1,5 +1,16 @@
 (use-package powershell)
 
+(use-package agent-shell
+  :ensure t
+  :general
+  (general-nmap :prefix "SPC"
+                "ca" 'agent-shell
+		)
+  :config
+  (setopt agent-shell-thought-process-expand-by-default t)
+  (setopt agent-shell-tool-use-expand-by-default t)
+  )
+
 (use-package treesit
   :init
   (setq treesit-language-source-alist

@@ -4,13 +4,14 @@
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
     aispamclassifier.url = "github:romanofski/aispamclassifier";
+    emacs.url = "github:nix-community/emacs-overlay";
     purebred.url = "github:purebred-mua/purebred/fix/muttaliasparsing";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixgl.url = "github:nix-community/nixGL";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgsUnstable, secrets, aispamclassifier, home-manager, nixgl, purebred}:
+  outputs = inputs@{ self, nixpkgs, nixpkgsUnstable, secrets, aispamclassifier, emacs, home-manager, nixgl, purebred}:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -21,6 +22,7 @@
         modules = [
           ./t14s.nix
           ./services/llm.nix
+          ({ nixpkgs.overlays = [ emacs.overlays.default ]; })
         ];
         extraSpecialArgs = {
           inherit inputs;

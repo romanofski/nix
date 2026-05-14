@@ -1,5 +1,5 @@
 
-{ pkgs, nixpkgsUnstable, ... }:
+{ pkgs, ... }:
 
 let
   configs = [
@@ -93,6 +93,7 @@ let
         bicep-ts-mode
         lsp-pyright
         yapfify
+        agent-shell
       ];
     }
     {
