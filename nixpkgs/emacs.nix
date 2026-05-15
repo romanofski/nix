@@ -157,6 +157,10 @@ in
     # for compiling treesit language grammars
     pkgs.gcc
 
+    # monochrome icons
+    pkgs.symbola
+    pkgs.nerd-fonts.symbols-only
+
     (pkgs.python311.withPackages (
       ps:
       with ps; [

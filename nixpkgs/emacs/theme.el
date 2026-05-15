@@ -61,6 +61,8 @@
 (when (window-system)
   ;;(add-to-list 'default-frame-alist '(font . "Fira Code Medium"))
   (set-face-attribute 'default nil :weight 'normal :height 90 :font "Fira Code Medium"))
+  (set-fontset-font t 'symbol "Symbola" nil 'append)
+  (set-fontset-font t 'symbol "Symbols Nerd Font Mono" nil 'append)
 
 ;; transparent title bar
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
