@@ -14,6 +14,14 @@
       frequency 433.92M
       convert si
       report_meta time:iso:tz:local
+      report_meta level
+      # These temp sensors are mine, but get decoded as others
+      # Rubicson temp sensors
+      protocol -02
+      # LaCrosse temp sensor
+      protocol -08
+      # disable Nexus-TH in favour for Bresser
+      protocol -19
 
       output mqtt://localhost:1883,retain=1,events=rtl_433[/model][/id]
     '';

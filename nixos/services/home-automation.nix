@@ -22,32 +22,73 @@ let
       name = "Outdoor";
       id = "197";
     }
+    {
+      name = "Garage";
+      id = "179";
+    }
   ];
-  mkMQTTSensors = { name, id }: [
-            {
-              name = "${name} Temperature";
-              state_topic = "rtl_433/Nexus-TH/${id}";
-              value_template = "{{ value_json.temperature_C }}";
-              unit_of_measurement = "°C";
-              device_class = "temperature";
-              unique_id = "nexus_th_${id}_temp";
-            }
-            {
-              name = "${name} Humidity";
-              state_topic = "rtl_433/Nexus-TH/${id}";
-              value_template = "{{ value_json.humidity }}";
-              unit_of_measurement = "%";
-              device_class = "humidity";
-              unique_id = "nexus_th_${id}_humidity";
-            }
-            {
-              name = "${name} Battery";
-              state_topic = "rtl_433/Nexus-TH/${id}";
-              value_template = "{{ value_json.battery_ok }}";
-              unique_id = "nexus_th_${id}_battery";
-            }
+  mkBatterySensors = { name, id, ... }: [
+    {
+      name = "${name} Battery";
+      state_topic = "rtl_433/Bresser-3CH/${id}";
+      value_template = "{{ value_json.battery_ok }}";
+      payload_on = "0"; # battery_ok=0 means LOW
+      payload_off = "1"; # battery_ok=1 means OK
+      device_class = "battery";
+      unique_id = "bresser_${id}_battery";
+      entity_category = "diagnostic";
+    }
   ];
-in
+  mkMQTTSensors = { name, id }: let
+
+    topic = "rtl_433/Bresser-3CH/${id}";
+  in
+  [
+    {
+      name = "${name} Temperature";
+      state_topic = topic;
+      value_template = "{{ value_json.temperature_C }}";
+      unit_of_measurement = "°C";
+      device_class = "temperature";
+      unique_id = "nexus_th_${id}_temp";
+      }
+      {
+      name = "${name} Humidity";
+      state_topic = topic;
+      value_template = "{{ value_json.humidity }}";
+      unit_of_measurement = "%";
+      device_class = "humidity";
+      unique_id = "nexus_th_${id}_humidity";
+      }
+      {
+      name = "${name} RSSI";
+      state_topic = topic;
+      value_template = "{{ value_json.rssi | round(1) }}";
+      unit_of_measurement = "dBm";
+      device_class = "signal_strength";
+      unique_id = "bresser_${id}_rssi";
+      entity_category = "diagnostic";
+      }
+      {
+      name = "${name} SNR";
+      state_topic = topic;
+      value_template = "{{ value_json.snr | round(1) }}";
+      unit_of_measurement = "dB";
+      device_class = "signal_strength";
+      unique_id = "bresser_${id}_snr";
+      entity_category = "diagnostic";
+      }
+      {
+      name = "${name} Noise";
+      state_topic = topic;
+      value_template = "{{ value_json.noise | round(1) }}";
+      unit_of_measurement = "dBm";
+      device_class = "signal_strength";
+      unique_id = "bresser_${id}_noise";
+      entity_category = "diagnostic";
+      }
+      ];
+      in
   {
     networking.firewall.allowedTCPPorts = [
       443
@@ -165,7 +206,25 @@ in
         };
         mqtt = {
           sensor = builtins.concatMap mkMQTTSensors sensorsDefinitions
-          ++ rainGaugeSensors;
+          ++ rainGaugeSensors ++ [
+            {
+              name = "Power 1";
+              state_topic = "rtl_433/Oregon-CM180i/18976";
+              value_template = "{{ value_json.power1_W | int }}";
+              unit_of_measurement = "W";
+              device_class = "power";
+              unique_id = "cm180i_power1";
+            }
+            {
+              name = "Power 3";
+              state_topic = "rtl_433/Oregon-CM180i/18976";
+              value_template = "{{ value_json.power3_W | int }}";
+              unit_of_measurement = "W";
+              device_class = "power";
+              unique_id = "cm180i_power3";
+            }
+          ];
+          binary_sensor = builtins.concatMap mkBatterySensors sensorsDefinitions;
         };
         template = [
           {
@@ -207,7 +266,7 @@ in
                   {{ [
                   states('sensor.roof_cavity_temperature') | float,
                   states('sensor.outdoor_temperature') | float
-                  ] | min
+                  ] | min | round(1)
                   }}
                 '';
               };
