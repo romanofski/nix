@@ -47,7 +47,7 @@
           ./home.nix
         ] ++ [
           ({
-            nixpkgs.overlays = [ nixgl.overlay ];
+            nixpkgs.overlays = [ nixgl.overlay emacs.overlays.default ];
           })
         ];
         extraSpecialArgs = {inherit inputs;
