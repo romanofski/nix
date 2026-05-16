@@ -2,17 +2,16 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
     aispamclassifier.url = "github:romanofski/aispamclassifier";
     emacs.url = "github:nix-community/emacs-overlay";
     purebred.url = "github:purebred-mua/purebred/fix/muttaliasparsing";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixgl.url = "github:nix-community/nixGL";
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgsUnstable, aispamclassifier, emacs, home-manager, nixgl, purebred, sops-nix }:
+  outputs = inputs@{ self, nixpkgs, nixpkgsUnstable, secrets, aispamclassifier, emacs, home-manager, nixgl, purebred}:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -45,7 +44,6 @@
       "rjoost@home" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          sops-nix.nixosModules.sops
           ./home.nix
         ] ++ [
           ({
