@@ -1,5 +1,5 @@
 
-{ pkgs, ... }:
+{ pkgs, nixpkgsUnstable, ... }:
 
 let
   configs = [
@@ -171,5 +171,7 @@ in
     ))
 
     pkgs.pyright
+    pkgs.gh
+    nixpkgsUnstable.github-copilot-cli
   ];
 }

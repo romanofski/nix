@@ -50,10 +50,15 @@
             nixpkgs.overlays = [ nixgl.overlay emacs.overlays.default ];
           })
         ];
-        extraSpecialArgs = {inherit inputs;
-        aispamclassifier = aispamclassifier;
-        secrets = secrets.homeSecrets;
-        purebred = purebred;
+        extraSpecialArgs = {
+          inherit inputs;
+          nixpkgsUnstable = import nixpkgsUnstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          aispamclassifier = aispamclassifier;
+          secrets = secrets.homeSecrets;
+          purebred = purebred;
         };
       };
     };
