@@ -45,6 +45,25 @@
         inherit pkgs;
         modules = [
           ./home.nix
+          ./emacs.nix
+          ./programs/vim.nix
+          ./programs/terminal.nix
+          ./programs/zsh.nix
+          ./programs/notmuch.nix
+          ./programs/xsession.nix
+          ./programs/purebred.nix
+          ./programs/gtk.nix
+          ./programs/tmux.nix
+          ./programs/maildrop.nix
+          ./programs/ghci.nix
+          ./programs/mcfly.nix
+          ./programs/niri.nix
+          ./programs/notification.nix
+          ./programs/passwordmanagement.nix
+          ./programs/maildrop.nix
+          ./services/gpg-agent.nix
+          ./services/filesync.nix
+          ./services/phoneconnect.nix
         ] ++ [
           ({
             nixpkgs.overlays = [ nixgl.overlay emacs.overlays.default ];
