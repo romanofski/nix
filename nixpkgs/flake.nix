@@ -5,7 +5,7 @@
     secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
     aispamclassifier.url = "github:romanofski/aispamclassifier";
     emacs.url = "github:nix-community/emacs-overlay";
-    purebred.url = "github:purebred-mua/purebred/fix/muttaliasparsing";
+    purebred.url = "github:purebred-mua/purebred/master";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixgl.url = "github:nix-community/nixGL";
