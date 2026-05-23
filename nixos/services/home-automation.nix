@@ -18,6 +18,14 @@ let
       name = "Roof Cavity";
       id = "213";
     }
+    { 
+      name = "Living Room";
+      id = "228";
+    }
+    { 
+      name = "Master Bedroom Bathroom";
+      id = "252";
+    }
     {
       name = "Outdoor";
       id = "197";
@@ -25,6 +33,14 @@ let
     {
       name = "Garage";
       id = "179";
+    }
+    {
+      name = "Fionns Bedroom";
+      id = "35";
+    }
+    {
+      name = "Felicias Bedroom";
+      id = "172";
     }
   ];
   mkBatterySensors = { name, id, ... }: [
@@ -272,6 +288,13 @@ let
               };
             };
           }
+          {
+            platform = "derivative";
+            name = "Bathroom Humidity Rate";
+            source = "sensor.master_bedroom_bathroom_humidity";
+            time_window = "00:05:00";
+            unit_time = "min";
+            }
         ];
         automation = "!include automations.yaml";
         logger = {
