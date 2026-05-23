@@ -1,0 +1,9 @@
+keys:
+ - &rjoost age1qpulahpfmm7unh2ajlyaza3p0k4rxpuyl38le93vj2mtzm7j39tqan8qwm
+ - &yoga age1s8njlq8g2mfrjde7dpkmdy0a47d4weuckr5qpc0qf0zlschkwdzqa8f9p8
+creation_rules:
+  - path_regex: secrets/yoga/.*\.yaml$
+    key_groups:
+      - age:
+        - *rjoost
+        - *yoga
