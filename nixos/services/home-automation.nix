@@ -13,6 +13,23 @@ let
     device_class = "precipitation";
     unique_id = "rain_gauge_${id}";
   }) rainGaugeIds;
+  makeMotionSensors = { name, code }: [
+    {
+      name = "${name} Motion";
+      state_topic = "rtl_433/PIR";
+      value_template = ''
+        {{ "ON" if "{25}${code}" in value_json.codes else "OFF" }}
+        '';
+      payload_on = "ON";
+      payload_off = "OFF";
+      device_class = "motion";
+      unique_id = "pir_${code}_motion";
+      off_delay = 300;
+    }
+  ];
+  motionSensors = [
+    { name = "Computer Room"; code = "17ffa88"; }
+  ];
   sensorsDefinitions = [
     { 
       name = "Roof Cavity";
@@ -240,7 +257,8 @@ let
               unique_id = "cm180i_power3";
             }
           ];
-          binary_sensor = builtins.concatMap mkBatterySensors sensorsDefinitions;
+          binary_sensor = (builtins.concatMap mkBatterySensors sensorsDefinitions)
+            ++ (builtins.concatMap makeMotionSensors motionSensors);
         };
         template = [
           {

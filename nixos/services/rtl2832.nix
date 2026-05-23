@@ -23,6 +23,9 @@
       # disable Nexus-TH in favour for Bresser
       protocol -19
 
+      # cheap PIR sensor
+      decoder n=PIR,m=OOK_PWM,s=400,l=1196,r=1200,g=0,t=500,y=0,bits=25
+
       output mqtt://localhost:1883,retain=1,events=rtl_433[/model][/id]
     '';
 
