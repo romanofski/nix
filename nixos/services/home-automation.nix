@@ -4,7 +4,7 @@ let
   tailscaleDomain = "mystique.kamori-gila.ts.net";
   networkInterface = "enp0s20f0u3u3";
   vendorID = "4939";
-  rainGaugeIds = ["213" "5"]; # also found 11 and 10 but didn't change
+  rainGaugeIds = ["10" "12"]; # also found 11 and 10 but didn't change
   rainGaugeSensors = map (id: {
     name = "Rain Gauge ${id}";
     state_topic = "rtl_433/Acurite-Rain/${id}";
