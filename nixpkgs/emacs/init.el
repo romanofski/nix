@@ -23,4 +23,4 @@
 (setq-default indent-tabs-mode nil)
 
 ;; show traceback on error
-(setq debug-on-error t)
+;; (setq debug-on-error t)
