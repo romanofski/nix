@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixpkgs-otbr.url = "github:NixOS/nixpkgs/pull/502388/head";
     nixgl.url = "github:nix-community/nixGL";
