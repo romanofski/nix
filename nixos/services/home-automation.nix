@@ -326,115 +326,6 @@ in
         }
       ];
 
-      utility_meter = {
-        daily_rainfall = {
-          source = "sensor.rain_gauge_average";
-          cycle = "daily";
-        };
-        monthly_rainfall = {
-          source = "sensor.rain_gauge_average";
-          cycle = "monthly";
-        };
-      };
-
-    services.home-assistant = {
-      enable = true;
-      openFirewall = true;
-      extraPackages = python3Packages: with python3Packages; [
-        gtts
-        pymiele
-        aiohue
-        ical
-        gcal-sync
-      ];
-      extraComponents = [
-        "default_config"
-        "esphome"
-        "forecast_solar"
-        "glances"
-        "google_translate"
-        "history"
-        "history_stats"
-        "homeassistant_hardware"
-        "homeassistant_sky_connect"
-        "hue"
-        "logbook"
-        "manual_mqtt"
-        "matter"
-        "met"
-        "miele"
-        "mobile_app"
-        "moon"
-        "mqtt"
-        "mqtt_eventstream"
-        "mqtt_json"
-        "mqtt_room"
-        "mqtt_statestream"
-        "openweathermap"
-        "otbr"
-        "persistent_notification"
-        "radio_browser"
-        "recorder"
-        "statistics"
-        "sun"
-        "system_health"
-        "thread"
-        "zeroconf"
-        "zha"
-      ];
-
-      config = {
-        history = {};
-        mobile_app = {};
-        logbook = {};
-        http = {
-          use_x_forwarded_for = true;
-          trusted_proxies = [
-            "127.0.0.1"
-            "::1"
-          ];
-        };
-        mqtt = {
-          sensor = builtins.concatMap mkMQTTSensors sensorsDefinitions
-          ++ rainGaugeSensors ++ [
-            {
-              name = "Power 1";
-              state_topic = "rtl_433/Oregon-CM180i/18976";
-              value_template = "{{ value_json.power1_W | int }}";
-              unit_of_measurement = "W";
-              device_class = "power";
-              unique_id = "cm180i_power1";
-            }
-            {
-              name = "Power 3";
-              state_topic = "rtl_433/Oregon-CM180i/18976";
-              value_template = "{{ value_json.power3_W | int }}";
-              unit_of_measurement = "W";
-              device_class = "power";
-              unique_id = "cm180i_power3";
-            }
-          ];
-          binary_sensor = (builtins.concatMap mkBatterySensors sensorsDefinitions)
-            ++ (builtins.concatMap makeMotionSensors motionSensors);
-        };
-        template = [
-          {
-            sensor = [
-              {
-                name = "Rain Gauge Average";
-                unit_of_measurement = "mm";
-                device_class = "precipitation";
-                unique_id = "rain_gauge_average";
-                state = ''
-                  {{ [
-                  ${builtins.concatStringsSep ",\n    " (map (id: "states('sensor.rain_gauge_${id}') | float") rainGaugeIds)}
-                  ] | average }}
-                '';
-              }
-            ];
-          }
-        ];
-
         utility_meter = {
           daily_rainfall = {
             source = "sensor.rain_gauge_average";
@@ -480,25 +371,7 @@ in
             "homeassistant.core" = "info";
             "homeassistant.helpers.entity_platform" = "debug";
           };
-        }
-        {
-          platform = "derivative";
-          name = "Bathroom Humidity Rate";
-          source = "sensor.master_bedroom_bathroom_humidity";
-          time_window = "00:05:00";
-          unit_time = "min";
-        }
-      ];
-      automation = "!include automations.yaml";
-      logger = {
-        default = "warning";
-        logs = {
-          "homeassistant.components.automation" = "debug";
-          "homeassistant.config" = "debug";
-          "homeassistant.core" = "info";
-          "homeassistant.helpers.entity_platform" = "debug";
         };
-      };
       homeassistant = {
         name = "Home";
         latitude = secrets.homeassistant.latitude;
