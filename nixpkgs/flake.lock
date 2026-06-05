@@ -215,16 +215,16 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1772151242,
-        "narHash": "sha256-oCGB1v5gdFKS7cMPQDyKUzEU1JilmGD9eQEqReZbuWA=",
+        "lastModified": 1780567023,
+        "narHash": "sha256-OSp9D4tj4qeoobcYdR8EER6sTC9PeMEw6nLjy2h6XW0=",
         "owner": "purebred-mua",
         "repo": "purebred",
-        "rev": "c6c10d8f04fa10eea328119e4bf9bc93cf27527e",
+        "rev": "c6748d47d98ab1bd8739307480ceed125779ddab",
         "type": "github"
       },
       "original": {
         "owner": "purebred-mua",
-        "ref": "master",
+        "ref": "feat/brick-editor-haskeline",
         "repo": "purebred",
         "type": "github"
       }
