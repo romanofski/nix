@@ -7,7 +7,7 @@
 
   # kudos to: https://rzetterberg.github.io/yubikey-gpg-nixos.html
   services.udev.packages = with pkgs; [
-    yubiky-personalization
+    yubikey-personalization
   ];
   security.pam.services = {
     login.u2fAuth = true;
