@@ -50,6 +50,7 @@
     pkgs.poppler-utils # pdftotext
     pkgs.signal-desktop
     pkgs.mpv
+    pkgs.spotify
     pkgs.nixgl.nixGLIntel
     (pkgs.writeShellScriptBin "viewpdfwrapper"
     ''
