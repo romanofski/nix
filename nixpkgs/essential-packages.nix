@@ -12,16 +12,20 @@
     pkgs.bluez
     pkgs.bluez-tools
     pkgs.cachix
+    pkgs.cheese
     pkgs.ctags
     pkgs.elinks
     pkgs.evince
     pkgs.feh
     pkgs.ffmpeg
+    pkgs.ffmpegthumbnailer
     pkgs.file
+    pkgs.firefox
     pkgs.gimp
     pkgs.git
-    pkgs.cheese
     pkgs.gnupg
+    pkgs.gvfs
+    pkgs.hamster
     pkgs.haskellPackages.xmobar
     pkgs.ibm-plex
     pkgs.inkscape
@@ -44,11 +48,10 @@
     pkgs.urlscan
     pkgs.usbutils
     pkgs.wget
-    pkgs.xlockmore
-    pkgs.xss-lock
-    pkgs.firefox
-    pkgs.hamster
     pkgs.xfce.thunar
     pkgs.xfce.thunar-volman
+    pkgs.xfce.tumbler # needed for thumbnails
+    pkgs.xlockmore
+    pkgs.xss-lock
   ];
 }
