@@ -1,5 +1,16 @@
-{ lib, buildHomeAssistantComponent, fetchFromGitHub, python3Packages }:
+{ lib, buildHomeAssistantComponent, fetchPypi, fetchFromGitHub, home-assistant }:
 
+let
+  py = home-assistant.python3Packages;
+  websocket-client = py.websocket-client.overridePythonAttrs (old: rec {
+    version = "1.8.0";
+    src = fetchPypi {
+      pname = "websocket_client";
+      inherit version;
+      hash = "sha256-Mjnfn0TaYy+WASRygF1AojKBqZECfOEdL0Wm8krEw9o=";
+    };
+  });
+in
 buildHomeAssistantComponent rec {
   owner = "fuatakgun";
   domain = "eufy_security";
@@ -12,9 +23,9 @@ buildHomeAssistantComponent rec {
     hash = "sha256-Pn+ci4h016EX7dbJ7eh1lF0L0wkzw3g/AEWKN0QZpww=";
   };
 
-  dependencies = with python3Packages; [
+  dependencies = [
     websocket-client
-    aiortsp
+    py.aiortsp
   ];
 
   meta = with lib; {

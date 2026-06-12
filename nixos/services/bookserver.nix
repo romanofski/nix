@@ -21,7 +21,7 @@ in
         User = config.users.users.rjoost.name;
         Group = config.users.users.rjoost.group;
         ReadWritePaths = statedir;
-        ExecStart = "${korrosync}/bin/korrosync";
+        ExecStart = "${korrosync}/bin/korrosync serve";
         Environment = [
           "KORROSYNC_DB_PATH=${statedir}/progress"
         ];

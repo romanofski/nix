@@ -91,7 +91,8 @@ let
       value_template = "{{ value_json.temperature_C }}";
       unit_of_measurement = "°C";
       device_class = "temperature";
-      unique_id = "nexus_th_${id}_temp";
+      unique_id = "bresser_${id}_temp";
+      force_update = true;
     }
     {
       name = "${name} Humidity";
@@ -99,7 +100,8 @@ let
       value_template = "{{ value_json.humidity }}";
       unit_of_measurement = "%";
       device_class = "humidity";
-      unique_id = "nexus_th_${id}_humidity";
+      unique_id = "bresser_${id}_humidity";
+      force_update = true;
     }
     {
       name = "${name} RSSI";
@@ -322,6 +324,20 @@ in
                 ] | average }}
               '';
             }
+            {
+              name = "Ambient Temperature";
+              unique_id = "ambient_temperature_min";
+              unit_of_measurement = "°C";
+              device_class = "temperature";
+              state = ''
+                {{ [
+                states('sensor.roof_cavity_temperature') | float,
+                states('sensor.outdoor_temperature') | float
+                ] | min | round(1)
+                }}
+              '';
+          }
+
           ];
         }
       ];
@@ -337,23 +353,6 @@ in
           };
         };
         sensor = [
-          {
-            platform = "template";
-            sensors = {
-              ambient_temperature_min = {
-                friendly_name = "Ambient Temperature";
-                unit_of_measurement = "°C";
-                device_class = "temperature";
-                value_template = ''
-                  {{ [
-                  states('sensor.roof_cavity_temperature') | float,
-                  states('sensor.outdoor_temperature') | float
-                  ] | min | round(1)
-                  }}
-                '';
-              };
-            };
-          }
           {
             platform = "derivative";
             name = "Bathroom Humidity Rate";

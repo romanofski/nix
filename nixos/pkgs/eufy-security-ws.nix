@@ -1,4 +1,4 @@
-{ lib, buildNpmPackage, fetchFromGitHub, nodejs }:
+{ lib, buildNpmPackage, fetchFromGitHub, nodejs_22 }:
 
 buildNpmPackage rec {
   pname = "eufy-security-ws";
@@ -11,9 +11,12 @@ buildNpmPackage rec {
     hash = "sha256-s+xOAAeA99Ujdc3VALnBN+69dTBqKCRFeElYeFKeZ3c=";
   };
 
-  npmDepsHash = "sha256-Bms/lwNPvN703uGh6xI8/Qe2SJJiyq9LqllqAA7ZRR0=";
+  npmDepsFetcherVersion = 2;
+  npmDepsHash = "sha256-sdoBCOmzLYEAM2mEFjlHH0EveeNFBKYsIYKaqPFbL/M=";
+  makeCacheWritable = true;
+  npmFlags = [ "--legacy-peer-deps" ];
 
-  inherit nodejs;
+  nodejs = nodejs_22;
 
   # The package's "build" script compiles TypeScript
   npmBuildScript = "build";

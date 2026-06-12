@@ -30,7 +30,7 @@
     # Enable networking
     networking.networkmanager.enable = true;
     networking.networkmanager.unmanaged = [ "wlp0s20f3" ];
-    networking.wireless.enable = false;
+    networking.wireless.enable = lib.mkDefault false;
 
     # Set your time zone.
     time.timeZone = "Australia/Brisbane";
