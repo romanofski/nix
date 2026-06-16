@@ -336,8 +336,18 @@ in
                 ] | min | round(1)
                 }}
               '';
-          }
-
+            }
+            {
+              name = "Roof Cavity Humidity Delta";
+              unique_id = "roof_cavity_humidity_delta";
+              unit_of_measurement = "%";
+              state_class = "measurement";
+              device_class = "humidity";
+              state = ''
+                {{ (states('sensor.roof_cavity_humidity') | float(0)) -
+                (states('sensor.outdoor_humidity') | float(0)) }}
+              '';
+            }
           ];
         }
       ];
