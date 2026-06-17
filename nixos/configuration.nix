@@ -49,6 +49,7 @@
       plugins = with pkgs; [
         networkmanager-openvpn
       ];
+      settings.connection."ipv6.method" = "ignore";
     };
     networking.hostName = "krombopulos"; # Define your hostname.
 
