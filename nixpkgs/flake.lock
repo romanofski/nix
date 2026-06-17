@@ -825,11 +825,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1781515957,
-        "narHash": "sha256-5Ubatv0ogO1F2qRe2HQLdjSJI7a4VjFSeS0HWaZIWcU=",
+        "lastModified": 1781693439,
+        "narHash": "sha256-lX9W3vXwjhywJBlNyBjMxRcVFO5o14ohsI7+/xKn/rI=",
         "owner": "purebred-mua",
         "repo": "purebred",
-        "rev": "0d3149900cf3e1bf1186ab8a647c6dedbcad7303",
+        "rev": "707713c62f032b470886538804879890adca4b65",
         "type": "github"
       },
       "original": {
