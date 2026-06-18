@@ -53,6 +53,8 @@
   };
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="ZPV0VPZW", RUN+="${pkgs.systemd}/bin/systemctl start mnt-backup.automount"
+    # battery optimisations
+    SUBSYSTEM=="power_supply", KERNEL=="BAT0", ATTR{charge_types}="Long_Life"
   '';
   environment.etc.crypttab = {
     mode = "0600";
