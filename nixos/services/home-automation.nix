@@ -268,6 +268,7 @@ in
       "statistics"
       "sun"
       "system_health"
+      "systemmonitor"
       "thread"
       "zeroconf"
       "zha"
@@ -369,7 +370,19 @@ in
             source = "sensor.master_bedroom_bathroom_humidity";
             time_window = "00:05:00";
             unit_time = "min";
-            }
+          }
+          {
+            platform = "systemmonitor";
+            resources = [
+              { type = "disk_use_percent"; arg = "/"; }
+              { type = "memory_use_percent"; }
+              { type = "processor_use"; }
+              { type = "load_1m"; }
+              { type = "load_5m"; }
+              { type = "load_15m"; }
+              { type = "last_boot"; }
+            ];
+          }
         ];
         automation = "!include automations.yaml";
         logger = {
