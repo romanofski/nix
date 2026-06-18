@@ -1,6 +1,32 @@
 { pkgs,config,secrets, ... }:
 
 let
+  pythonEnv = pkgs.python3.withPackages (ps: [ ps.paho-mqtt ]);
+  batteryPublisher = pkgs.writeScript "publish-bat0-mqtt" ''
+    #!${pythonEnv}/bin/python3
+    ${builtins.readFile ../scripts/battery_mqtt.py}
+    '';
+  batterySensors = [
+      {
+        name = "BAT0 Capacity";
+        state_topic = "home/battery/bat0/capacity";
+        unit_of_measurement = "%";
+        device_class = "battery";
+      }
+      {
+        name = "BAT0 Status";
+        state_topic = "home/battery/bat0/status";
+      }
+      {
+        name = "BAT0 Charge Type";
+        state_topic = "home/battery/bat0/charge_type";
+      }
+      {
+        name = "BAT0 Cycle Count";
+        state_topic = "home/battery/bat0/cycle_count";
+      }
+  ];
+
   tailscaleDomain = "mystique.kamori-gila.ts.net";
   networkInterface = "enp0s20f0u3u3";
   vendorID = "4939";
@@ -81,7 +107,6 @@ let
     }
   ];
   mkMQTTSensors = { name, id }: let
-
     topic = "rtl_433/Bresser-3CH/${id}";
   in
   [
@@ -217,6 +242,23 @@ in
     };
   };
 
+  systemd.services.publish-bat0-mqtt = {
+    description = "Publish BAT0 battery stats to MQTT";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${batteryPublisher}";
+    };
+  };
+  systemd.timers.publish-bat0-mqtt = {
+    description = "Timer for BAT0 MQTT publisher";
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnBootSec = "30s";
+      OnUnitActiveSec = "30s";
+      Unit = "publish-bat0-mqtt.service";
+    };
+  };
+
   # Ensure the directory exists with correct ownership
   systemd.tmpfiles.rules = [
     "d ${config.services.home-assistant.configDir}/www              0755 hass hass - -"
@@ -290,7 +332,9 @@ in
       ];
       mqtt = {
         sensor = builtins.concatMap mkMQTTSensors sensorsDefinitions
-        ++ rainGaugeSensors ++ [
+        ++ rainGaugeSensors
+        ++ batterySensors
+        ++ [
           {
             name = "Power 1";
             state_topic = "rtl_433/Oregon-CM180i/18976";
@@ -370,18 +414,6 @@ in
             source = "sensor.master_bedroom_bathroom_humidity";
             time_window = "00:05:00";
             unit_time = "min";
-          }
-          {
-            platform = "systemmonitor";
-            resources = [
-              { type = "disk_use_percent"; arg = "/"; }
-              { type = "memory_use_percent"; }
-              { type = "processor_use"; }
-              { type = "load_1m"; }
-              { type = "load_5m"; }
-              { type = "load_15m"; }
-              { type = "last_boot"; }
-            ];
           }
         ];
         automation = "!include automations.yaml";
