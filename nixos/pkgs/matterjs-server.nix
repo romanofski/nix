@@ -3,22 +3,26 @@ makeWrapper }:
 
 buildNpmPackage rec {
   pname = "matterjs-server";
-  version = "0.6.4";
+  version = "1.1.1";
 
   src = fetchFromGitHub {
     owner = "matter-js";
     repo = "matterjs-server";
     tag = "v${version}";
-    hash = "sha256-iHTc5PDlg4KvOY+oY9GU2l/pPNMrnmIyFqxjCL7w0kw=";
+    hash = "sha256-1BbAPTu9YFSYuZh7sIa1mpAGJtyWB3NWxls8zindmso=";
   };
 
-  npmDepsHash = "sha256-Qveo8b92Y5y2AZR8wCiFbCCRyydandnRJghrHoWt464=";
+  npmDepsHash = "sha256-FcGjEOpXMaB4GQGcFfOgFwXrkbGKb8q55j95x+m+lxQ=";
 
   nodejs = nodejs_22;
 
   nativeBuildInputs = [ pkg-config makeWrapper ];
   buildInputs = [ systemd ];
 
+  # node-addon-api (pulled in by 'usb' native module) requires C++17;
+  # node-gyp otherwise builds it with an older standard ->
+  # std::string_view erros
+  env.CXXFLAGS = "-std=c++17";
   npmBuildScript = "build";
 
   preBuild = ''
