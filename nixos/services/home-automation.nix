@@ -393,6 +393,57 @@ in
                 (states('sensor.outdoor_humidity') | float(0)) }}
               '';
             }
+            {
+              name = "Dew Point Outside";
+              unique_id = "dew_point_porch";
+              unit_of_measurement = "°C";
+              device_class = "temperature";
+              state = ''
+                {% set T = states('sensor.outdoor_temperature') | float %}
+                {% set RH = states('sensor.outdoor_humidity') | float %}
+                {% if T is number and RH is number and RH > 0 %}
+                  {% set b = 17.625 %}
+                  {% set c = 243.04 %}
+                  {% set gamma = log(RH/100) + (b * T) / (c + T) %}
+                  {{ ((c * gamma) / (b - gamma)) | round(1) }}
+                {% else %}
+                  unknown
+                {% endif %}
+              '';
+            }
+            {
+              name = "Dew Point Roof Cavity";
+              unique_id = "dew_point_roof_cavity";
+              unit_of_measurement = "°C";
+              device_class = "temperature";
+              state = ''
+                {% set T = states('sensor.roof_cavity_temperature') | float %}
+                {% set RH = states('sensor.roof_cavity_humidity') | float %}
+                {% if T is number and RH is number and RH > 0 %}
+                  {% set b = 17.625 %}
+                  {% set c = 243.04 %}
+                  {% set gamma = log(RH/100) + (b * T) / (c + T) %}
+                  {{ ((c * gamma) / (b - gamma)) | round(1) }}
+                {% else %}
+                  unknown
+                {% endif %}
+              '';
+            }
+             {
+              name = "Dew Point Delta";
+              unique_id = "dew_point_delta";
+              unit_of_measurement = "°C";
+              device_class = "temperature";
+              state = ''
+                {% set dp_out = states('sensor.dew_point_outside') | float %}
+                {% set dp_cav = states('sensor.dew_point_roof_cavity') | float %}
+                {% if dp_out is number and dp_cav is number %}
+                  {{ (dp_cav - dp_out) | round(1) }}
+                {% else %}
+                  unknown
+                {% endif %}
+              '';
+            }
           ];
         }
       ];
