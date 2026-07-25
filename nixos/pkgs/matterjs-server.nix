@@ -3,16 +3,16 @@ makeWrapper }:
 
 buildNpmPackage rec {
   pname = "matterjs-server";
-  version = "1.1.1";
+  version = "1.3.1";
 
   src = fetchFromGitHub {
     owner = "matter-js";
     repo = "matterjs-server";
     tag = "v${version}";
-    hash = "sha256-1BbAPTu9YFSYuZh7sIa1mpAGJtyWB3NWxls8zindmso=";
+    hash = "sha256-HY1VEjqQ2C6Ym9PB2/g7M7TeAgOFsVYMX6jvpZLPgOI=";
   };
 
-  npmDepsHash = "sha256-FcGjEOpXMaB4GQGcFfOgFwXrkbGKb8q55j95x+m+lxQ=";
+  npmDepsHash = "sha256-I/iY2YdsgvdLMkLRzML5VttmmDNUr/U38l+Wp8bu2B8=";
 
   nodejs = nodejs_22;
 
