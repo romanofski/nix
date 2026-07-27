@@ -109,6 +109,8 @@
         zsh
         iputils
         jq
+        bluez
+        bluez-tools
       ];
     };
 

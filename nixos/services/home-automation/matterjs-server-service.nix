@@ -29,6 +29,12 @@ in {
       default = 5580;
       description = "WebSocket port to listen on";
     };
+    
+    bluetoothAdapter = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "Bluetooth adapter to use";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -45,6 +51,8 @@ in {
           "--port ${toString cfg.port}"
         ] ++ lib.optionals (cfg.primaryInterface != null) [
           "--primary-interface ${cfg.primaryInterface}"
+        ] ++ lib.optionals (cfg.bluetoothAdapter != null) [
+          "--bluetooth-adapter ${cfg.bluetoothAdapter}"
         ] ++ lib.optionals (cfg.vendorID != null) [
           "--vendorid ${cfg.vendorID}"
         ]);

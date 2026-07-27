@@ -207,6 +207,7 @@ in
     enable = true;
     primaryInterface = networkInterface;
     vendorID = vendorID;
+    bluetoothAdapter = "0";
   };
 
   sops.templates."config.json" = {
