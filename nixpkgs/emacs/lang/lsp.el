@@ -6,6 +6,9 @@
   (general-nmap :prefix "SPC"
                 "ca" 'agent-shell
 		)
+  :bind (:map agent-shell-mode-map
+              ("RET" . newline)
+              ("C-c C-c" . shell-maker-submit))
   :config
   (setopt agent-shell-thought-process-expand-by-default t)
   (setopt agent-shell-tool-use-expand-by-default t)
