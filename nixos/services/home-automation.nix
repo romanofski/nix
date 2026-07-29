@@ -462,8 +462,15 @@ in
         sensor = [
           {
             platform = "derivative";
-            name = "Bathroom Humidity Rate";
-            source = "sensor.master_bedroom_bathroom_humidity";
+            name = "Master Bathroom Humidity Rate";
+            source = "sensor.timmerflotte_temp_hmd_sensor_humidity_2";
+            time_window = "00:05:00";
+            unit_time = "min";
+          }
+          {
+            platform = "derivative";
+            name = "Main Bedroom Bathroom Humidity Rate";
+            source = "sensor.timmerflotte_temp_hmd_sensor_humidity";
             time_window = "00:05:00";
             unit_time = "min";
           }
