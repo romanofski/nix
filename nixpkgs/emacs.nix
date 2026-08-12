@@ -172,6 +172,5 @@ in
 
     pkgs.pyright
     pkgs.gh
-    nixpkgsUnstable.github-copilot-cli
   ];
 }
