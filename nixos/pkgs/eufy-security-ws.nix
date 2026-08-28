@@ -1,22 +1,22 @@
-{ lib, buildNpmPackage, fetchFromGitHub, nodejs_22 }:
+{ lib, buildNpmPackage, fetchFromGitHub, nodejs_24 }:
 
 buildNpmPackage rec {
   pname = "eufy-security-ws";
-  version = "2.1.0";  # check https://github.com/bropat/eufy-security-ws/releases
+  version = "3.1.0";  # check https://github.com/bropat/eufy-security-ws/releases
 
   src = fetchFromGitHub {
     owner = "bropat";
     repo  = "eufy-security-ws";
     rev   = "${version}";
-    hash = "sha256-s+xOAAeA99Ujdc3VALnBN+69dTBqKCRFeElYeFKeZ3c=";
+    hash = "sha256-xHsq497V0aOpEulAJBeZ+05cH0FhJPAein04TY0DT2o=";
   };
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-sdoBCOmzLYEAM2mEFjlHH0EveeNFBKYsIYKaqPFbL/M=";
+  npmDepsHash = "sha256-RDcegOYYlL8r2QC/TL0UyDEtIDBnjRvpylkLVLGmoSA=";
   makeCacheWritable = true;
   npmFlags = [ "--legacy-peer-deps" ];
 
-  nodejs = nodejs_22;
+  nodejs = nodejs_24;
 
   # The package's "build" script compiles TypeScript
   npmBuildScript = "build";
