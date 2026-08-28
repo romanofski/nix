@@ -479,10 +479,10 @@ in
         logger = {
           default = "warning";
           logs = {
-            "homeassistant.components.automation" = "debug";
-            "homeassistant.config" = "debug";
+            "homeassistant.components.automation" = "info";
+            "homeassistant.config" = "info";
             "homeassistant.core" = "info";
-            "homeassistant.helpers.entity_platform" = "debug";
+            "homeassistant.helpers.entity_platform" = "info";
           };
         };
       homeassistant = {
