@@ -56,16 +56,12 @@ let
       name = "Living Room";
       id = "228";
     }
-    { 
-      name = "Master Bedroom Bathroom";
-      id = "252";
-    }
     {
       name = "Living Room";
       id = "228";
     }
     {
-      name = "Master Bedroom Bathroom";
+      name = "Main Toilet";
       id = "252";
     }
     {
