@@ -279,6 +279,7 @@ in
     customComponents = [
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/eufy_security.nix {})
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/webrtc.nix {})
+      (pkgs.callPackage ../pkgs/home-assistant-custom-components/ha_bom_australia.nix {})
     ];
     extraComponents = [
       "default_config"
