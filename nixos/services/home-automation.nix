@@ -30,15 +30,6 @@ let
   tailscaleDomain = "mystique.kamori-gila.ts.net";
   networkInterface = "enp0s20f0u3u3";
   vendorID = "4939";
-  rainGaugeIds = ["10" "12"]; # also found 11 and 10 but didn't change
-  rainGaugeSensors = map (id: {
-    name = "Rain Gauge ${id}";
-    state_topic = "rtl_433/Acurite-Rain/${id}";
-    value_template = "{{ value_json.rain_mm | float }}";
-    unit_of_measurement = "mm";
-    device_class = "precipitation";
-    unique_id = "rain_gauge_${id}";
-  }) rainGaugeIds;
   makeMotionSensors = { name, code }: [
     {
       name = "${name} Motion";
@@ -334,43 +325,13 @@ in
       ];
       mqtt = {
         sensor = builtins.concatMap mkMQTTSensors sensorsDefinitions
-        ++ rainGaugeSensors
-        ++ batterySensors
-        ++ [
-          {
-            name = "Power 1";
-            state_topic = "rtl_433/Oregon-CM180i/18976";
-            value_template = "{{ value_json.power1_W | int }}";
-            unit_of_measurement = "W";
-            device_class = "power";
-            unique_id = "cm180i_power1";
-          }
-          {
-            name = "Power 3";
-            state_topic = "rtl_433/Oregon-CM180i/18976";
-            value_template = "{{ value_json.power3_W | int }}";
-            unit_of_measurement = "W";
-            device_class = "power";
-            unique_id = "cm180i_power3";
-          }
-        ];
+        ++ batterySensors;
         binary_sensor = (builtins.concatMap mkBatterySensors sensorsDefinitions)
         ++ (builtins.concatMap makeMotionSensors motionSensors);
       };
       template = [
         {
           sensor = [
-            {
-              name = "Rain Gauge Average";
-              unit_of_measurement = "mm";
-              device_class = "precipitation";
-              unique_id = "rain_gauge_average";
-              state = ''
-                {{ [
-                ${builtins.concatStringsSep ",\n    " (map (id: "states('sensor.rain_gauge_${id}') | float") rainGaugeIds)}
-                ] | average }}
-              '';
-            }
             {
               name = "Ambient Temperature";
               unique_id = "ambient_temperature_min";
@@ -450,16 +411,6 @@ in
         }
       ];
 
-        utility_meter = {
-          daily_rainfall = {
-            source = "sensor.rain_gauge_average";
-            cycle = "daily";
-          };
-          monthly_rainfall = {
-            source = "sensor.rain_gauge_average";
-            cycle = "monthly";
-          };
-        };
         sensor = [
           {
             platform = "derivative";
