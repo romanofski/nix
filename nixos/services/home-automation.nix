@@ -329,6 +329,27 @@ in
         {
           sensor = [
             {
+              name = "Roof Cavity Temp Delta";
+              unique_id = "roof_cavity_temp_delta";
+              unit_of_measurement = "°C";
+              device_class = "temperature";
+              state_class = "measurement";
+              state = ''
+                {% set cavity = states('sensor.roof_cavity_temperature') %}
+                {% set outdoor = states('sensor.bom_bellbowrie_sensors_bom_bellbowrie_temp') %}
+                {% if cavity not in ['unknown', 'unavailable', 'none', None]
+                      and outdoor not in ['unknown', 'unavailable', 'none', None] %}
+                  {{ (cavity | float - outdoor | float) | round(1) }}
+                {% else %}
+                  {{ none }}
+                {% endif %}
+              '';
+              availability = ''
+                {{ states('sensor.roof_cavity_temperature') not in ['unknown', 'unavailable', 'none']
+                   and states('sensor.bom_bellbowrie_sensors_bom_bellbowrie_temp') not in ['unknown', 'unavailable', 'none'] }}
+              '';
+            }
+            {
               name = "Ambient Temperature";
               unique_id = "ambient_temperature_min";
               unit_of_measurement = "°C";
