@@ -26,6 +26,61 @@ let
         state_topic = "home/battery/bat0/cycle_count";
       }
   ];
+  soilSensors = [
+    { name = "Garden Bed"; id = "0fe2fa"; }
+  ];
+
+  mkSoilSensors = { name, id }: [
+    {
+      name = "${name} Moisture";
+      state_topic = "rtl_433/Fineoffset-WH51/${id}";
+      value_template = "{{ value_json.moisture }}";
+      unit_of_measurement = "%";
+      device_class = "moisture";
+      unique_id = "soil_${id}_moisture";
+      force_update = true;
+    }
+    {
+      name = "${name} Battery";
+      state_topic = "rtl_433/Fineoffset-WH51/${id}";
+      value_template = "{{ value_json.battery_mV }}";
+      unit_of_measurement = "mV";
+      unique_id = "soil_${id}_battery_mv";
+      entity_category = "diagnostic";
+      force_update = true;
+    }
+    {
+      name = "${name} SNR";
+      state_topic = "rtl_433/Fineoffset-WH51/${id}";
+      value_template = "{{ value_json.snr | round(1) }}";
+      unit_of_measurement = "dB";
+      unique_id = "soil_${id}_snr";
+      entity_category = "diagnostic";
+      force_update = true;
+    }
+    {
+      name = "${name} RSSI";
+      state_topic = "rtl_433/Fineoffset-WH51/${id}";
+      value_template = "{{ value_json.rssi | round(1) }}";
+      unit_of_measurement = "dBm";
+      device_class = "signal_strength";
+      unique_id = "soil_${id}_rssi";
+      entity_category = "diagnostic";
+      force_update = true;
+    }
+    {
+      name = "${name} Battery";
+      state_topic = "rtl_433/Fineoffset-WH51/${id}";
+      value_template = ''
+        {{ [[((value_json.battery_mV - 1200) / (1800 - 1200) * 100) | round, 0] | max, 100] | min }}
+      '';
+      unit_of_measurement = "%";
+      device_class = "battery";
+      unique_id = "soil_${id}_battery_pct";
+      entity_category = "diagnostic";
+      force_update = true;
+    }
+  ];
 
   tailscaleDomain = "mystique.kamori-gila.ts.net";
   networkInterface = "enp0s20f0u3u3";
@@ -321,6 +376,7 @@ in
       ];
       mqtt = {
         sensor = builtins.concatMap mkMQTTSensors sensorsDefinitions
+        ++ (builtins.concatMap mkSoilSensors soilSensors)
         ++ batterySensors;
         binary_sensor = (builtins.concatMap mkBatterySensors sensorsDefinitions)
         ++ (builtins.concatMap makeMotionSensors motionSensors);
