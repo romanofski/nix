@@ -393,27 +393,6 @@ in
         {
           sensor = [
             {
-              name = "Roof Cavity Temp Delta";
-              unique_id = "roof_cavity_temp_delta";
-              unit_of_measurement = "°C";
-              device_class = "temperature";
-              state_class = "measurement";
-              state = ''
-                {% set cavity = states('sensor.roof_cavity_temperature') %}
-                {% set outdoor = states('sensor.bom_bellbowrie_sensors_bom_bellbowrie_temp') %}
-                {% if cavity not in ['unknown', 'unavailable', 'none', None]
-                      and outdoor not in ['unknown', 'unavailable', 'none', None] %}
-                  {{ (cavity | float - outdoor | float) | round(1) }}
-                {% else %}
-                  {{ none }}
-                {% endif %}
-              '';
-              availability = ''
-                {{ states('sensor.roof_cavity_temperature') not in ['unknown', 'unavailable', 'none']
-                   and states('sensor.bom_bellbowrie_sensors_bom_bellbowrie_temp') not in ['unknown', 'unavailable', 'none'] }}
-              '';
-            }
-            {
               name = "Ambient Temperature";
               unique_id = "ambient_temperature_min";
               unit_of_measurement = "°C";
@@ -424,68 +403,6 @@ in
                 states('sensor.outdoor_temperature') | float
                 ] | min | round(1)
                 }}
-              '';
-            }
-            {
-              name = "Roof Cavity Humidity Delta";
-              unique_id = "roof_cavity_humidity_delta";
-              unit_of_measurement = "%";
-              state_class = "measurement";
-              device_class = "humidity";
-              state = ''
-                {{ (states('sensor.roof_cavity_humidity') | float(0)) -
-                (states('sensor.outdoor_humidity') | float(0)) }}
-              '';
-            }
-            {
-              name = "Dew Point Outside";
-              unique_id = "dew_point_porch";
-              unit_of_measurement = "°C";
-              device_class = "temperature";
-              state = ''
-                {% set T = states('sensor.outdoor_temperature') | float %}
-                {% set RH = states('sensor.outdoor_humidity') | float %}
-                {% if T is number and RH is number and RH > 0 %}
-                  {% set b = 17.625 %}
-                  {% set c = 243.04 %}
-                  {% set gamma = log(RH/100) + (b * T) / (c + T) %}
-                  {{ ((c * gamma) / (b - gamma)) | round(1) }}
-                {% else %}
-                  unknown
-                {% endif %}
-              '';
-            }
-            {
-              name = "Dew Point Roof Cavity";
-              unique_id = "dew_point_roof_cavity";
-              unit_of_measurement = "°C";
-              device_class = "temperature";
-              state = ''
-                {% set T = states('sensor.roof_cavity_temperature') | float %}
-                {% set RH = states('sensor.roof_cavity_humidity') | float %}
-                {% if T is number and RH is number and RH > 0 %}
-                  {% set b = 17.625 %}
-                  {% set c = 243.04 %}
-                  {% set gamma = log(RH/100) + (b * T) / (c + T) %}
-                  {{ ((c * gamma) / (b - gamma)) | round(1) }}
-                {% else %}
-                  unknown
-                {% endif %}
-              '';
-            }
-             {
-              name = "Dew Point Delta";
-              unique_id = "dew_point_delta";
-              unit_of_measurement = "°C";
-              device_class = "temperature";
-              state = ''
-                {% set dp_out = states('sensor.dew_point_outside') | float %}
-                {% set dp_cav = states('sensor.dew_point_roof_cavity') | float %}
-                {% if dp_out is number and dp_cav is number %}
-                  {{ (dp_cav - dp_out) | round(1) }}
-                {% else %}
-                  unknown
-                {% endif %}
               '';
             }
           ];
