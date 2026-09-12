@@ -318,13 +318,20 @@ in
       ical
       gcal-sync
     ];
+    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
+      apexcharts-card
+    ] ++ [
+      (pkgs.callPackage ../pkgs/home-assistant-custom-lovelace-modules/power-flow-card-plus.nix {})
+    ];
     customComponents = [
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/eufy_security.nix {})
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/webrtc.nix {})
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/ha_bom_australia.nix {})
+      (pkgs.callPackage ../pkgs/home-assistant-custom-components/sigenergy_local_modbus.nix {})
     ];
     extraComponents = [
       "default_config"
+      "energy"
       "esphome"
       "forecast_solar"
       "glances"
@@ -356,6 +363,7 @@ in
       "system_health"
       "systemmonitor"
       "thread"
+      "utility_meter"
       "zeroconf"
       "zha"
     ];
