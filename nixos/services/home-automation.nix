@@ -385,7 +385,8 @@ in
       mqtt = {
         sensor = builtins.concatMap mkMQTTSensors sensorsDefinitions
         ++ (builtins.concatMap mkSoilSensors soilSensors)
-        ++ batterySensors;
+        ++ batterySensors
+        ++ (pkgs.callPackage ./home-automation/ws90-sensors.nix {});
         binary_sensor = (builtins.concatMap mkBatterySensors sensorsDefinitions)
         ++ (builtins.concatMap makeMotionSensors motionSensors);
       };
