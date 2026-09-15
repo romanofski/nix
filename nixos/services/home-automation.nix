@@ -334,6 +334,7 @@ in
       "energy"
       "esphome"
       "forecast_solar"
+      "frontend"
       "glances"
       "google_translate"
       "history"
@@ -342,6 +343,7 @@ in
       "homeassistant_sky_connect"
       "hue"
       "logbook"
+      "lovelace"
       "manual_mqtt"
       "matter"
       "met"
@@ -372,6 +374,7 @@ in
       history = {};
       mobile_app = {};
       logbook = {};
+      energy = {};
       http = {
         use_x_forwarded_for = true;
         trusted_proxies = [
