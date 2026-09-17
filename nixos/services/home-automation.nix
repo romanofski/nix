@@ -107,10 +107,6 @@ let
       name = "Roof Cavity";
       id = "213";
     }
-    { 
-      name = "Living Room";
-      id = "228";
-    }
     {
       name = "Living Room";
       id = "228";
