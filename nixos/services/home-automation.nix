@@ -317,6 +317,7 @@ in
       aiohue
       ical
       gcal-sync
+      aioelectricitymaps
     ];
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
       apexcharts-card
@@ -395,21 +396,103 @@ in
       };
       template = [
         {
-          sensor = [
-            {
-              name = "Ambient Temperature";
-              unique_id = "ambient_temperature_min";
-              unit_of_measurement = "°C";
-              device_class = "temperature";
-              state = ''
-                {{ [
-                states('sensor.roof_cavity_temperature') | float,
-                states('sensor.outdoor_temperature') | float
-                ] | min | round(1)
-                }}
-              '';
-            }
+          trigger = [{ trigger = "state"; entity_id = ["sensor.ws90_rain_since_9am"]; }];
+          condition = [{
+            condition = "template";
+            value_template = ''
+              {{ trigger.from_state is not none
+                 and trigger.to_state is not none
+                 and is_number(trigger.from_state.state)
+                 and is_number(trigger.to_state.state)
+                 and trigger.to_state.state | float > trigger.from_state.state | float }}
+            '';
+          }];
+          sensor = [{
+            name = "WS90 Last Rain Timestamp";
+            unique_id = "ws90_last_rain_timestamp";
+            device_class = "timestamp";
+            state = "{{ now().isoformat() }}";
+          }];
+        }
+        {
+          trigger = [{ trigger = "state"; entity_id = ["sensor.ws90_rain_since_9am"]; }];
+          condition = [{
+            condition = "template";
+            value_template = ''
+              {% set threshold = states('input_number.ws90_rain_threshold_mm') | float(5) %}
+              {{ trigger.from_state is not none
+              and trigger.to_state is not none
+              and is_number(trigger.from_state.state)
+              and is_number(trigger.to_state.state)
+              and trigger.to_state.state | float >= threshold
+              and trigger.from_state.state | float < threshold }}
+            '';
+          }];
+          sensor = [{
+            name = "WS90 Last Heavy Rain Timestamp";
+            unique_id = "ws90_last_heavy_rain_timestamp";
+            device_class = "timestamp";
+            state = "{{ now().isoformat() }}";
+          }];
+        }
+        {
+          trigger = [{ trigger = "time_pattern"; hours = "/1"; }];
+          sensor = [{
+            name = "Days Since Last Rain";
+            unique_id = "ws90_days_since_rain";
+            unit_of_measurement = "d";
+            state_class = "measurement";
+            state = ''
+              {% set last = as_datetime(states('sensor.ws90_last_rain_timestamp'), none) %}
+              {{ (now() - last).days if last is not none else none }}
+            '';
+          }];
+        }
+        {
+          trigger = [{ trigger = "time_pattern"; hours = "/1"; }];
+          sensor = [{
+            name = "Days Since Last Heavy Rain";
+            unique_id = "ws90_days_since_heavy_rain";
+            unit_of_measurement = "d";
+            state_class = "measurement";
+            state = ''
+              {% set last = as_datetime(states('sensor.ws90_last_rain_timestamp'), none) %}
+              {{ (now() - last).days if last is not none else none }}
+            '';
+          }];
+        }
+        {
+          trigger = [
+            { trigger = "time"; at = "09:00:00"; id = "reset"; }
+            { trigger = "state"; entity_id = ["sensor.ws90_rain_total"]; id = "update"; }
           ];
+          sensor = [{
+            name = "WS90 Rain Since 9am";
+            unique_id = "ws90_rain_since_9am";
+            unit_of_measurement = "mm";
+            state_class = "measurement";
+            state = ''
+              {% set total = states('sensor.ws90_rain_total') %}
+              {% if trigger.id == 'reset' %}
+                0.0
+              {% elif is_number(total) %}
+                {% set baseline = this.attributes.get('baseline', total | float) | float %}
+                {{ ([total | float - baseline, 0] | max) | round(1) }}
+              {% else %}
+                {{ this.state }}
+              {% endif %}
+            '';
+            attributes = {
+              baseline = ''
+                {% set total = states('sensor.ws90_rain_total') %}
+                {% if trigger.id == 'reset' and is_number(total) %}
+                  {{ total | float }}
+                {% else %}
+                  {{ this.attributes.get('baseline', total | float(0)) | float }}
+                {% endif %}
+              '';
+            };
+          }];
         }
       ];
 
