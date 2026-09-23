@@ -319,6 +319,7 @@ in
       apexcharts-card
     ] ++ [
       (pkgs.callPackage ../pkgs/home-assistant-custom-lovelace-modules/power-flow-card-plus.nix {})
+      (pkgs.callPackage ../pkgs/home-assistant-custom-lovelace-modules/lovelace-windrose-card.nix {})
     ];
     customComponents = [
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/eufy_security.nix {})
