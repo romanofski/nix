@@ -5,31 +5,25 @@ let
   bookdir = "/srv/books/Repo";
 in
 {
-  services.calibre-server = {
+  sops.secrets.bookorbit_jwt_secret = {
+    owner = config.services.bookorbit.user;
+    group = config.services.bookorbit.group;
+    mode = "0400";
+  };
+  sops.secrets.bookorbit_setup_bootstrap_token = {
+    owner = config.services.bookorbit.user;
+    group = config.services.bookorbit.group;
+    mode = "0400";
+  };
+  sops.templates."bookorbit.env".content = ''
+    JWT_SECRET=${config.sops.placeholder.bookorbit_jwt_secret}
+    SETUP_BOOTSTRAP_TOKEN=${config.sops.placeholder.bookorbit_setup_bootstrap_token}
+    BOOKS_HOST_PATH=${bookdir}
+  '';
+
+  services.bookorbit = {
     enable = true;
     openFirewall = true;
-    libraries = [
-      bookdir
-    ];
-  };
-
-  systemd.services = {
-    korrosync = {
-      enable = true;
-      description = "KOReader Sync Server";
-      serviceConfig = {
-        User = config.users.users.rjoost.name;
-        Group = config.users.users.rjoost.group;
-        ReadWritePaths = statedir;
-        ExecStart = "${korrosync}/bin/korrosync serve";
-        Environment = [
-          "KORROSYNC_DB_PATH=${statedir}/progress"
-        ];
-        Restart = "on-failure";
-        RestartSec = "5s";
-      };
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
-    };
+    environmentFile = config.sops.templates."bookorbit.env".path;
   };
 }

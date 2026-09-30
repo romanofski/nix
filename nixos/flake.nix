@@ -1,18 +1,17 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixgl.url = "github:nix-community/nixGL";
-    korrosync.url = "github:szaffarano/korrosync";
     secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, nixos-hardware, nixgl, korrosync, secrets, sops-nix }@attrs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, nixgl, secrets, sops-nix }@attrs:
   let
     system = "x86_64-linux";
-    korroPkg = korrosync.packages.${system}.default;
-    korrosyncNoTests = korroPkg.overrideAttrs (old: { doCheck = false; });
+    pkgs-unstable = import nixpkgs-unstable { inherit system; config = {}; };
   in {
     nixosConfigurations.krombopulos = nixpkgs.lib.nixosSystem {
       specialArgs = attrs;
@@ -27,8 +26,9 @@
       ];
     };
     nixosConfigurations.yoga = nixpkgs.lib.nixosSystem {
+      inherit system;
       specialArgs = {
-        korrosync = korrosyncNoTests;
+        inherit attrs pkgs-unstable;
         secrets = secrets.yogaSecrets;
       };
       modules = [
@@ -43,10 +43,12 @@
         ./services/rtl2832.nix
         sops-nix.nixosModules.sops
         ({ pkgs, ... }: {
+          imports = [ "${nixpkgs-unstable}/nixos/modules/services/web-apps/bookorbit.nix" ];
           nixpkgs.overlays = [
             (final: prev: {
               matterjs-server = final.callPackage ./pkgs/matterjs-server.nix {};
               eufy-security-ws = final.callPackage ./pkgs/eufy-security-ws.nix {};
+              bookorbit = pkgs-unstable.bookorbit;
             })
           ];
         })
