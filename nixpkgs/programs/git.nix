@@ -3,7 +3,7 @@
 let
   gcm = {
     credential = {
-      helper = "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe";
+      helper = "/mnt/c/Program\\ Files/Git/ucrt64/bin/git-credential-manager.exe";
     };
   };
   settings = {
