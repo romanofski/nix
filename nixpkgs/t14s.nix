@@ -129,6 +129,9 @@
   home.sessionVariables = {
     EDITOR = "vim";
   };
+  home.sessionPath = [
+    "$HOME/.config/agency/CurrentVersion"
+  ];
 
   programs.home-manager = {
     enable = true;
