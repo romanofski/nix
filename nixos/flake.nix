@@ -37,18 +37,21 @@
         ./services/media-server.nix
         ./services/image-server.nix
         ./services/vpn.nix
+        ./services/httpd.nix
         ./services/home-automation.nix
-        ./services/home-automation/matterjs-server-service.nix
         ./services/home-automation/eufy-security-ws-service.nix
         ./services/rtl2832.nix
         sops-nix.nixosModules.sops
         ({ pkgs, ... }: {
-          imports = [ "${nixpkgs-unstable}/nixos/modules/services/web-apps/bookorbit.nix" ];
+          imports = [
+            "${nixpkgs-unstable}/nixos/modules/services/web-apps/bookorbit.nix"
+            "${nixpkgs-unstable}/nixos/modules/services/home-automation/matterjs-server.nix"
+          ];
           nixpkgs.overlays = [
             (final: prev: {
-              matterjs-server = final.callPackage ./pkgs/matterjs-server.nix {};
               eufy-security-ws = final.callPackage ./pkgs/eufy-security-ws.nix {};
               bookorbit = pkgs-unstable.bookorbit;
+              matterjs-server = pkgs-unstable.matterjs-server;
             })
           ];
         })

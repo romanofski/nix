@@ -23,7 +23,7 @@ in
 
   services.bookorbit = {
     enable = true;
-    openFirewall = true;
+    openFirewall = false;
     environmentFile = config.sops.templates."bookorbit.env".path;
   };
 }

@@ -82,7 +82,6 @@ let
     }
   ];
 
-  tailscaleDomain = "mystique.kamori-gila.ts.net";
   networkInterface = "enp0s20f0u3u3";
   vendorID = "4939";
   makeMotionSensors = { name, code }: [
@@ -199,10 +198,6 @@ in
   sops.secrets.username = {};
   sops.secrets.password = {};
 
-  networking.firewall.allowedTCPPorts = [
-    443
-    5580 # matter-server dashboard
-  ];
   networking.firewall.allowedUDPPorts = [
     5353  # mDNS/ how phone finds thread border router
     5540  # matter protocol
@@ -225,16 +220,6 @@ in
     ];
   };
 
-  services.caddy = {
-    enable = true;
-
-    virtualHosts."${tailscaleDomain}".extraConfig = ''
-      handle {
-      reverse_proxy http://localhost:8123
-      }
-    '';
-  };
-
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -243,9 +228,12 @@ in
   services.matter-server.enable = false;
   services.matterjs-server = {
     enable = true;
-    primaryInterface = networkInterface;
-    vendorID = vendorID;
-    bluetoothAdapter = "0";
+    openFirewall = false;
+    bluetoothSupport = true;
+    extraArgs = [
+      "--bluetooth-adapter=0"
+      "--vendorid=${vendorID}"
+    ];
   };
 
   sops.templates."config.json" = {
@@ -306,7 +294,7 @@ in
 
   services.home-assistant = {
     enable = true;
-    openFirewall = true;
+    openFirewall = false;
     extraPackages = python3Packages: with python3Packages; [
       gtts
       pymiele
