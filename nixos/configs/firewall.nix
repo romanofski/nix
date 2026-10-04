@@ -5,7 +5,6 @@
     enable = true;
     allowedTCPPorts = [
       22
-      3000 # korrosync
     ];
     # kde connect
     allowedTCPPortRanges = [ { from = 1714; to = 1764; }];

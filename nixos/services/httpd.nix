@@ -28,27 +28,28 @@ in {
   sops.secrets.cert_provider_key = {};
 
   sops.templates."caddy.env" = {
-     content = ''
-       MATTER_PASSWORD_HASH=${config.sops.placeholder.matterjs_dashboard_pw}
-     '';
-     owner = "caddy";
-     group = "caddy";
-     mode = "0400";
-   };
+    content = ''
+      MATTER_PASSWORD_HASH=${config.sops.placeholder.matterjs_dashboard_pw}
+    '';
+    owner = "caddy";
+    group = "caddy";
+    mode = "0400";
+  };
   sops.templates."acme.env" = {
-     content = ''
-       PDNS_API_URL=${config.sops.placeholder.cert_api_base_url}
-       PDNS_API_KEY=${config.sops.placeholder.cert_provider_key}
-       PDNS_SERVER_NAME=localhost
-     '';
-     owner = "caddy";
-     group = "caddy";
-     mode = "0400";
-   };
+    content = ''
+      PDNS_API_URL=${config.sops.placeholder.cert_api_base_url}
+      PDNS_API_KEY=${config.sops.placeholder.cert_provider_key}
+      PDNS_SERVER_NAME=localhost
+    '';
+    owner = "root";
+    group = "root";
+    mode = "0400";
+  };
 
-  networking.firewall.allowedTCPPorts = [
-    443
-  ];
+  networking.firewall.interfaces = {
+    enp0s20f0u3u3.allowedTCPPorts = [ 443 ];
+    tailscale0.allowedTCPPorts = [ 443 ];
+  };
 
   security.acme = {
     acceptTerms = true;
@@ -63,39 +64,39 @@ in {
     environmentFile = config.sops.templates."caddy.env".path;
 
     virtualHosts = {
-       "ha.home.romanofski.de".extraConfig =
-         tlsFor "ha.home.romanofski.de" + ''
-         reverse_proxy 127.0.0.1:8123
-       '';
+      "ha.home.romanofski.de".extraConfig =
+        tlsFor "ha.home.romanofski.de" + ''
+          reverse_proxy 127.0.0.1:8123
+        '';
 
-       "matter.home.romanofski.de".extraConfig =
-         tlsFor "matter.home.romanofski.de" + ''
-         basic_auth {
-           admin {$MATTER_PASSWORD_HASH}
-         }
-         reverse_proxy 127.0.0.1:5580
-       '';
+        "matter.home.romanofski.de".extraConfig =
+          tlsFor "matter.home.romanofski.de" + ''
+            basic_auth {
+            admin {$MATTER_PASSWORD_HASH}
+            }
+            reverse_proxy 127.0.0.1:5580
+          '';
 
-       "photos.home.romanofski.de".extraConfig =
-         tlsFor "photos.home.romanofski.de" + ''
-         reverse_proxy 127.0.0.1:2283
-       '';
+          "photos.home.romanofski.de".extraConfig =
+            tlsFor "photos.home.romanofski.de" + ''
+              reverse_proxy 127.0.0.1:2283
+            '';
 
-       "books.home.romanofski.de".extraConfig =
-         tlsFor "books.home.romanofski.de" + ''
-         reverse_proxy 127.0.0.1:3000
-       '';
+            "books.home.romanofski.de".extraConfig =
+              tlsFor "books.home.romanofski.de" + ''
+                reverse_proxy 127.0.0.1:3000
+              '';
 
-       "movies.home.romanofski.de".extraConfig =
-         tlsFor "movies.home.romanofski.de" + ''
-         reverse_proxy 127.0.0.1:8096
-       '';
+              "movies.home.romanofski.de".extraConfig =
+                tlsFor "movies.home.romanofski.de" + ''
+                  reverse_proxy 127.0.0.1:8096
+                '';
 
-      "${tailscaleDomain}".extraConfig = ''
-        handle                                  {
-        reverse_proxy http://localhost:8123
-        }
-      '';
+                "${tailscaleDomain}".extraConfig = ''
+                  handle                                  {
+                  reverse_proxy http://localhost:8123
+                  }
+                '';
     };
   };
 
