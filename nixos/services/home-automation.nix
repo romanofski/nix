@@ -5,26 +5,26 @@ let
   batteryPublisher = pkgs.writeScript "publish-bat0-mqtt" ''
     #!${pythonEnv}/bin/python3
     ${builtins.readFile ../scripts/battery_mqtt.py}
-    '';
+  '';
   batterySensors = [
-      {
-        name = "BAT0 Capacity";
-        state_topic = "home/battery/bat0/capacity";
-        unit_of_measurement = "%";
-        device_class = "battery";
-      }
-      {
-        name = "BAT0 Status";
-        state_topic = "home/battery/bat0/status";
-      }
-      {
-        name = "BAT0 Charge Type";
-        state_topic = "home/battery/bat0/charge_type";
-      }
-      {
-        name = "BAT0 Cycle Count";
-        state_topic = "home/battery/bat0/cycle_count";
-      }
+    {
+      name = "BAT0 Capacity";
+      state_topic = "home/battery/bat0/capacity";
+      unit_of_measurement = "%";
+      device_class = "battery";
+    }
+    {
+      name = "BAT0 Status";
+      state_topic = "home/battery/bat0/status";
+    }
+    {
+      name = "BAT0 Charge Type";
+      state_topic = "home/battery/bat0/charge_type";
+    }
+    {
+      name = "BAT0 Cycle Count";
+      state_topic = "home/battery/bat0/cycle_count";
+    }
   ];
   soilSensors = [
     { name = "Garden Bed"; id = "0fe2fa"; }
@@ -90,7 +90,7 @@ let
       state_topic = "rtl_433/PIR";
       value_template = ''
         {{ "ON" if "{25}${code}" in value_json.codes else "OFF" }}
-        '';
+      '';
       payload_on = "ON";
       payload_off = "OFF";
       device_class = "motion";
@@ -195,8 +195,12 @@ let
   ];
 in
 {
-  sops.secrets.username = {};
-  sops.secrets.password = {};
+  sops.secrets.username = {
+    restartUnits = [ "eufy-sdk-bridge.service" ];
+  };
+  sops.secrets.password = {
+    restartUnits = [ "eufy-sdk-bridge.service" ];
+  };
 
   networking.firewall.allowedUDPPorts = [
     5353  # mDNS/ how phone finds thread border router
@@ -236,27 +240,28 @@ in
     ];
   };
 
-  sops.templates."config.json" = {
-    content = ''
-      {
-      "username": "${config.sops.placeholder.username}",
-      "password": "${config.sops.placeholder.password}",
-      "country": "AU",
-      "language": "en",
-      "p2pConnectionSetup": 2,
-      "persistentDir": "${config.users.users.${config.services.eufy-security-ws.user}.home}"
-      }
-    '';
-    owner = config.services.eufy-security-ws.user;
-    mode  = "0600";
-  };
-  services.eufy-security-ws = {
-    enable= true;
-    configFile = config.sops.templates."config.json".path;
-    port = 3080;
-  };
-  services.go2rtc = {
+  services.eufy-sdk-bridge = {
     enable = true;
+    package = pkgs.eufy-sdk-bridge;
+
+    host = "127.0.0.1";
+    port = 4000;
+    openFirewall = false;
+
+    credentials = {
+      emailFile = config.sops.secrets.username.path;
+      passwordFile = config.sops.secrets.password.path;
+      country = "AU";
+    };
+
+    go2rtc = {
+      apiPort = 1984;
+      rtspPort = 8554;
+      webrtcPort = 8555;
+
+      # TODO
+      openFirewall = true;
+    };
   };
 
   services.openthread-border-router = {
@@ -310,8 +315,7 @@ in
       (pkgs.callPackage ../pkgs/home-assistant-custom-lovelace-modules/lovelace-windrose-card.nix {})
     ];
     customComponents = [
-      (pkgs.callPackage ../pkgs/home-assistant-custom-components/eufy_security.nix {})
-      (pkgs.callPackage ../pkgs/home-assistant-custom-components/webrtc.nix {})
+      (pkgs.callPackage ../pkgs/home-assistant-custom-components/ha_eufy_sdk.nix {})
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/ha_bom_australia.nix {})
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/sigenergy_local_modbus.nix {})
     ];
@@ -386,10 +390,10 @@ in
             condition = "template";
             value_template = ''
               {{ trigger.from_state is not none
-                 and trigger.to_state is not none
-                 and is_number(trigger.from_state.state)
-                 and is_number(trigger.to_state.state)
-                 and trigger.to_state.state | float > trigger.from_state.state | float }}
+              and trigger.to_state is not none
+              and is_number(trigger.from_state.state)
+              and is_number(trigger.to_state.state)
+              and trigger.to_state.state | float > trigger.from_state.state | float }}
             '';
           }];
           sensor = [{
@@ -459,21 +463,21 @@ in
             state = ''
               {% set total = states('sensor.ws90_rain_total') %}
               {% if trigger.id == 'reset' %}
-                0.0
+              0.0
               {% elif is_number(total) %}
-                {% set baseline = this.attributes.get('baseline', total | float) | float %}
-                {{ ([total | float - baseline, 0] | max) | round(1) }}
+              {% set baseline = this.attributes.get('baseline', total | float) | float %}
+              {{ ([total | float - baseline, 0] | max) | round(1) }}
               {% else %}
-                {{ this.state }}
+              {{ this.state }}
               {% endif %}
             '';
             attributes = {
               baseline = ''
                 {% set total = states('sensor.ws90_rain_total') %}
                 {% if trigger.id == 'reset' and is_number(total) %}
-                  {{ total | float }}
+                {{ total | float }}
                 {% else %}
-                  {{ this.attributes.get('baseline', total | float(0)) | float }}
+                {{ this.attributes.get('baseline', total | float(0)) | float }}
                 {% endif %}
               '';
             };
@@ -481,32 +485,32 @@ in
         }
       ];
 
-        sensor = [
-          {
-            platform = "derivative";
-            name = "Master Bathroom Humidity Rate";
-            source = "sensor.timmerflotte_temp_hmd_sensor_humidity_2";
-            time_window = "00:05:00";
-            unit_time = "min";
-          }
-          {
-            platform = "derivative";
-            name = "Main Bedroom Bathroom Humidity Rate";
-            source = "sensor.timmerflotte_temp_hmd_sensor_humidity";
-            time_window = "00:05:00";
-            unit_time = "min";
-          }
-        ];
-        automation = "!include automations.yaml";
-        logger = {
-          default = "warning";
-          logs = {
-            "homeassistant.components.automation" = "info";
-            "homeassistant.config" = "info";
-            "homeassistant.core" = "info";
-            "homeassistant.helpers.entity_platform" = "info";
-          };
+      sensor = [
+        {
+          platform = "derivative";
+          name = "Master Bathroom Humidity Rate";
+          source = "sensor.timmerflotte_temp_hmd_sensor_humidity_2";
+          time_window = "00:05:00";
+          unit_time = "min";
+        }
+        {
+          platform = "derivative";
+          name = "Main Bedroom Bathroom Humidity Rate";
+          source = "sensor.timmerflotte_temp_hmd_sensor_humidity";
+          time_window = "00:05:00";
+          unit_time = "min";
+        }
+      ];
+      automation = "!include automations.yaml";
+      logger = {
+        default = "warning";
+        logs = {
+          "homeassistant.components.automation" = "info";
+          "homeassistant.config" = "info";
+          "homeassistant.core" = "info";
+          "homeassistant.helpers.entity_platform" = "info";
         };
+      };
       homeassistant = {
         name = "Home";
         latitude = secrets.homeassistant.latitude;
