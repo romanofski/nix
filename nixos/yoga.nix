@@ -145,15 +145,15 @@
       # List services that you want to enable:
 
       # Enable the OpenSSH daemon.
-    services.openssh = {
-      enable = true;
-      settings = {
-        PasswordAuthentication = false;
-        KbdInteractiveAuthentication = false;
-        PermitRootLogin = "no";
-        AllowUsers = [ "rjoost" ];
+      services.openssh = {
+        enable = true;
+        settings = {
+          PasswordAuthentication = false;
+          KbdInteractiveAuthentication = false;
+          PermitRootLogin = "no";
+          AllowUsers = [ "rjoost" ];
+        };
       };
-    };
 
       # Open ports in the firewall.
       # networking.firewall.allowedTCPPorts = [ ... ];
