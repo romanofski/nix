@@ -562,7 +562,7 @@ in
         {
           platform = "derivative";
           name = "BAT0 Charge Rate";
-          unique_id = "bat0_charge_rate";
+          unique_id = "home_battery_charge_rate";
           source = "sensor.sigen_plant_battery_state_of_charge";
           unit_time = "h";
           time_window = "01:00:00";
