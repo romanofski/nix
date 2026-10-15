@@ -43,6 +43,8 @@
     pkgs.jq
     aispamclassifier.packages.x86_64-linux.default
     purebred.packages.x86_64-linux.default
+    pkgs.wine
+    pkgs.winetricks
     # niri
     pkgs.wireplumber
     pkgs.xwayland-satellite
