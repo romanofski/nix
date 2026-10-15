@@ -5,26 +5,26 @@ let
   batteryPublisher = pkgs.writeScript "publish-bat0-mqtt" ''
     #!${pythonEnv}/bin/python3
     ${builtins.readFile ../scripts/battery_mqtt.py}
-    '';
+  '';
   batterySensors = [
-      {
-        name = "BAT0 Capacity";
-        state_topic = "home/battery/bat0/capacity";
-        unit_of_measurement = "%";
-        device_class = "battery";
-      }
-      {
-        name = "BAT0 Status";
-        state_topic = "home/battery/bat0/status";
-      }
-      {
-        name = "BAT0 Charge Type";
-        state_topic = "home/battery/bat0/charge_type";
-      }
-      {
-        name = "BAT0 Cycle Count";
-        state_topic = "home/battery/bat0/cycle_count";
-      }
+    {
+      name = "BAT0 Capacity";
+      state_topic = "home/battery/bat0/capacity";
+      unit_of_measurement = "%";
+      device_class = "battery";
+    }
+    {
+      name = "BAT0 Status";
+      state_topic = "home/battery/bat0/status";
+    }
+    {
+      name = "BAT0 Charge Type";
+      state_topic = "home/battery/bat0/charge_type";
+    }
+    {
+      name = "BAT0 Cycle Count";
+      state_topic = "home/battery/bat0/cycle_count";
+    }
   ];
   soilSensors = [
     { name = "Garden Bed"; id = "0fe2fa"; }
@@ -90,7 +90,7 @@ let
       state_topic = "rtl_433/PIR";
       value_template = ''
         {{ "ON" if "{25}${code}" in value_json.codes else "OFF" }}
-        '';
+      '';
       payload_on = "ON";
       payload_off = "OFF";
       device_class = "motion";
@@ -386,10 +386,10 @@ in
             condition = "template";
             value_template = ''
               {{ trigger.from_state is not none
-                 and trigger.to_state is not none
-                 and is_number(trigger.from_state.state)
-                 and is_number(trigger.to_state.state)
-                 and trigger.to_state.state | float > trigger.from_state.state | float }}
+              and trigger.to_state is not none
+              and is_number(trigger.from_state.state)
+              and is_number(trigger.to_state.state)
+              and trigger.to_state.state | float > trigger.from_state.state | float }}
             '';
           }];
           sensor = [{
@@ -459,54 +459,126 @@ in
             state = ''
               {% set total = states('sensor.ws90_rain_total') %}
               {% if trigger.id == 'reset' %}
-                0.0
+              0.0
               {% elif is_number(total) %}
-                {% set baseline = this.attributes.get('baseline', total | float) | float %}
-                {{ ([total | float - baseline, 0] | max) | round(1) }}
+              {% set baseline = this.attributes.get('baseline', total | float) | float %}
+              {{ ([total | float - baseline, 0] | max) | round(1) }}
               {% else %}
-                {{ this.state }}
+              {{ this.state }}
               {% endif %}
             '';
             attributes = {
               baseline = ''
                 {% set total = states('sensor.ws90_rain_total') %}
                 {% if trigger.id == 'reset' and is_number(total) %}
-                  {{ total | float }}
+                {{ total | float }}
                 {% else %}
-                  {{ this.attributes.get('baseline', total | float(0)) | float }}
+                {{ this.attributes.get('baseline', total | float(0)) | float }}
                 {% endif %}
               '';
             };
           }];
         }
+        {
+          trigger = [
+            {
+              trigger = "state";
+              entity_id = [
+                "sensor.sigen_plant_battery_state_of_charge"
+                "sensor.home_battery_charge_rate"
+              ];
+            }
+            {
+              trigger = "time_pattern";
+              minutes = "/1";
+            }
+          ];
+
+          sensor = [
+            {
+              name = "Home Battery Time to Full";
+              unique_id = "home_battery_time_to_full";
+              device_class = "duration";
+              unit_of_measurement = "h";
+              state_class = "measurement";
+
+              availability = ''
+                {% set soc = states('sensor.sigen_plant_battery_state_of_charge') %}
+                {% set rate = states('sensor.home_battery_charge_rate') %}
+                {{ is_number(soc)
+                and is_number(rate)
+                and soc | float < 100
+                and rate | float > 0.1 }}
+              '';
+
+              state = ''
+                {% set soc = states('sensor.sigen_plant_battery_state_of_charge') | float %}
+                {% set rate = states('sensor.home_battery_charge_rate') | float %}
+                {{ ((100 - soc) / rate) | round(1) }}
+              '';
+            }
+
+            {
+              name = "Home Battery Time to Empty";
+              unique_id = "home_battery_time_to_empty";
+              device_class = "duration";
+              unit_of_measurement = "h";
+              state_class = "measurement";
+
+              availability = ''
+                {% set soc = states('sensor.sigen_plant_battery_state_of_charge') %}
+                {% set rate = states('sensor.home_battery_charge_rate') %}
+                {{ is_number(soc)
+                and is_number(rate)
+                and soc | float > 0
+                and rate | float < -0.1 }}
+              '';
+
+              state = ''
+                {% set soc = states('sensor.sigen_plant_battery_state_of_charge') | float %}
+                {% set rate = states('sensor.home_battery_charge_rate') | float %}
+                {{ (soc / (rate | float | abs)) | round(1) }}
+              '';
+            }
+          ];
+        }
       ];
 
-        sensor = [
-          {
-            platform = "derivative";
-            name = "Master Bathroom Humidity Rate";
-            source = "sensor.timmerflotte_temp_hmd_sensor_humidity_2";
-            time_window = "00:05:00";
-            unit_time = "min";
-          }
-          {
-            platform = "derivative";
-            name = "Main Bedroom Bathroom Humidity Rate";
-            source = "sensor.timmerflotte_temp_hmd_sensor_humidity";
-            time_window = "00:05:00";
-            unit_time = "min";
-          }
-        ];
-        automation = "!include automations.yaml";
-        logger = {
-          default = "warning";
-          logs = {
-            "homeassistant.components.automation" = "info";
-            "homeassistant.config" = "info";
-            "homeassistant.core" = "info";
-            "homeassistant.helpers.entity_platform" = "info";
-          };
+      sensor = [
+        {
+          platform = "derivative";
+          name = "Master Bathroom Humidity Rate";
+          source = "sensor.timmerflotte_temp_hmd_sensor_humidity_2";
+          time_window = "00:05:00";
+          unit_time = "min";
+        }
+        {
+          platform = "derivative";
+          name = "Main Bedroom Bathroom Humidity Rate";
+          source = "sensor.timmerflotte_temp_hmd_sensor_humidity";
+          time_window = "00:05:00";
+          unit_time = "min";
+        }
+        {
+          platform = "derivative";
+          name = "BAT0 Charge Rate";
+          unique_id = "bat0_charge_rate";
+          source = "sensor.sigen_plant_battery_state_of_charge";
+          unit_time = "h";
+          time_window = "01:00:00";
+          round = 2;
+        }
+      ];
+      automation = "!include automations.yaml";
+      logger = {
+        default = "warning";
+        logs = {
+          "homeassistant.components.automation" = "info";
+          "homeassistant.config" = "info";
+          "homeassistant.core" = "info";
+          "homeassistant.helpers.entity_platform" = "info";
         };
+      };
       homeassistant = {
         name = "Home";
         latitude = secrets.homeassistant.latitude;
