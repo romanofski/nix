@@ -316,6 +316,7 @@ in
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/sigenergy_local_modbus.nix {})
     ];
     extraComponents = [
+      "apple_tv"
       "default_config"
       "energy"
       "esphome"
