@@ -39,7 +39,7 @@
         ./services/vpn.nix
         ./services/httpd.nix
         ./services/home-automation.nix
-        ./services/home-automation/eufy-security-ws-service.nix
+        ./services/home-automation/eufy-sdk-bridge.nix
         ./services/rtl2832.nix
         sops-nix.nixosModules.sops
         ({ pkgs, ... }: {
@@ -49,7 +49,8 @@
           ];
           nixpkgs.overlays = [
             (final: prev: {
-              eufy-security-ws = final.callPackage ./pkgs/eufy-security-ws.nix {};
+              eufy-sdk = final.callPackage ./pkgs/eufy-sdk.nix {};
+              eufy-sdk-bridge = final.callPackage ./pkgs/ha-eufy-sdk-bridge.nix {};
               bookorbit = pkgs-unstable.bookorbit;
               matterjs-server = pkgs-unstable.matterjs-server;
             })

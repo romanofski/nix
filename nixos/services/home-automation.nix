@@ -195,8 +195,12 @@ let
   ];
 in
 {
-  sops.secrets.username = {};
-  sops.secrets.password = {};
+  sops.secrets.username = {
+    restartUnits = [ "eufy-sdk-bridge.service" ];
+  };
+  sops.secrets.password = {
+    restartUnits = [ "eufy-sdk-bridge.service" ];
+  };
 
   networking.firewall.allowedUDPPorts = [
     5353  # mDNS/ how phone finds thread border router
@@ -236,27 +240,28 @@ in
     ];
   };
 
-  sops.templates."config.json" = {
-    content = ''
-      {
-      "username": "${config.sops.placeholder.username}",
-      "password": "${config.sops.placeholder.password}",
-      "country": "AU",
-      "language": "en",
-      "p2pConnectionSetup": 2,
-      "persistentDir": "${config.users.users.${config.services.eufy-security-ws.user}.home}"
-      }
-    '';
-    owner = config.services.eufy-security-ws.user;
-    mode  = "0600";
-  };
-  services.eufy-security-ws = {
-    enable= true;
-    configFile = config.sops.templates."config.json".path;
-    port = 3080;
-  };
-  services.go2rtc = {
+  services.eufy-sdk-bridge = {
     enable = true;
+    package = pkgs.eufy-sdk-bridge;
+
+    host = "127.0.0.1";
+    port = 4000;
+    openFirewall = false;
+
+    credentials = {
+      emailFile = config.sops.secrets.username.path;
+      passwordFile = config.sops.secrets.password.path;
+      country = "AU";
+    };
+
+    go2rtc = {
+      apiPort = 1984;
+      rtspPort = 8554;
+      webrtcPort = 8555;
+
+      # TODO
+      openFirewall = true;
+    };
   };
 
   services.openthread-border-router = {
@@ -311,8 +316,7 @@ in
       (pkgs.callPackage ../pkgs/home-assistant-custom-lovelace-modules/lovelace-windrose-card.nix {})
     ];
     customComponents = [
-      (pkgs.callPackage ../pkgs/home-assistant-custom-components/eufy_security.nix {})
-      (pkgs.callPackage ../pkgs/home-assistant-custom-components/webrtc.nix {})
+      (pkgs.callPackage ../pkgs/home-assistant-custom-components/ha_eufy_sdk.nix {})
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/ha_bom_australia.nix {})
       (pkgs.callPackage ../pkgs/home-assistant-custom-components/sigenergy_local_modbus.nix {})
     ];
