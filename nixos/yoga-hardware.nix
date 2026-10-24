@@ -8,80 +8,99 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+    boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+    boot.initrd.kernelModules = [ ];
+    boot.kernelModules = [ "kvm-intel" ];
+    boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/mapper/luks-5fc2fe7f-ceec-4c3b-83c4-5c7377498627";
+    fileSystems."/" =
+      { device = "/dev/mapper/luks-5fc2fe7f-ceec-4c3b-83c4-5c7377498627";
       fsType = "btrfs";
       options = [ "subvol=@" ];
-    };
-  fileSystems."/srv/images" = {
-    device = "/dev/mapper/data";
-    fsType = "btrfs";
-    options = [
-      "subvol=images"
-      "compress=zstd"
-      "noatime"
-      "noauto"
-      "x-systemd.automount"
-    ];
-  };
-  fileSystems."/srv/videos" = {
-    device = "/dev/mapper/data";
-    fsType = "btrfs";
-    options = [
-      "subvol=videos"
-      "compress=zstd"
-      "noatime"
-      "noauto"
-      "x-systemd.automount"
-    ];
-  };
-  fileSystems."/srv/books" = {
-    device = "/dev/mapper/data";
-    fsType = "btrfs";
-    options = [
-      "subvol=books"
-      "compress=zstd"
-      "noatime"
-      "noauto"
-      "x-systemd.automount"
-    ];
-  };
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="ZPV0VPZW", RUN+="${pkgs.systemd}/bin/systemctl start mnt-backup.automount"
-    # battery optimisations
-    SUBSYSTEM=="power_supply", KERNEL=="BAT0", ATTR{charge_types}="Long_Life"
-  '';
-  environment.etc.crypttab = {
-    mode = "0600";
-    text = ''
-      data UUID=a161ed87-67dc-4e60-9036-8bb1ba1a6fee /root/usb-datadisk-seagate.key luks,noauto
-    '';
-  };
+      };
+      fileSystems."/srv/images" = {
+        device = "/dev/mapper/data";
+        fsType = "btrfs";
+        options = [
+          "subvol=images"
+          "compress=zstd"
+          "noatime"
+          "noauto"
+          "x-systemd.automount"
+        ];
+      };
+      fileSystems."/srv/videos" = {
+        device = "/dev/mapper/data";
+        fsType = "btrfs";
+        options = [
+          "subvol=videos"
+          "compress=zstd"
+          "noatime"
+          "noauto"
+          "x-systemd.automount"
+        ];
+      };
+      fileSystems."/srv/books" = {
+        device = "/dev/mapper/data";
+        fsType = "btrfs";
+        options = [
+          "subvol=books"
+          "compress=zstd"
+          "noatime"
+          "noauto"
+          "x-systemd.automount"
+        ];
+      };
 
-  boot.initrd.luks.devices."luks-5fc2fe7f-ceec-4c3b-83c4-5c7377498627".device = "/dev/disk/by-uuid/5fc2fe7f-ceec-4c3b-83c4-5c7377498627";
+      # backup drive
+      fileSystems."/mnt/immich-borg" = {
+        device = "/dev/mapper/backup";
+        fsType = "btrfs";
+        options = [
+          "noauto"
+          "x-systemd.automount"
+          "x-systemd.idle-timeout=300" # unmount after 5min idle
+          "subvol=/immich-borg"
+        ];
+      };
+      fileSystems."/mnt/mail-borg" = {
+        device = "/dev/mapper/backup";
+        fsType = "btrfs";
+        options = [
+          "noauto"
+          "x-systemd.automount"
+          "x-systemd.idle-timeout=300" # unmount after 5min idle
+          "subvol=/mail"
+        ];
+      };
 
-  fileSystems."/home" =
-    { device = "/dev/mapper/luks-5fc2fe7f-ceec-4c3b-83c4-5c7377498627";
-      fsType = "btrfs";
-      options = [ "subvol=@home" ];
-    };
+      environment.etc.crypttab = {
+        mode = "0600";
+        text = ''
+          data UUID=a161ed87-67dc-4e60-9036-8bb1ba1a6fee /root/usb-datadisk-seagate.key luks,noauto
+          backup UUID=58377753-f993-4902-8876-b483bb8119d9 /root/backupdrive.key luks,noauto
+        '';
+      };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/71D0-1DB5";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+      boot.initrd.luks.devices."luks-5fc2fe7f-ceec-4c3b-83c4-5c7377498627".device = "/dev/disk/by-uuid/5fc2fe7f-ceec-4c3b-83c4-5c7377498627";
 
-  swapDevices = [ ];
+      fileSystems."/home" =
+        { device = "/dev/mapper/luks-5fc2fe7f-ceec-4c3b-83c4-5c7377498627";
+        fsType = "btrfs";
+        options = [ "subvol=@home" ];
+        };
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+        fileSystems."/boot" =
+          { device = "/dev/disk/by-uuid/71D0-1DB5";
+          fsType = "vfat";
+          options = [ "fmask=0077" "dmask=0077" ];
+          };
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
+          swapDevices = [ ];
+
+          nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+          hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+          hardware.bluetooth.enable = true;
+          hardware.bluetooth.powerOnBoot = true;
 }

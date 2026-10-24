@@ -11,6 +11,7 @@
       ./configs/firewall.nix
       ./services/ntp.nix
       ./services/upower.nix
+      ./services/backup.nix
     ];
 
     sops.defaultSopsFile = ../secrets/yoga/default.yaml;
