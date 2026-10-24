@@ -1,4 +1,4 @@
-{ secrets, aispamclassifier, purebred, korrosync, pkgs, lib, config, ... }:
+{ secrets, aispamclassifier, purebred, korrosync, pkgs, lib, config, glsmacPackage, ... }:
 
 {
 
@@ -45,6 +45,7 @@
     purebred.packages.x86_64-linux.default
     pkgs.wine
     pkgs.winetricks
+    glsmacPackage
     # niri
     pkgs.wireplumber
     pkgs.xwayland-satellite

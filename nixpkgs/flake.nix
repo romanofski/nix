@@ -15,6 +15,8 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+
+    glsmacPackage = pkgs.callPackage ./packages/glsmac.nix {};
   in {
     homeConfigurations = {
       "rjoost@work" = home-manager.lib.homeManagerConfiguration {
@@ -70,7 +72,7 @@
           })
         ];
         extraSpecialArgs = {
-          inherit inputs;
+          inherit inputs glsmacPackage;
           nixpkgsUnstable = import nixpkgsUnstable {
             inherit system;
             config.allowUnfree = true;

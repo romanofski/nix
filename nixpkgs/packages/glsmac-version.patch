@@ -1,0 +1,37 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f421aac5..8404c21e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -7,6 +7,8 @@ SET( CMAKE_MODULE_PATH "." )
+ 
+ SET( EXECUTABLE_OUTPUT_PATH "bin" )
+ 
++SET( GLSMAC_LAST_COMMIT "" CACHE STRING "Commit identifier supplied by the packager" )
++
+ IF ( WIN32 )
+ SET( SRC "WIN32" )
+ ELSE ()
+@@ -18,11 +20,18 @@ SET( PWD "." )
+ ADD_CUSTOM_TARGET( glsmac_version )
+ 
+ IF ( NOT WIN32 )
+-	ADD_CUSTOM_COMMAND(
+-		TARGET glsmac_version PRE_BUILD
+-		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+-		COMMAND git show -s --format='\#define GLSMAC_LAST_COMMIT \"%h\"' > ${PROJECT_SOURCE_DIR}/src/tmp/last_commit.h
+-	)
++        IF ( NOT GLSMAC_LAST_COMMIT STREQUAL "" )
++                FILE( MAKE_DIRECTORY "${PROJECT_SOURCE_DIR}/src/tmp" )
++                FILE( WRITE "${PROJECT_SOURCE_DIR}/src/tmp/last_commit.h"
++                        "#define GLSMAC_LAST_COMMIT \"${GLSMAC_LAST_COMMIT}\"\n"
++                )
++        ELSE ()
++                ADD_CUSTOM_COMMAND(
++                        TARGET glsmac_version PRE_BUILD
++                        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
++                        COMMAND git show -s --format='\#define GLSMAC_LAST_COMMIT \"%h\"' > ${PROJECT_SOURCE_DIR}/src/tmp/last_commit.h
++                )
++        ENDIF ()
+ ENDIF ()
+ 
+ IF ( NOT WIN32 )
