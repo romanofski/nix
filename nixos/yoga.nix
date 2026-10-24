@@ -97,7 +97,6 @@
         "wheel"
         "video"
         "audio"
-        "disk"
         "networkmanager"
         "jellyfin"
         "immich"
