@@ -13,6 +13,9 @@
       createDB = true;
     };
   };
+  systemd.services.immich-server = {
+    unitConfig.RequiresMountsFor = [ "/srv/images" ];
+  };
   environment.systemPackages = with pkgs; [
     immich-cli
     immich-go
