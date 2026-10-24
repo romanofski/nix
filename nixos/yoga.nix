@@ -172,6 +172,6 @@
       nix.gc.automatic = true;
       nix.gc.dates = "weekly";
       nix.gc.options = "--delete-older-than 14d";
-      nix.settings.trusted-users = ["root" "rjoost"];
+      nix.settings.trusted-users = ["root"];
       nix.settings.max-jobs = lib.mkDefault 8;
 }
