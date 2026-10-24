@@ -215,6 +215,7 @@ in
     enable = true;
     listeners = [
       {
+        address = "127.0.0.1";
         acl = [
           "topic readwrite #"
         ];
