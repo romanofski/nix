@@ -206,6 +206,7 @@ in
     5353  # mDNS/ how phone finds thread border router
     5540  # matter protocol
     49154  # MeshCoP / Thread commissioning service port
+    8555 # Preserve go2rtc WebRTC media access
   ];
   networking.firewall.trustedInterfaces = [ "wpan0" ];
 
@@ -259,9 +260,7 @@ in
       apiPort = 1984;
       rtspPort = 8554;
       webrtcPort = 8555;
-
-      # TODO
-      openFirewall = true;
+      openFirewall = false;
     };
   };
 
