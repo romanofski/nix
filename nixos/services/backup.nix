@@ -3,6 +3,7 @@
   services.borgbackup = {
     jobs = {
       immichBackup = {
+        doInit = false;
         repo = "/mnt/immich-borg";
         encryption.mode = "none";
         paths = [
