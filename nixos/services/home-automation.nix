@@ -368,6 +368,7 @@ in
       logbook = {};
       energy = {};
       http = {
+        server_host = "127.0.0.1";
         use_x_forwarded_for = true;
         trusted_proxies = [
           "127.0.0.1"

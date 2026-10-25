@@ -24,6 +24,7 @@ in
   services.bookorbit = {
     enable = true;
     openFirewall = false;
+    environment.HOST = "127.0.0.1";
     environmentFile = config.sops.templates."bookorbit.env".path;
   };
 }
