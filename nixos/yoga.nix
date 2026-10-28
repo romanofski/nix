@@ -8,7 +8,6 @@
   imports =
     [
       ./yoga-hardware.nix
-      ./configs/firewall.nix
       ./services/ntp.nix
       ./services/upower.nix
       ./services/backup.nix
@@ -28,6 +27,10 @@
     # networking.proxy.default = "http://user:password@proxy:port/";
     # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+    networking.firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 ];
+    };
     # Enable networking
     networking.networkmanager.enable = true;
     networking.networkmanager.unmanaged = [ "wlp0s20f3" ];

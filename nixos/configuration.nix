@@ -10,7 +10,6 @@
     ./hardware-configuration.nix
     ./configs/yubikey.nix
     ./configs/printing.nix
-    ./configs/firewall.nix
     ./configs/unfree.nix
     ./services/ntp.nix
     ./services/tor.nix
@@ -43,6 +42,14 @@
     networking = {
       enableIPv6 = false;
     };
+    # KDE Connect is used only on this host.
+    networking.firewall.allowedTCPPortRanges = [
+      { from = 1714; to = 1764; }
+    ];
+
+    networking.firewall.allowedUDPPortRanges = [
+      { from = 1714; to = 1764; }
+    ];
     networking.networkmanager = {
       enable = true;
       dns = "systemd-resolved";
