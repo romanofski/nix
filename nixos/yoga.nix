@@ -29,7 +29,10 @@
 
     networking.firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 ];
+      interfaces = {
+        enp0s20f0u3u3.allowedTCPPorts = [ 22 ];
+        tailscale0.allowedTCPPorts = [ 22 ];
+      };
     };
     # Enable networking
     networking.networkmanager.enable = true;
@@ -150,6 +153,7 @@
       # Enable the OpenSSH daemon.
       services.openssh = {
         enable = true;
+        openFirewall = false;
         settings = {
           PasswordAuthentication = false;
           KbdInteractiveAuthentication = false;
