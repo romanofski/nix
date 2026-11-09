@@ -15,8 +15,10 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    pkgsUnstable = nixpkgsUnstable.legacyPackages.${system};
 
     glsmacPackage = pkgs.callPackage ./packages/glsmac.nix {};
+    harunekoPackage = pkgs.callPackage ./packages/haruneko.nix { electron_44 = pkgsUnstable.electron_44; };
   in {
     homeConfigurations = {
       "rjoost@work" = home-manager.lib.homeManagerConfiguration {
@@ -72,7 +74,7 @@
           })
         ];
         extraSpecialArgs = {
-          inherit inputs glsmacPackage;
+          inherit inputs glsmacPackage harunekoPackage;
           nixpkgsUnstable = import nixpkgsUnstable {
             inherit system;
             config.allowUnfree = true;

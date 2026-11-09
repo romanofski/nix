@@ -1,4 +1,4 @@
-{ secrets, aispamclassifier, purebred, korrosync, pkgs, lib, config, glsmacPackage, ... }:
+{ secrets, aispamclassifier, purebred, korrosync, pkgs, lib, config, glsmacPackage, harunekoPackage, ... }:
 
 {
 
@@ -46,6 +46,7 @@
     pkgs.wine
     pkgs.winetricks
     glsmacPackage
+    harunekoPackage
     # niri
     pkgs.wireplumber
     pkgs.xwayland-satellite
