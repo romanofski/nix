@@ -2,16 +2,18 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixgl.url = "github:nix-community/nixGL";
     secrets.url = "git+ssh://rjoost@krombopulos.lan:/home/rjoost/works/configs/nixsecrets";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, nixgl, secrets, sops-nix }@attrs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgsMaster, nixos-hardware, nixgl, secrets, sops-nix }@attrs:
   let
     system = "x86_64-linux";
     pkgs-unstable = import nixpkgs-unstable { inherit system; config = {}; };
+    pkgs-master = import nixpkgsMaster { inherit system; config = {}; };
   in {
     nixosConfigurations.krombopulos = nixpkgs.lib.nixosSystem {
       specialArgs = attrs;
@@ -44,14 +46,14 @@
         sops-nix.nixosModules.sops
         ({ pkgs, ... }: {
           imports = [
-            "${nixpkgs-unstable}/nixos/modules/services/web-apps/bookorbit.nix"
+            "${nixpkgsMaster}/nixos/modules/services/web-apps/bookorbit.nix"
             "${nixpkgs-unstable}/nixos/modules/services/home-automation/matterjs-server.nix"
           ];
           nixpkgs.overlays = [
             (final: prev: {
               eufy-sdk = final.callPackage ./pkgs/eufy-sdk.nix {};
               eufy-sdk-bridge = final.callPackage ./pkgs/ha-eufy-sdk-bridge.nix {};
-              bookorbit = pkgs-unstable.bookorbit;
+              bookorbit = pkgs-master.bookorbit;
               matterjs-server = pkgs-unstable.matterjs-server;
             })
           ];
