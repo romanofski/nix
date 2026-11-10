@@ -71,6 +71,23 @@
         "type": "github"
       }
     },
+    "nixpkgs-bookorbit": {
+      "locked": {
+        "lastModified": 1794228666,
+        "narHash": "sha256-rcEyIcueD2Z8LwOhJFrqGPgbCWATHuS2fLnzYMuMC08=",
+        "ref": "refs/pull/585438/head",
+        "rev": "f78103a96555374a80b1ecb000b8f8712c301e3e",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/NixOS/nixpkgs"
+      },
+      "original": {
+        "ref": "refs/pull/585438/head",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/NixOS/nixpkgs"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1790046670,
@@ -83,22 +100,6 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgsMaster": {
-      "locked": {
-        "lastModified": 1794293618,
-        "narHash": "sha256-mQVIq5vQuk3Vb+VIPoBx02CAswSoHoUUH+mSGuTmi74=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e49e66345c5130ab9050a53ec7531fde35f70357",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -137,8 +138,8 @@
         "nixgl": "nixgl",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-bookorbit": "nixpkgs-bookorbit",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nixpkgsMaster": "nixpkgsMaster",
         "secrets": "secrets",
         "sops-nix": "sops-nix"
       }
