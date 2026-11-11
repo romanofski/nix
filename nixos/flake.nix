@@ -43,6 +43,7 @@
         ./services/home-automation.nix
         ./services/home-automation/eufy-sdk-bridge.nix
         ./services/rtl2832.nix
+        ./services/bookserver/mangabaka-metadata-provider.nix
         sops-nix.nixosModules.sops
         ({ pkgs, ... }: {
           imports = [
@@ -54,6 +55,7 @@
               eufy-sdk = final.callPackage ./pkgs/eufy-sdk.nix {};
               eufy-sdk-bridge = final.callPackage ./pkgs/ha-eufy-sdk-bridge.nix {};
               bookorbit = pkgs-bookorbit.bookorbit;
+              mangabaka-metadata-provider = final.callPackage ./pkgs/mangabaka-bookorbit-provider.nix {};
               matterjs-server = pkgs-unstable.matterjs-server;
             })
           ];

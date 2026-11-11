@@ -27,4 +27,9 @@ in
     environment.HOST = "127.0.0.1";
     environmentFile = config.sops.templates."bookorbit.env".path;
   };
+
+  services.mangabaka-metadata-provider = {
+    enable = true;
+    port = 12822;
+  };
 }
