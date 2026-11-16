@@ -141,8 +141,16 @@
         model = "pc105";
         layout = "us";
       };
+      videoDrivers = [
+        "modesetting"
+        "fbdev"
+        "displaylink"
+      ];
     };
+    systemd.services.dlm.wantedBy = [ "graphical.target" ];
+
     programs.niri.enable = true;
+
     services.greetd = {
       enable = true;
       settings = {
