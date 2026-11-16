@@ -476,7 +476,7 @@ in
             unit_of_measurement = "d";
             state_class = "measurement";
             state = ''
-              {% set last = as_datetime(states('sensor.ws90_last_rain_timestamp'), none) %}
+              {% set last = as_datetime(states('sensor.ws90_last_heavy_rain_timestamp'), none) %}
               {{ (now() - last).days if last is not none else none }}
             '';
           }];
