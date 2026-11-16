@@ -386,6 +386,34 @@ in
         binary_sensor = (builtins.concatMap mkBatterySensors sensorsDefinitions)
         ++ (builtins.concatMap makeMotionSensors motionSensors);
       };
+      utility_meter = {
+        ws90_rain_week = {
+          name = "WS90 Rain This Week";
+          source = "sensor.ws90_rain_total";
+          cycle = "weekly";
+          offset = {
+            hours = 9;
+          };
+        };
+
+        ws90_rain_month = {
+          name = "WS90 Rain This Month";
+          source = "sensor.ws90_rain_total";
+          cycle = "monthly";
+          offset = {
+            hours = 9;
+          };
+        };
+
+        ws90_rain_year = {
+          name = "WS90 Rain This Year";
+          source = "sensor.ws90_rain_total";
+          cycle = "yearly";
+          offset = {
+            hours = 9;
+          };
+        };
+      };
       template = [
         {
           trigger = [{ trigger = "state"; entity_id = ["sensor.ws90_rain_since_9am"]; }];
