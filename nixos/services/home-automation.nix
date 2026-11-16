@@ -389,6 +389,7 @@ in
       utility_meter = {
         ws90_rain_week = {
           name = "WS90 Rain This Week";
+          unique_id = "ws90_rain_week";
           source = "sensor.ws90_rain_total";
           cycle = "weekly";
           offset = {
@@ -398,6 +399,7 @@ in
 
         ws90_rain_month = {
           name = "WS90 Rain This Month";
+          unique_id = "ws90_rain_month";
           source = "sensor.ws90_rain_total";
           cycle = "monthly";
           offset = {
@@ -407,6 +409,7 @@ in
 
         ws90_rain_year = {
           name = "WS90 Rain This Year";
+          unique_id = "ws90_rain_year";
           source = "sensor.ws90_rain_total";
           cycle = "yearly";
           offset = {
