@@ -577,6 +577,92 @@ in
             }
           ];
         }
+        {
+          trigger = [
+            {
+              trigger = "state";
+              entity_id = [
+                "sensor.ws90_temperature"
+                "sensor.ws90_rain_day"
+              ];
+              id = "update";
+            }
+            {
+              trigger = "time";
+              at = "00:00:00";
+              id = "year_check";
+            }
+          ];
+
+          # Allow sensor updates throughout the year,
+          # but only process the midnight trigger on January 1.
+          condition = [{
+            condition = "template";
+            value_template = ''
+              {{ trigger.id == 'update'
+              or (now().month == 1 and now().day == 1) }}
+            '';
+          }];
+
+          sensor = [
+            {
+              name = "WS90 Highest Temperature This Year";
+              unique_id = "ws90_highest_temperature_this_year";
+              device_class = "temperature";
+              unit_of_measurement = "°C";
+
+              state = ''
+                {% set current = states('sensor.ws90_temperature') %}
+                {% if trigger.id == 'year_check' %}
+                {{ current | float if is_number(current) else none }}
+                {% elif is_number(current) %}
+                {{ [this.state | float(current | float),
+                current | float] | max }}
+                {% else %}
+                {{ this.state }}
+                {% endif %}
+              '';
+            }
+
+            {
+              name = "WS90 Lowest Temperature This Year";
+              unique_id = "ws90_lowest_temperature_this_year";
+              device_class = "temperature";
+              unit_of_measurement = "°C";
+
+              state = ''
+                {% set current = states('sensor.ws90_temperature') %}
+                {% if trigger.id == 'year_check' %}
+                {{ current | float if is_number(current) else none }}
+                {% elif is_number(current) %}
+                {{ [this.state | float(current | float),
+                current | float] | min }}
+                {% else %}
+                {{ this.state }}
+                {% endif %}
+              '';
+            }
+
+            {
+              name = "WS90 Wettest Day This Year";
+              unique_id = "ws90_wettest_day_this_year";
+              device_class = "precipitation";
+              unit_of_measurement = "mm";
+
+              state = ''
+                {% set current = states('sensor.ws90_rain_day') %}
+                {% if trigger.id == 'year_check' %}
+                0
+                {% elif is_number(current) %}
+                {{ ([this.state | float(0),
+                current | float] | max) | round(1) }}
+                {% else %}
+                {{ this.state }}
+                {% endif %}
+              '';
+            }
+          ];
+        }
       ];
 
       sensor = [
