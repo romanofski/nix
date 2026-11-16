@@ -583,19 +583,19 @@ in
               trigger = "state";
               entity_id = [
                 "sensor.ws90_temperature"
-                "sensor.ws90_rain_day"
+                "sensor.ws90_rain_since_9am"
               ];
               id = "update";
             }
             {
               trigger = "time";
-              at = "00:00:00";
+              at = "09:00:00";
               id = "year_check";
             }
           ];
 
-          # Allow sensor updates throughout the year,
-          # but only process the midnight trigger on January 1.
+          # Process sensor updates normally, and reset records
+          # at 9am on January 1.
           condition = [{
             condition = "template";
             value_template = ''
@@ -650,7 +650,7 @@ in
               unit_of_measurement = "mm";
 
               state = ''
-                {% set current = states('sensor.ws90_rain_day') %}
+                {% set current = states('sensor.ws90_rain_since_9am') %}
                 {% if trigger.id == 'year_check' %}
                 0
                 {% elif is_number(current) %}
