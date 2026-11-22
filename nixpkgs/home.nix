@@ -1,4 +1,4 @@
-{ secrets, aispamclassifier, purebred, korrosync, pkgs, lib, config, glsmacPackage, harunekoPackage, ... }:
+{ secrets, nixpkgsUnstable, aispamclassifier, purebred, korrosync, pkgs, lib, config, glsmacPackage, harunekoPackage, ... }:
 
 {
 
@@ -52,7 +52,7 @@
     pkgs.xwayland-satellite
     pkgs.swaybg # wallpaper
     pkgs.poppler-utils # pdftotext
-    pkgs.signal-desktop
+    nixpkgsUnstable.signal-desktop
     pkgs.mpv
     pkgs.spotify
     pkgs.nixgl.nixGLIntel
