@@ -1,5 +1,5 @@
 
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 {
   services.immich = {
     enable = true;
@@ -8,6 +8,7 @@
     accelerationDevices = ["/dev/dri/renderD128"];
     mediaLocation = "/srv/images";
     redis.enable = true;
+    package = pkgs-unstable.immich;
     database = {
       enable = true;
       createDB = true;
