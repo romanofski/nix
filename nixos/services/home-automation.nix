@@ -193,6 +193,108 @@ let
       entity_category = "diagnostic";
     }
   ];
+  mkYearlyMax = {
+    name,
+    uniqueId,
+    source,
+    unit,
+    deviceClass,
+    weather ? false,
+  }: let
+    resetTime = if weather then "09:00:00" else "00:00:00";
+    recordYear =
+      if weather
+      then "(now() - timedelta(hours=9)).year"
+      else "now().year";
+  in {
+    trigger = [
+      {
+        trigger = "state";
+        entity_id = source;
+        to = null; # State changes only; ignore attribute-only updates.
+        id = "sample";
+      }
+      {
+        trigger = "time";
+        at = resetTime;
+        id = "boundary";
+      }
+    ];
+
+    condition = [{
+      condition = "template";
+      value_template = ''
+        {{ (trigger.id == 'sample'
+        and trigger.to_state is not none
+        and is_number(trigger.to_state.state))
+        or (trigger.id == 'boundary'
+        and now().month == 1 and now().day == 1) }}
+      '';
+    }];
+
+    sensor = [{
+      inherit name;
+      unique_id = uniqueId;
+      unit_of_measurement = unit;
+      device_class = deviceClass;
+
+      state = ''
+        {% set year = ${recordYear} %}
+        {% set same_year = this.attributes.get('record_year') | int(0) == year %}
+        {% set old = this.state | float(none) if same_year else none %}
+        {% if trigger.id == 'sample' %}
+        {% set sample = trigger.to_state.state | float %}
+        {{ sample if old is none else [old, sample] | max }}
+        {% else %}
+        {# Keep a new-year sample if it arrived just before this trigger.
+        Otherwise wait for the first valid reading of the new year. #}
+        {{ old }}
+        {% endif %}
+      '';
+
+      attributes.record_year = "{{ ${recordYear} }}";
+    }];
+  };
+
+  yearlyMaxRecords = [
+    {
+      name = "WS90 Highest Wind Gust This Year";
+      uniqueId = "ws90_highest_wind_gust_this_year";
+      source = "sensor.ws90_wind_gust";
+      unit = "km/h";
+      deviceClass = "wind_speed";
+      weather = true;
+    }
+    {
+      name = "WS90 Highest Wind Speed This Year";
+      uniqueId = "ws90_highest_wind_speed_this_year";
+      source = "sensor.ws90_wind_speed";
+      unit = "km/h";
+      deviceClass = "wind_speed";
+      weather = true;
+    }
+    {
+      name = "Highest Daily PV Production This Year";
+      uniqueId = "highest_daily_pv_production_this_year";
+      source = "sensor.sigen_plant_daily_pv_energy";
+      unit = "kWh";
+      deviceClass = "energy";
+    }
+    {
+      name = "Highest Daily Battery Discharge This Year";
+      uniqueId = "highest_daily_battery_discharge_this_year";
+      source = "sensor.sigen_plant_daily_battery_discharge_energy";
+      unit = "kWh";
+      deviceClass = "energy";
+    }
+    {
+      name = "Highest Daily Consumption This Year";
+      uniqueId = "highest_daily_consumption_this_year";
+      source = "sensor.sigen_plant_daily_consumed_energy";
+      unit = "kWh";
+      deviceClass = "energy";
+    }
+  ];
 in
 {
   sops.secrets.username = {
@@ -666,7 +768,7 @@ in
             }
           ];
         }
-      ];
+      ] ++ builtins.map mkYearlyMax yearlyMaxRecords;
 
       sensor = [
         {
