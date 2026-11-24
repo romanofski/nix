@@ -290,7 +290,7 @@ let
     {
       name = "Highest Daily Consumption This Year";
       uniqueId = "highest_daily_consumption_this_year";
-      source = "sensor.sigen_plant_daily_consumed_energy";
+      source = "sensor.sigen_plant_daily_load_consumption";
       unit = "kWh";
       deviceClass = "energy";
     }
